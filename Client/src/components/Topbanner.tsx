@@ -4,7 +4,7 @@ const Topbanner = () => {
 return(
 <div className="flex items-center justify-between bg-gray-100 p-4 shadow-md">
         <div className="flex items-center space-x-4">
-          <img src="logo.png" alt="Circle Property Management" className="h-12" />
+          <img src="logo.png" alt="TrueEstae Property Management" className="h-12" />
           <div className="text-green-700 text-sm font-medium">
             <p>"We are your local resource and caring professional serving You From Wherever You Are"</p>
           </div>

@@ -2,6 +2,7 @@ import Container from '../components/Container';
 import Navbar from '../components/Navbar';
 import HeroSection from '../components/HeroSection';
 import Topbanner from '../components/Topbanner';
+import FeaturedProperties from '../components/Featured properties';
 
 const Home = () => {
     return (
@@ -10,6 +11,7 @@ const Home = () => {
                 <Topbanner />
                 <Navbar />
                 <HeroSection />
+                <FeaturedProperties />
             
             </Container>
         </div>
