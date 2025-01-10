@@ -3,6 +3,8 @@ import Navbar from '../components/Navbar';
 import HeroSection from '../components/HeroSection';
 import Topbanner from '../components/Topbanner';
 import FeaturedProperties from '../components/Featured properties';
+import Footer from '../components/Footer';
+import About from '../components/About';
 
 const Home = () => {
     return (
@@ -12,6 +14,8 @@ const Home = () => {
                 <Navbar />
                 <HeroSection />
                 <FeaturedProperties />
+                <About />
+                <Footer />
             
             </Container>
         </div>
