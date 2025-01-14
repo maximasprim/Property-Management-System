@@ -4,9 +4,9 @@ const Navbar = () => {
 
 <nav className="bg-gray-900 text-white px-6 py-4">
         <ul className="flex justify-center space-x-6 text-sm font-semibold">
-          <li><a href="#home" className="hover:text-green-400">Dashboard</a></li>
-          <li><a href="#about" className="hover:text-green-400">About Us</a></li>
-          <li><a href="#services" className="hover:text-green-400">Services</a></li>
+          <li><a href="/" className="hover:text-green-400">Home</a></li>
+          <li><a href="/aboutUs" className="hover:text-green-400">About Us</a></li>
+          <li><a href="/testimonials" className="hover:text-green-400">Services</a></li>
           <li><a href="#owners" className="hover:text-green-400">Locations</a></li>
           <li className="relative group">
       <a href="#properties" className="hover:text-green-400 cursor-pointer">Properties</a>
@@ -30,8 +30,8 @@ const Navbar = () => {
     </li>
           
           <li><a href="#tenants" className="hover:text-green-400">Our Team</a></li>
-          <li><a href="#testimonials" className="hover:text-green-400">Testimonials</a></li>
-          <li><a href="#contact" className="hover:text-green-400">Our Contact</a></li>
+          <li><a href="/testimonials" className="hover:text-green-400">Testimonials</a></li>
+          <li><a href="/contact" className="hover:text-green-400">Our Contact</a></li>
           
         </ul>
       </nav>
