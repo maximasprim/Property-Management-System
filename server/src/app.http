@@ -1,2 +1,29 @@
 ###
 GET http://localhost:3000
+###
+//users queries
+GET http://localhost:3000/users   
+###
+GET  http://localhost:3000/users/1  
+###
+post http://localhost:3000/users
+Content-Type: application/json
+
+{
+ "full_name":"max",
+ "email":"maximas@gmail.com",
+ "contact_phone":"0743",
+ "address":"123"
+ 
+}
+
+###
+PUT http://localhost:3000/users/1
+Content-Type: application/json
+
+{
+    "contact_phone":12345
+}
+
+###
+DELETE http://localhost:3000/users/4
