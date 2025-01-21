@@ -1,5 +1,5 @@
 import { Context } from "hono";
-import { bookingsService, getBookingsService, createBookingsService, updateBookingsService, deleteBookingsService,getBookingWithVehicleAndPaymentsAndUserService,getSingleBookingWithVehicleAndPaymentsAndUserService  } from "./Bookings.service";
+import { bookingsService, getBookingsService, createBookingsService, updateBookingsService, deleteBookingsService} from "./Bookings.service";
 // import { createPaymentWithStripe } from "../Payments/payments.controller";
 
 
@@ -87,22 +87,22 @@ export const deleteBooking =  async (c: Context) => {
   }
 }
 
-export const listBookingsWithVehicleAndUserAndPayments = async (c: Context) =>{
-  const data = await getBookingWithVehicleAndPaymentsAndUserService();
-  if ( data == null){
-    return c.text("Booking not Found", 404)
-  }
-    return c.json(data, 200);
-}
+// export const listBookingsWithVehicleAndUserAndPayments = async (c: Context) =>{
+//   const data = await getBookingWithVehicleAndPaymentsAndUserService();
+//   if ( data == null){
+//     return c.text("Booking not Found", 404)
+//   }
+//     return c.json(data, 200);
+// }
 
-export const getSingleBookingWithVehicleAndPaymentsAndUser = async (c: Context) => {
-  const id = parseInt(c.req.param("id"));
-  if (isNaN(id)) 
-    return c.text("invalid ID!", 400);
+// export const getSingleBookingWithVehicleAndPaymentsAndUser = async (c: Context) => {
+//   const id = parseInt(c.req.param("id"));
+//   if (isNaN(id)) 
+//     return c.text("invalid ID!", 400);
 
-  const booking = await getSingleBookingWithVehicleAndPaymentsAndUserService(id);
-  if (booking == null) {
-    return c.text("Booking not found!", 404);
-  }
-  return c.json(booking, 200);
-}
+//   const booking = await getSingleBookingWithVehicleAndPaymentsAndUserService(id);
+//   if (booking == null) {
+//     return c.text("Booking not found!", 404);
+//   }
+//   return c.json(booking, 200);
+// }

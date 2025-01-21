@@ -86,3 +86,31 @@ Content-Type: application/json
 }
 ###
 DELETE http://localhost:3000/location/1234
+
+//bookings queries
+###
+GET http://localhost:3000/bookings
+###
+GET http://localhost:3000/bookings/1
+###
+POST http://localhost:3000/bookings
+Content-Type: application/json
+
+{
+    "property_type":"vehicle",
+    "property_id":1,
+    "total_amount":10000,
+    "user_id":1,
+    "status":"pending",
+    "location":"eldoret"
+}
+
+###
+put http://localhost:3000/bookings/2
+Content-Type: application/json
+    
+    {
+        "status":"approved"
+    }
+###
+DELETE http://localhost:3000/bookings/1

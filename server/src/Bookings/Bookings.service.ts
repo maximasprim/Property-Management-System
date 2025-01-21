@@ -1,6 +1,6 @@
-import db from "../drizzle/db";
+import db from "../Drizzle/db";
 import { eq } from "drizzle-orm";
-import { TIBookings, TSBookings, bookingsTable, TIPayments, paymentsTable, vehiclesTable, usersTable } from "../drizzle/schema";
+import { TIBookings, TSBookings, bookingsTable, TIPayments, paymentsTable, vehiclesTable, usersTable } from "../Drizzle/schema";
 import { createPaymentsService } from "../Payments/payments.service";
 
 export const bookingsService = async (): Promise<TSBookings[] | null> => {
@@ -14,7 +14,7 @@ export const getBookingsService = async (id: number): Promise<TSBookings | undef
 };
 
 export const createBookingsService = async (booking: TIBookings): Promise<TIBookings> => {
-  const { total_amount, user_id, booking_id, location_id, return_date, booking_date } = booking;
+  const { total_amount, user_id, booking_id, booking_date } = booking;
 
   try {
     // Ensure amount is a number
@@ -54,64 +54,64 @@ export const deleteBookingsService = async (id: number) => {
   return "Booking deleted successfully";
 };
 
-export const getBookingWithVehicleAndPaymentsAndUserService = async (): Promise<TSBookings[] | null> => {
-  return await db.query.bookingsTable.findMany({
-    with: {
-      vehicle: {
-        columns: {
-          vehicle_id: true,
-          availability: true,
-        },
-      },
-      payments: {
-        columns: {
-          payment_id: true,
-          payment_status: true,
-          amount: true,
-          payment_method: true,
-          transaction_id: true,
-        },
-      },
-      user: {
-        columns: {
-          user_id: true,
-          full_name: true,
-          email: true,
-          role: true,
-        },
-      },
-    },
-  });
-};
+// export const getBookingWithVehicleAndPaymentsAndUserService = async (): Promise<TSBookings[] | null> => {
+//   return await db.query.bookingsTable.findMany({
+//     with: {
+//       vehicles: {
+//         columns: {
+//           vehicle_id: true,
+//           availability: true,
+//         },
+//       },
+//       payments: {
+//         columns: {
+//           payment_id: true,
+//           payment_status: true,
+//           amount: true,
+//           payment_method: true,
+//           transaction_id: true,
+//         },
+//       },
+//       user: {
+//         columns: {
+//           user_id: true,
+//           full_name: true,
+//           email: true,
+//           role: true,
+//         },
+//       },
+//     },
+//   });
+// };
 
-export const getSingleBookingWithVehicleAndPaymentsAndUserService = async (id: number): Promise<TSBookings | null> => {
-  return await db.query.bookingsTable.findFirst({
-    where: eq(bookingsTable.booking_id, id),
-    with: {
-      vehicle: {
-        columns: {
-          vehicle_id: true,
-          availability: true,
+// export const getSingleBookingWithVehicleAndPaymentsAndUserService = async (id: number): Promise<TSBookings | null> => {
+//   return await db.query.bookingsTable.findFirst({
+//     where: eq(bookingsTable.booking_id, id),
+//     with: {
+//       vehicle: {
+//         columns: {
+//           vehicle_id: true,
+//           availability: true,
           
-        },
-      },
-      payments: {
-        columns: {
-          payment_id: true,
-          payment_status: true,
-          amount: true,
-          payment_method: true,
-          transaction_id: true,
-        },
-      },
-      user: {
-        columns: {
-          user_id: true,
-          full_name: true,
-          email: true,
-          role: true,
-        },
-      },
-    },
-  }) as TSBookings | null; // Add type assertion to match the expected return type
-};
+//         },
+//       },
+//       payments: {
+//         columns: {
+//           payment_id: true,
+//           payment_status: true,
+//           amount: true,
+//           payment_method: true,
+//           transaction_id: true,
+//         },
+//       },
+//       user: {
+//         columns: {
+//           user_id: true,
+//           full_name: true,
+//           email: true,
+//           role: true,
+//         },
+//       },
+//     },
+//   }) as TSBookings | null; // Add type assertion to match the expected return type
+// };

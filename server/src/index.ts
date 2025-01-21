@@ -3,6 +3,7 @@ import { Hono } from 'hono'
 import { userRouter } from './Users/user.router'
 import { vehiclesRouter} from './Vehicles/vehicles.router'
 import { locationRouter } from './Location and branches/location.router'
+import { bookingsRouter } from './Bookings/Bookings.router'
 
 const app = new Hono()
 
@@ -21,3 +22,4 @@ serve({
 app.route('/',userRouter)
 app.route('/',vehiclesRouter)
 app.route('/',locationRouter)
+app.route('/',bookingsRouter)

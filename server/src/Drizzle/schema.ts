@@ -117,13 +117,15 @@ export const bookingsTable = pgTable("bookings", {
   booking_id: serial("booking_id").primaryKey(),
   property_type: varchar("property_type", { length: 50 }).notNull(), // 'house', 'land', or 'vehicle'
   property_id: integer("property_id").notNull(),
+  total_amount: integer("total_amount").notNull(),
   user_id: integer("user_id").references(() => usersTable.user_id, { onDelete: "cascade" }),
   booking_date: timestamp("booking_date").notNull().defaultNow(),
   status: varchar("status", { length: 50 }).notNull(),// confirmed, pending, cancelled
+  location: varchar("location").references(() => locationsTable.address, { onDelete: "set null"})
 });
 
-// Transactions Table (covers all property types)
-export const transactionsTable = pgTable("transactions", {
+// Payments Table (covers all property types)
+export const paymentsTable = pgTable("payments", {
   transaction_id: serial("transaction_id").primaryKey(),
   property_type: varchar("property_type", { length: 50 }).notNull(), // 'house', 'land', or 'vehicle'
   property_id: integer("property_id").notNull(),
@@ -151,7 +153,7 @@ export const reviewsTable = pgTable("reviews", {
 export const userRelations = relations(usersTable, ({ one,many }) => ({
   auth: one(authenticationsTable),
   reviews: many(reviewsTable),
-  transactions: many(transactionsTable)
+  payments: many(paymentsTable)
 }));
 
 export const authenticationsRelations = relations(authenticationsTable, ({ one }) => ({
@@ -160,7 +162,7 @@ export const authenticationsRelations = relations(authenticationsTable, ({ one }
 
 export const houseRelations = relations(housesTable, ({ many }) => ({
   history: many(propertyHistoryTable),
-  transactions: many(transactionsTable),
+  payments: many(paymentsTable),
   locations: many(locationsTable),
   reviews: many(reviewsTable),
   
@@ -168,7 +170,7 @@ export const houseRelations = relations(housesTable, ({ many }) => ({
 
 export const landRelations = relations(landTable, ({ many }) => ({
   history: many(propertyHistoryTable),
-  transactions: many(transactionsTable),
+  payments: many(paymentsTable),
   locations: many(locationsTable),
   reviews: many(reviewsTable),
   // media: many(propertyMediaTable),
@@ -177,7 +179,7 @@ export const landRelations = relations(landTable, ({ many }) => ({
 export const vehicleRelations = relations(vehiclesTable, ({ many }) => ({
   history: many(propertyHistoryTable),
   locations: many(locationsTable),
-  transactions: many(transactionsTable),
+  payments: many(paymentsTable),
   reviews: many(reviewsTable),
   // media: many(propertyMediaTable),
 }));
@@ -188,13 +190,13 @@ export const locationsRelations = relations(locationsTable, ({ many }) => ({
   vehicles: many(vehiclesTable),
 }));
 
-export const transactionsRelations = relations(transactionsTable, ({ one }) => ({
+export const paymentsRelations = relations(paymentsTable, ({ one }) => ({
   buyer: one(usersTable),
   bookingsTable: one(bookingsTable),
 }));
 
 export const bookingsRelations = relations(bookingsTable, ({ one,many }) => ({
-  transaction: one(transactionsTable),
+  transaction: one(paymentsTable),
   users: one(usersTable),
 }));
 
@@ -230,8 +232,8 @@ export type TSLocations = typeof locationsTable.$inferSelect;
 export type TIPropertyHistory = typeof propertyHistoryTable.$inferInsert;
 export type TSPropertyHistory = typeof propertyHistoryTable.$inferSelect;
 
-export type TITransactions = typeof transactionsTable.$inferInsert;
-export type TSTransactions = typeof transactionsTable.$inferSelect;
+export type TIPayments = typeof paymentsTable.$inferInsert;
+export type TSPayments = typeof paymentsTable.$inferSelect;
 
 export type TIBookings = typeof bookingsTable.$inferInsert;
 export type TSBookings = typeof bookingsTable.$inferSelect;
