@@ -27,3 +27,37 @@ Content-Type: application/json
 
 ###
 DELETE http://localhost:3000/users/4
+
+//vehicle queries
+###
+GET http://localhost:3000/vehicles
+
+###
+GET http://localhost:3000/vehicle/1
+###
+POST http://localhost:3000/vehicles
+Content-Type: application/json
+
+{
+    "owner_id": 1,
+    "make":"nissan",
+    "model":"teana",
+    "year": 2021,
+    "vin":"12335",
+    "status":"available",
+    "price":128934.23,
+    "mileage":10000,
+    "fuel_type":"diesel",
+    "location": 2
+}
+
+###
+PUT http://localhost:3000/vehicles/1
+Content-Type: application/json
+
+{
+    "status":"sold"
+}
+
+###
+DELETE http://localhost:3000/vehicles/1
