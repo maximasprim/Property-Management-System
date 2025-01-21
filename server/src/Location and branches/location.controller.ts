@@ -12,17 +12,32 @@ export const listLocation = async (c: Context) =>{
     return c.json(data, 200);
 }
 
-export const getSingleLocation = async (c: Context) => {
-  const id = parseInt(c.req.param("id"));
-  if (isNaN(id)) 
-      return c.text("invalid ID!", 400);
+// export const getSingleLocation = async (c: Context) => {
+//   const id = parseInt(c.req.param("id"));
+//   if (isNaN(id)) 
+//       return c.text("invalid ID!", 400);
 
-  const location = await getLocationService(id);
-  if (location == undefined){
-      return c.text(" not found!", 404);
+//   const location = await getLocationService(id);
+//   if (location == undefined){
+//       return c.text(" not found!", 404);
+//   }
+//   return c.json(location, 200);
+// } 
+
+export const getSingleLocation = async (c: Context) => {
+  const address = c.req.param("address");
+  if (!address || typeof address !== "string") {
+    return c.text("Invalid address!", 400);
   }
+
+  const location = await getLocationService(address);
+  if (location == undefined) {
+    return c.text("Location Not found!", 404);
+  }
+
   return c.json(location, 200);
-} 
+};
+
 
 export const createLocation = async (c: Context) => {
   try{
@@ -38,18 +53,19 @@ export const createLocation = async (c: Context) => {
 }
 
 export const updateLocation = async (c: Context) => {
-  const id = parseInt(c.req.param("id"));
-  if (isNaN(id)) 
-      return c.text("invalid ID!", 400);
+  const address = c.req.param("id");
+  if (!address || typeof address !== "string") {
+      return c.text("invalid address!", 400);
+  }
 
   const location = await c.req.json();
   try{
   //search for user
-  const foundLocation = await getLocationService(id);
+  const foundLocation = await getLocationService(address);
   if (foundLocation == undefined) 
       return c.text("Location not found!", 404);
   //get the data and update
-  const res = await updateLocationService(id, location);
+  const res = await updateLocationService(address, location);
   //return the updated user
   if (!res )
     return c.text("Location not updated!", 404); 
@@ -62,18 +78,18 @@ export const updateLocation = async (c: Context) => {
 
 //delete city
 export const deleteLocation =  async (c: Context) => {
-  const id = Number(c.req.param("id"));
-  if (isNaN(id)) 
+  const address = c.req.param("id");
+  if (!address || typeof address !== "string") 
       return c.text("invalid ID!", 400);
 
   try{
 
  //search for the user
- const location = await getLocationService(id);
+ const location = await getLocationService(address);
  if (location == undefined) 
      return c.text("Location not found!👽", 404);
   //delete the user
-  const res = await deleteLocationService(id);
+  const res = await deleteLocationService(address);
   if (!res) return c.text("Location not deleted!👽", 404);
 
   return c.json({msg: res}, 201);

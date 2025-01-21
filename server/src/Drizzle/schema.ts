@@ -14,7 +14,8 @@ import { relations } from "drizzle-orm";
 
 // Role Enum
 export const roleEnum = pgEnum("role", ["user", "admin", "buyer"]);
-
+//propert type
+export const propertyTypeEnum = pgEnum("property_type", ["house", "land", "vehicle"]);
 // Users Table
 export const usersTable = pgTable("users", {
   user_id: serial("user_id").primaryKey(),
@@ -41,14 +42,16 @@ export const authenticationsTable = pgTable("authentications", {
 export const housesTable = pgTable("houses", {
   house_id: serial("house_id").primaryKey(),
   owner_id: integer("owner_id").references(() => usersTable.user_id, { onDelete: "set null" }),
-  address: varchar("address").references(() => locationBranches.address, { onDelete: "set null" }),
+  address: varchar("address").references(() => locationsTable.address, { onDelete: "set null" }),
   name: varchar("name_of_House", { length: 255 }).notNull(),
   number_of_rooms: integer("number_of_rooms").notNull(),
   size: integer("size").notNull(),
   price: decimal("price", { precision: 10, scale: 2 }).notNull(),
   status: varchar("status", { length: 50 }).notNull(),
   year_built: integer("year_built"),
-  image: text("image"),
+  image1: text("image"),
+  imade2: text("image"),
+  image3: text("image"),
   created_at: timestamp("created_at", { mode: "string" }).notNull().defaultNow(),
   updated_at: timestamp("updated_at", { mode: "string" }).notNull().defaultNow(),
 });
@@ -57,7 +60,7 @@ export const housesTable = pgTable("houses", {
 export const landTable = pgTable("land", {
   land_id: serial("land_id").primaryKey(),
   owner_id: integer("owner_id").references(() => usersTable.user_id, { onDelete: "set null" }),
-  location: varchar("location").references(() => locationBranches.address, { onDelete: "set null" }),
+  location: varchar("location").references(() => locationsTable.address, { onDelete: "set null" }),
   size: integer("size").notNull(),
   price: decimal("price", { precision: 10, scale: 2 }).notNull(),
   status: varchar("status", { length: 50 }).notNull(),
@@ -79,18 +82,20 @@ export const vehiclesTable = pgTable("vehicles", {
   price: decimal("price", { precision: 10, scale: 2 }).notNull(),
   mileage: integer("mileage").notNull(),
   fuel_type: varchar("fuel_type", { length: 50 }),
-  location: varchar("location").references(() => locationBranches.address, { onDelete: "set null" }),
-  image: text("image"),
+  location: varchar("location").references(() => locationsTable.address, { onDelete: "set null" }),
+  image1: text("image"),
+  image2: text("image"),
+  image3: text("image"),
   created_at: timestamp("created_at", { mode: "string" }).notNull().defaultNow(),
   updated_at: timestamp("updated_at", { mode: "string" }).notNull().defaultNow(),
 });
 
 //locations and branches
 
-export const locationBranches = pgTable("location", {
+export const locationsTable = pgTable("location", {
+  name_of_branch: varchar("name_of_branch", { length: 255 }).notNull(),
   address: varchar("address", { length: 255 }).primaryKey(),
   city: varchar("city", { length: 100 }).notNull(),
-  state: varchar("state", { length: 100 }).notNull(),
   country: varchar("country", { length: 100 }).notNull(),
   zip_code: varchar("zip_code", { length: 10 }).notNull(),
   created_at: timestamp("created_at", { mode: "string" }).notNull().defaultNow(),
@@ -140,30 +145,12 @@ export const reviewsTable = pgTable("reviews", {
   created_at: timestamp("created_at").notNull().defaultNow(),
 });
 
-// Favorites Table (covers all property types)
-export const favoritesTable = pgTable("favorites", {
-  favorite_id: serial("favorite_id").primaryKey(),
-  user_id: integer("user_id").references(() => usersTable.user_id, { onDelete: "cascade" }),
-  property_type: varchar("property_type", { length: 50 }).notNull(), // 'house', 'land', or 'vehicle'
-  property_id: integer("property_id").notNull(),
-  created_at: timestamp("created_at").notNull().defaultNow(),
-});
 
-// Property Media Table (new addition)
-export const propertyMediaTable = pgTable("property_media", {
-  media_id: serial("media_id").primaryKey(),
-  property_type: varchar("property_type", { length: 50 }).notNull(), // 'house', 'land', or 'vehicle'
-  property_id: integer("property_id").notNull(),
-  url: text("url").notNull(),
-  description: text("description"),
-  created_at: timestamp("created_at", { mode: "string" }).notNull().defaultNow(),
-});
 
 // Relations
 export const userRelations = relations(usersTable, ({ one,many }) => ({
   auth: one(authenticationsTable),
   reviews: many(reviewsTable),
-  favorites: many(favoritesTable),
   transactions: many(transactionsTable)
 }));
 
@@ -174,28 +161,28 @@ export const authenticationsRelations = relations(authenticationsTable, ({ one }
 export const houseRelations = relations(housesTable, ({ many }) => ({
   history: many(propertyHistoryTable),
   transactions: many(transactionsTable),
+  locations: many(locationsTable),
   reviews: many(reviewsTable),
-  favorites: many(favoritesTable),
-  media: many(propertyMediaTable),
+  
 }));
 
 export const landRelations = relations(landTable, ({ many }) => ({
   history: many(propertyHistoryTable),
   transactions: many(transactionsTable),
+  locations: many(locationsTable),
   reviews: many(reviewsTable),
-  favorites: many(favoritesTable),
-  media: many(propertyMediaTable),
+  // media: many(propertyMediaTable),
 }));
 
 export const vehicleRelations = relations(vehiclesTable, ({ many }) => ({
   history: many(propertyHistoryTable),
+  locations: many(locationsTable),
   transactions: many(transactionsTable),
   reviews: many(reviewsTable),
-  favorites: many(favoritesTable),
-  media: many(propertyMediaTable),
+  // media: many(propertyMediaTable),
 }));
 
-export const locationBranchesRelations = relations(locationBranches, ({ many }) => ({
+export const locationsRelations = relations(locationsTable, ({ many }) => ({
   houses: many(housesTable),
   land: many(landTable),
   vehicles: many(vehiclesTable),
@@ -237,8 +224,8 @@ export type TSLand = typeof landTable.$inferSelect;
 export type TIVehicles = typeof vehiclesTable.$inferInsert;
 export type TSVehicles = typeof vehiclesTable.$inferSelect;
 
-export type TILocationBranches = typeof locationBranches.$inferInsert;
-export type TSLocationBranches = typeof locationBranches.$inferSelect;
+export type TILocations = typeof locationsTable.$inferInsert;
+export type TSLocations = typeof locationsTable.$inferSelect;
 
 export type TIPropertyHistory = typeof propertyHistoryTable.$inferInsert;
 export type TSPropertyHistory = typeof propertyHistoryTable.$inferSelect;
@@ -252,8 +239,5 @@ export type TSBookings = typeof bookingsTable.$inferSelect;
 export type TIReviews = typeof reviewsTable.$inferInsert;
 export type TSReviews = typeof reviewsTable.$inferSelect;
 
-export type TIFavorites = typeof favoritesTable.$inferInsert;
-export type TSFavorites = typeof favoritesTable.$inferSelect;
-
-export type TIPropertyMedia = typeof propertyMediaTable.$inferInsert;
-export type TSPropertyMedia = typeof propertyMediaTable.$inferSelect;
+// export type TIPropertyMedia = typeof propertyMediaTable.$inferInsert;
+// export type TSPropertyMedia = typeof propertyMediaTable.$inferSelect;

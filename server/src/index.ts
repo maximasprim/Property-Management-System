@@ -2,6 +2,7 @@ import { serve } from '@hono/node-server'
 import { Hono } from 'hono'
 import { userRouter } from './Users/user.router'
 import { vehiclesRouter} from './Vehicles/vehicles.router'
+import { locationRouter } from './Location and branches/location.router'
 
 const app = new Hono()
 
@@ -19,3 +20,4 @@ serve({
 
 app.route('/',userRouter)
 app.route('/',vehiclesRouter)
+app.route('/',locationRouter)

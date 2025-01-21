@@ -16,7 +16,7 @@ locationRouter.get("/location", listLocation)
 
 //get a single Driver    
 
-locationRouter.get("/location/:id", getSingleLocation)
+locationRouter.get("/location/:address", getSingleLocation)
 
 
 

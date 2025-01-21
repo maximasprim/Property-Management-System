@@ -1,6 +1,6 @@
-import db from "../drizzle/db";
+import db from "../Drizzle/db";
 import { eq } from "drizzle-orm";
-import { TILocations,TSLocations,locationsTable } from "../drizzle/schema";
+import { TILocations,TSLocations,locationsTable } from "../Drizzle/schema";
 
 
 
@@ -9,9 +9,9 @@ export const locationService = async ():Promise<TSLocations[] | null> =>{
 
 }
 
-export const getLocationService = async (id: number): Promise<TSLocations | undefined> => {
+export const getLocationService = async (address: string): Promise<TSLocations | undefined> => {
     return await db.query.locationsTable.findFirst({
-        where: eq(locationsTable.location_id, id)
+        where: eq(locationsTable.address, address)
     })
 }
 
@@ -20,12 +20,12 @@ export const createLocationService = async (location: TILocations): Promise<TILo
     return location;
 }
 
-export const updateLocationService = async (id: number, location: TILocations) => {
-    await db.update(locationsTable).set(location).where(eq(locationsTable.location_id, id))
+export const updateLocationService = async (address: string, location: TILocations) => {
+    await db.update(locationsTable).set(location).where(eq(locationsTable.address, address))
     return location;
 }
 
-export const deleteLocationService = async (id: number) => {
-    await db.delete(locationsTable).where(eq(locationsTable.location_id, id))
+export const deleteLocationService = async (address: string) => {
+    await db.delete(locationsTable).where(eq(locationsTable.address, address))
     return "Location deleted successfully";
 }

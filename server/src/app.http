@@ -61,3 +61,28 @@ Content-Type: application/json
 
 ###
 DELETE http://localhost:3000/vehicles/1
+//location queries
+###
+GET http://localhost:3000/location
+###
+get http://localhost:3000/location/eldoret
+###
+POST http://localhost:3000/location
+Content-Type: application/json
+
+{
+    "name_of_branch":"eldoret branch",
+    "city":"nairobi",
+    "address":"eldoret",
+    "country":"Kenya",
+    "zip_code":"00100"
+}
+###
+PUT http://localhost:3000/location/eldoret
+Content-Type: application/json
+
+{
+    "zip_code":"00200"
+}
+###
+DELETE http://localhost:3000/location/1234
