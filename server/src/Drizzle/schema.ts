@@ -83,9 +83,9 @@ export const vehiclesTable = pgTable("vehicles", {
   mileage: integer("mileage").notNull(),
   fuel_type: varchar("fuel_type", { length: 50 }),
   location: varchar("location").references(() => locationsTable.address, { onDelete: "set null" }),
-  image1: text("image"),
-  image2: text("image"),
-  image3: text("image"),
+  image1: text("image1"),
+  image2: text("image2"),
+  image3: text("image3"),
   created_at: timestamp("created_at", { mode: "string" }).notNull().defaultNow(),
   updated_at: timestamp("updated_at", { mode: "string" }).notNull().defaultNow(),
 });

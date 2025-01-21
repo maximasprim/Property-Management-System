@@ -48,7 +48,7 @@ Content-Type: application/json
     "price":128934.23,
     "mileage":10000,
     "fuel_type":"diesel",
-    "location": 2
+    "location": "eldoret"
 }
 
 ###
