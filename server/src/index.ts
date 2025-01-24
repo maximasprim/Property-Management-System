@@ -4,6 +4,7 @@ import { userRouter } from './Users/user.router'
 import { vehiclesRouter} from './Vehicles/vehicles.router'
 import { locationRouter } from './Location and branches/location.router'
 import { bookingsRouter } from './Bookings/Bookings.router'
+import { paymentsRouter } from './Payments/payments.router'
 
 const app = new Hono()
 
@@ -23,3 +24,4 @@ app.route('/',userRouter)
 app.route('/',vehiclesRouter)
 app.route('/',locationRouter)
 app.route('/',bookingsRouter)
+app.route('/',paymentsRouter)
