@@ -29,8 +29,8 @@ export const ticketSchema = z.object({
 export const locationSchema = z.object({
 
 });
-export const fleetManagementSchema = z.object({
-
+export const propertyHistorySchema = z.object({
+    
 });
 export const  registerUserSchema= z.object({
 

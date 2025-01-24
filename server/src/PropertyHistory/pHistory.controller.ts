@@ -1,43 +1,43 @@
 import { Context } from "hono";
-import { usersService, getUserService, createUserService, updateUserService, deleteUserService} from "./user.service";
+import { propertyHistoryService, getPropertyHistoryService, createPropertyHistoryService, updatePropertyHistoryService, deletePropertyHistoryService} from "./pHistory.service";
 
 
 
 
-export const listUsers = async (c: Context) =>{
-  const data = await usersService();
+export const listPropertyHistory = async (c: Context) =>{
+  const data = await propertyHistoryService();
   if ( data == null){
-    return c.text("User not Found", 404)
+    return c.text("PropertyHistory not Found", 404)
   }
     return c.json(data, 200);
 }
 
-export const getSingleUser = async (c: Context) => {
+export const getSinglePropertyHistory = async (c: Context) => {
   const id = parseInt(c.req.param("id"));
   if (isNaN(id)) 
       return c.text("invalid ID!", 400);
 
-  const user = await getUserService(id);
+  const user = await getPropertyHistoryService(id);
   if (user == undefined){
       return c.text("user not found!", 404);
   }
   return c.json(user, 200);
 } 
 
-export const createUser = async (c: Context) => {
+export const createPropertyHistory = async (c: Context) => {
   try{
     const user = await c.req.json();
-    const createdUser = await createUserService(user);
-   if (!createdUser){
+    const createdPropertyHistory = await createPropertyHistoryService(user);
+   if (!createdPropertyHistory){
     return c.text("user not created!", 404)
    }
-    return c.json(createdUser, 201);
+    return c.json(createdPropertyHistory, 201);
 } catch (error: any){
     return c.json({error: error?.message}, 400)
 }
 }
 
-export const updateUser = async (c: Context) => {
+export const updatePropertyHistory = async (c: Context) => {
   try{
   const id = parseInt(c.req.param("id"));
   console.log
@@ -47,11 +47,11 @@ export const updateUser = async (c: Context) => {
   const user = await c.req.json();
   console.log(user)
   //search for user
-  const founduser = await getUserService(id);
+  const founduser = await getPropertyHistoryService(id);
   if (founduser == undefined) 
       return c.text("user not found!", 404);
   //get the data and update
-  const res = await updateUserService(id, user);
+  const res = await updatePropertyHistoryService(id, user);
   //return the updated user
 if (!res ) return c.text("user not updated!", 404);
 
@@ -64,7 +64,7 @@ if (!res ) return c.text("user not updated!", 404);
 }
 
 //delete user
-export const deleteUser =  async (c: Context) => {
+export const deletePropertyHistory =  async (c: Context) => {
   const id = Number(c.req.param("id"));
   if (isNaN(id)) 
       return c.text("invalid ID!", 400);
@@ -72,12 +72,12 @@ export const deleteUser =  async (c: Context) => {
   try{
 
  //search for the user
- const user = await getUserService(id);
+ const user = await getPropertyHistoryService(id);
  if (user == undefined) 
-     return c.text("User not found!👽", 404);
+     return c.text("PropertyHistory not found!👽", 404);
   //delete the user
-  const res = await deleteUserService(id);
-  if (!res) return c.text("User not deleted!👽", 404);
+  const res = await deletePropertyHistoryService(id);
+  if (!res) return c.text("PropertyHistory not deleted!👽", 404);
 
   return c.json({msg: res}, 201);
 
@@ -88,8 +88,8 @@ export const deleteUser =  async (c: Context) => {
 
 //user relations
 
-// export const listUserWithBookings = async (c: Context) =>{
-//   const data = await getUserWithBookingsService();
+// export const listPropertyHistoryWithBookings = async (c: Context) =>{
+//   const data = await getPropertyHistoryWithBookingsService();
 //   if ( data == null){
 //     return c.text("user not Found", 404)
 //   }
@@ -98,23 +98,23 @@ export const deleteUser =  async (c: Context) => {
 
 // export const listsingleuserwithBooking = async (c: Context) =>{
 //   const id = parseInt(c.req.param("id"));
-//   const data = await getSingleUserWithBookingService(id);
+//   const data = await getSinglePropertyHistoryWithBookingService(id);
 //   if ( data == null){
 //     return c.text("user not Found", 404)
 //   }
 //     return c.json(data, 200);
 // }
 
-// export const listUserWithTickets = async (c: Context) =>{
-//   const data = await getUserWithTicketsService();
+// export const listPropertyHistoryWithTickets = async (c: Context) =>{
+//   const data = await getPropertyHistoryWithTicketsService();
 //   if ( data == null){
 //     return c.text("user not Found", 404)
 //   }
 //     return c.json(data, 200);
 // }
-// export const listSingleUserWithTickets = async (c: Context) =>{
+// export const listSinglePropertyHistoryWithTickets = async (c: Context) =>{
 //   const id = parseInt(c.req.param("id"));
-//   const data = await getSingleUserWithTicketsService(id);
+//   const data = await getSinglePropertyHistoryWithTicketsService(id);
 //   if ( data == null){
 //     return c.text("user not Found", 404)
 //   }
