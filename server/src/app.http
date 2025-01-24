@@ -118,3 +118,28 @@ DELETE http://localhost:3000/bookings/1
 //payments queries
 ###
 GET http://localhost:3000/payments
+###
+GET http://localhost:3000/payments/1
+###
+POST http://localhost:3000/payments
+Content-Type: application/json
+
+{
+    "property_type":"vehicle",
+    "property_id":1,
+    "amount":10000,
+    "booking_id":1,
+    "buyer_id":1,
+    "status":"pending",
+    "payment_method":"mpesa",
+    "transaction_id":"12345"
+}
+###
+PUT http://localhost:3000/payments/1
+Content-Type: application/json
+
+{
+    "status":"approved"
+}
+###
+DELETE http://localhost:3000/payments/1

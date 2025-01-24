@@ -16,7 +16,7 @@ paymentsRouter.get("/payments", listPayments)
 
 //get a single Driver    
 
-paymentsRouter.get("/payments/:id",bothRolesAuth, getSinglePayment)
+paymentsRouter.get("/payments/:id",getSinglePayment)
 
 
 
@@ -30,10 +30,10 @@ paymentsRouter.get("/payments/:id",bothRolesAuth, getSinglePayment)
 
 //update Driver
 
-paymentsRouter.put("/payments/:id",adminRoleAuth, updatePayment)
+paymentsRouter.put("/payments/:id", updatePayment)
 
 // delete Driver
-paymentsRouter.delete("/payments/:id",adminRoleAuth, deletePayment)
+paymentsRouter.delete("/payments/:id", deletePayment)
 
 // paymentsRouter.post("/paymentsWithstripe", createPaymentWithStripe)
 paymentsRouter.post("/create-checkout-session",createPayment.createCheckoutSession);
