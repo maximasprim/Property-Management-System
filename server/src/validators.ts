@@ -16,6 +16,10 @@ export const vehicleSchema = z.object({
 export const bookingsSchema = z.object({
 
 });
+
+export const housesSchema = z.object({
+    
+});
 export const paymentsSchema = z.object({
 
 });

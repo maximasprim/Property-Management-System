@@ -49,9 +49,9 @@ export const housesTable = pgTable("houses", {
   price: decimal("price", { precision: 10, scale: 2 }).notNull(),
   status: varchar("status", { length: 50 }).notNull(),
   year_built: integer("year_built"),
-  image1: text("image"),
-  imade2: text("image"),
-  image3: text("image"),
+  // image1: text("image"),
+  // imade2: text("image"),
+  // image3: text("image"),
   created_at: timestamp("created_at", { mode: "string" }).notNull().defaultNow(),
   updated_at: timestamp("updated_at", { mode: "string" }).notNull().defaultNow(),
 });

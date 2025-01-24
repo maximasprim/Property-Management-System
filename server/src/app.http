@@ -143,3 +143,33 @@ Content-Type: application/json
 }
 ###
 DELETE http://localhost:3000/payments/1
+
+//Houses queries
+###
+GET http://localhost:3000/houses
+###
+GET http://localhost:3000/houses/1
+###
+POST http://localhost:3000/houses
+Content-Type: application/json
+
+{
+    "owner_id":1,
+    "address":"eldoret",
+    "name":"max",
+    "number_of_rooms":3,
+    "size":100,
+    "price":10000,
+    "status":"available",
+    "year_built":2021
+
+}
+###
+PUT http://localhost:3000/houses/1
+Content-Type: application/json
+
+{
+    "status":"sold"
+}
+###
+DELETE http://localhost:3000/houses/1
