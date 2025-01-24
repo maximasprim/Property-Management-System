@@ -124,16 +124,18 @@ export const bookingsTable = pgTable("bookings", {
   location: varchar("location").references(() => locationsTable.address, { onDelete: "set null"})
 });
 
-// Payments Table (covers all property types)
+// // Payments Table (covers all property types)
 export const paymentsTable = pgTable("payments", {
-  transaction_id: serial("transaction_id").primaryKey(),
+  payment_id: serial("payment_id").primaryKey(),
   property_type: varchar("property_type", { length: 50 }).notNull(), // 'house', 'land', or 'vehicle'
   property_id: integer("property_id").notNull(),
+  amount:integer("amount").notNull(),
   booking_id: integer("booking_id").references(() => bookingsTable.booking_id, { onDelete: "set null" }),
   buyer_id: integer("buyer_id").references(() => usersTable.user_id, { onDelete: "set null" }),
-  sale_price: decimal("sale_price", { precision: 10, scale: 2 }).notNull(),
   transaction_date: timestamp("transaction_date").notNull().defaultNow(),
-  status: varchar("status", { length: 50 }).notNull(),
+  transaction_id: varchar("transaction_id", { length: 255 }).notNull(),
+  status: varchar("status", { length: 256 }).default("Pending"),
+  payment_method: varchar("payment_method", { length: 50 }).notNull(),
 });
 
 // Reviews Table (covers all property types)
@@ -196,7 +198,7 @@ export const paymentsRelations = relations(paymentsTable, ({ one }) => ({
 }));
 
 export const bookingsRelations = relations(bookingsTable, ({ one,many }) => ({
-  transaction: one(paymentsTable),
+  payments: one(paymentsTable),
   users: one(usersTable),
 }));
 
