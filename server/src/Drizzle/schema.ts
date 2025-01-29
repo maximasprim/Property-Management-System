@@ -1,6 +1,7 @@
 import {
   integer,
   pgEnum,
+  date,
   pgTable,
   serial,
   varchar,
@@ -11,11 +12,11 @@ import {
   decimal,
 } from "drizzle-orm/pg-core";
 import { relations } from "drizzle-orm";
+import { stat } from "fs";
 
 // Role Enum
 export const roleEnum = pgEnum("role", ["user", "admin", "buyer"]);
-//propert type
-export const propertyTypeEnum = pgEnum("property_type", ["house", "land", "vehicle"]);
+
 // Users Table
 export const usersTable = pgTable("users", {
   user_id: serial("user_id").primaryKey(),
@@ -40,7 +41,7 @@ export const authenticationsTable = pgTable("authentications", {
 });
 // Houses Table
 export const housesTable = pgTable("houses", {
-  house_id: serial("house_id").primaryKey(),
+  property_id: serial("property_id").primaryKey(),
   owner_id: integer("owner_id").references(() => usersTable.user_id, { onDelete: "set null" }),
   address: varchar("address").references(() => locationsTable.address, { onDelete: "set null" }),
   name: varchar("name_of_House", { length: 255 }).notNull(),
@@ -58,7 +59,7 @@ export const housesTable = pgTable("houses", {
 
 // Land Table
 export const landTable = pgTable("land", {
-  land_id: serial("land_id").primaryKey(),
+  property_id: serial("property_id").primaryKey(),
   owner_id: integer("owner_id").references(() => usersTable.user_id, { onDelete: "set null" }),
   location: varchar("location").references(() => locationsTable.address, { onDelete: "set null" }),
   size: integer("size").notNull(),
@@ -72,7 +73,7 @@ export const landTable = pgTable("land", {
 
 // Vehicles Table
 export const vehiclesTable = pgTable("vehicles", {
-  vehicle_id: serial("vehicle_id").primaryKey(),
+  property_id: serial("property_id").primaryKey(),
   owner_id: integer("owner_id").references(() => usersTable.user_id, { onDelete: "set null" }),
   make: varchar("make", { length: 100 }).notNull(),
   model: varchar("model", { length: 100 }).notNull(),
@@ -103,13 +104,79 @@ export const locationsTable = pgTable("location", {
 });
 
 // Property History Table (covers all property types)
+// const ownershipType = pgEnum("ownership_type", ["rental", "complete_ownership"]);
+// //property type
+export const propertyTypeEnum = pgEnum("property_type", ["house", "land", "vehicle"]);
+
 export const propertyHistoryTable = pgTable("property_history", {
   history_id: serial("history_id").primaryKey(),
-  property_type: varchar("property_type", { length: 50 }).notNull(), // 'house', 'land', or 'vehicle'
+  property_type: propertyTypeEnum("property_type").notNull(), // 'house', 'land', or 'vehicle'
   property_id: integer("property_id").notNull(),
-  event: varchar("event", { length: 255 }).notNull(),
-  event_date: timestamp("event_date").notNull(),
-  description: text("description"),
+  // Ownership History
+  previous_owner: varchar("previous_owner", { length: 255 }),
+  transfer_date: date("transfer_date").notNull(),
+  // ownership: ownershipType("ownership_type").notNull(), // ENUM column
+
+  // Maintenance and Repairs Hi story
+  maintenance_type: varchar("maintenance_type", { length: 255 }),
+  maintenance_date: date("maintenance_date"),
+  service_provider: varchar("service_provider", { length: 255 }),
+  maintenance_cost: integer("maintenance_cost"),
+
+  // Rental or Occupancy History
+  tenant_name: varchar("tenant_name", { length: 255 }),
+  lease_start: date("lease_start"),
+  lease_end: date("lease_end"),
+  usage_type: varchar("usage_type", { length: 50 }), // e.g., 'residential', 'commercial'
+
+  // Payment History
+  tax_payment_date: date("tax_payment_date"),
+  tax_amount: integer("tax_amount"),
+  
+  // Legal and Regulatory History
+  legal_issue: varchar("legal_issue", { length: 255 }),
+  resolution_date: date("resolution_date"),
+  permit_approval_date: date("permit_approval_date"),
+
+  // Environmental History
+  disaster_type: varchar("disaster_type", { length: 255 }),
+  disaster_description: text("disaster_description"),
+  disaster_date: date("disaster_date"),
+  status_after_disaster: varchar("status_after_disaster", { length: 50 }),
+  environmental_assessment_date: date("environmental_assessment_date"),
+
+  // Insurance History
+  insurance_policy_number: varchar("insurance_policy_number", { length: 50 }),
+  claim_date: date("insurance_claim_date"),
+  claim_amount: integer("insurance_claim_amount"),
+
+  // Crime and Safety History
+  crime_type: varchar("crime_type", { length: 255 }),
+  crime_date: date("crime_date"),
+ 
+  // Market and Valuation History
+  valuation_date: date("valuation_date"),
+  property_value: integer("property_value"),
+
+  // Utility and Infrastructure History
+  utility_type: varchar("utility_type", { length: 50 }),
+  utility_installation_amount: integer("utility_installation_amount"),
+  utility_installation_date: date("utility_installation_date"),
+  infrastructure_update_date: date("infrastructure_update_date"),
+
+  // Dispute and Litigation History
+  dispute_type: varchar("dispute_type", { length: 255 }),
+  dispute_status: varchar("dispute_status", { length: 50 }),
+  dispute_resolution_date: date("dispute_resolution_date"),
+
+  // Tenant Feedback or Reviews
+  tenant_feedback: text("tenant_feedback"),
+  feedback_date: date("feedback_date"),
+
+  // Development History
+  construction_date: date("construction_date"),
+  renovation_date: date("renovation_date")
+  
 });
 
 //Bookings Table

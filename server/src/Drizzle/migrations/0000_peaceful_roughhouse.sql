@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS "bookings" (
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "houses" (
-	"house_id" serial PRIMARY KEY NOT NULL,
+	"property_id" serial PRIMARY KEY NOT NULL,
 	"owner_id" integer,
 	"address" varchar,
 	"name_of_House" varchar(255) NOT NULL,
@@ -41,13 +41,12 @@ CREATE TABLE IF NOT EXISTS "houses" (
 	"price" numeric(10, 2) NOT NULL,
 	"status" varchar(50) NOT NULL,
 	"year_built" integer,
-	"image" text,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "land" (
-	"land_id" serial PRIMARY KEY NOT NULL,
+	"property_id" serial PRIMARY KEY NOT NULL,
 	"owner_id" integer,
 	"location" varchar,
 	"size" integer NOT NULL,
@@ -84,11 +83,46 @@ CREATE TABLE IF NOT EXISTS "payments" (
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "property_history" (
 	"history_id" serial PRIMARY KEY NOT NULL,
-	"property_type" varchar(50) NOT NULL,
+	"property_type" "property_type" NOT NULL,
 	"property_id" integer NOT NULL,
-	"event" varchar(255) NOT NULL,
-	"event_date" timestamp NOT NULL,
-	"description" text
+	"previous_owner" varchar(255),
+	"transfer_date" date NOT NULL,
+	"maintenance_type" varchar(255),
+	"maintenance_date" date,
+	"service_provider" varchar(255),
+	"maintenance_cost" integer,
+	"tenant_name" varchar(255),
+	"lease_start" date,
+	"lease_end" date,
+	"usage_type" varchar(50),
+	"tax_payment_date" date,
+	"tax_amount" integer,
+	"legal_issue" varchar(255),
+	"resolution_date" date,
+	"permit_approval_date" date,
+	"disaster_type" varchar(255),
+	"disaster_description" text,
+	"disaster_date" date,
+	"status_after_disaster" varchar(50),
+	"environmental_assessment_date" date,
+	"insurance_policy_number" varchar(50),
+	"insurance_claim_date" date,
+	"insurance_claim_amount" integer,
+	"crime_type" varchar(255),
+	"crime_date" date,
+	"valuation_date" date,
+	"property_value" integer,
+	"utility_type" varchar(50),
+	"utility_installation_amount" integer,
+	"utility_installation_date" date,
+	"infrastructure_update_date" date,
+	"dispute_type" varchar(255),
+	"dispute_status" varchar(50),
+	"dispute_resolution_date" date,
+	"tenant_feedback" text,
+	"feedback_date" date,
+	"construction_date" date,
+	"renovation_date" date
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "reviews" (
@@ -114,7 +148,7 @@ CREATE TABLE IF NOT EXISTS "users" (
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "vehicles" (
-	"vehicle_id" serial PRIMARY KEY NOT NULL,
+	"property_id" serial PRIMARY KEY NOT NULL,
 	"owner_id" integer,
 	"make" varchar(100) NOT NULL,
 	"model" varchar(100) NOT NULL,

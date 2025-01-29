@@ -17,19 +17,19 @@ export const getSinglePropertyHistory = async (c: Context) => {
   if (isNaN(id)) 
       return c.text("invalid ID!", 400);
 
-  const user = await getPropertyHistoryService(id);
-  if (user == undefined){
-      return c.text("user not found!", 404);
+  const history = await getPropertyHistoryService(id);
+  if (history == undefined){
+      return c.text("history not found!", 404);
   }
-  return c.json(user, 200);
+  return c.json(history, 200);
 } 
 
 export const createPropertyHistory = async (c: Context) => {
   try{
-    const user = await c.req.json();
-    const createdPropertyHistory = await createPropertyHistoryService(user);
+    const history = await c.req.json();
+    const createdPropertyHistory = await createPropertyHistoryService(history);
    if (!createdPropertyHistory){
-    return c.text("user not created!", 404)
+    return c.text("history not created!", 404)
    }
     return c.json(createdPropertyHistory, 201);
 } catch (error: any){
@@ -44,16 +44,16 @@ export const updatePropertyHistory = async (c: Context) => {
   if (isNaN(id)) 
       return c.text("invalid ID!", 400);
 
-  const user = await c.req.json();
-  console.log(user)
-  //search for user
-  const founduser = await getPropertyHistoryService(id);
-  if (founduser == undefined) 
-      return c.text("user not found!", 404);
+  const history = await c.req.json();
+  console.log(history)
+  //search for history
+  const foundhistory = await getPropertyHistoryService(id);
+  if (foundhistory == undefined) 
+      return c.text("history not found!", 404);
   //get the data and update
-  const res = await updatePropertyHistoryService(id, user);
-  //return the updated user
-if (!res ) return c.text("user not updated!", 404);
+  const res = await updatePropertyHistoryService(id, history);
+  //return the updated history
+if (!res ) return c.text("history not updated!", 404);
 
 
     return c.json({msg: res}, 201);
@@ -63,7 +63,7 @@ if (!res ) return c.text("user not updated!", 404);
 }
 }
 
-//delete user
+//delete history
 export const deletePropertyHistory =  async (c: Context) => {
   const id = Number(c.req.param("id"));
   if (isNaN(id)) 
@@ -71,11 +71,11 @@ export const deletePropertyHistory =  async (c: Context) => {
 
   try{
 
- //search for the user
- const user = await getPropertyHistoryService(id);
- if (user == undefined) 
+ //search for the history
+ const history = await getPropertyHistoryService(id);
+ if (history == undefined) 
      return c.text("PropertyHistory not found!👽", 404);
-  //delete the user
+  //delete the history
   const res = await deletePropertyHistoryService(id);
   if (!res) return c.text("PropertyHistory not deleted!👽", 404);
 
@@ -86,21 +86,21 @@ export const deletePropertyHistory =  async (c: Context) => {
   }
 }
 
-//user relations
+//history relations
 
 // export const listPropertyHistoryWithBookings = async (c: Context) =>{
 //   const data = await getPropertyHistoryWithBookingsService();
 //   if ( data == null){
-//     return c.text("user not Found", 404)
+//     return c.text("history not Found", 404)
 //   }
 //     return c.json(data, 200);
 // }
 
-// export const listsingleuserwithBooking = async (c: Context) =>{
+// export const listsinglehistorywithBooking = async (c: Context) =>{
 //   const id = parseInt(c.req.param("id"));
 //   const data = await getSinglePropertyHistoryWithBookingService(id);
 //   if ( data == null){
-//     return c.text("user not Found", 404)
+//     return c.text("history not Found", 404)
 //   }
 //     return c.json(data, 200);
 // }
@@ -108,7 +108,7 @@ export const deletePropertyHistory =  async (c: Context) => {
 // export const listPropertyHistoryWithTickets = async (c: Context) =>{
 //   const data = await getPropertyHistoryWithTicketsService();
 //   if ( data == null){
-//     return c.text("user not Found", 404)
+//     return c.text("history not Found", 404)
 //   }
 //     return c.json(data, 200);
 // }
@@ -116,7 +116,7 @@ export const deletePropertyHistory =  async (c: Context) => {
 //   const id = parseInt(c.req.param("id"));
 //   const data = await getSinglePropertyHistoryWithTicketsService(id);
 //   if ( data == null){
-//     return c.text("user not Found", 404)
+//     return c.text("history not Found", 404)
 //   }
 //     return c.json(data, 200);
 // }
