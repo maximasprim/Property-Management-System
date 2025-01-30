@@ -1,5 +1,5 @@
 {
-  "id": "9aea2a9b-0cad-41cc-9f7e-b660a40bd87d",
+  "id": "b2ffedeb-da1b-4529-8eb6-214b0b9b9349",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -160,6 +160,210 @@
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
+    "public.house_history": {
+      "name": "house_history",
+      "schema": "",
+      "columns": {
+        "history_id": {
+          "name": "history_id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "property_id": {
+          "name": "property_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "previous_owner": {
+          "name": "previous_owner",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "transfer_date": {
+          "name": "transfer_date",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "maintenance_date": {
+          "name": "maintenance_date",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "maintenance_type": {
+          "name": "maintenance_type",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "maintenance_provider": {
+          "name": "maintenance_provider",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "maintenance_cost": {
+          "name": "maintenance_cost",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "tenant_name": {
+          "name": "tenant_name",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "lease_start(Rental_property)": {
+          "name": "lease_start(Rental_property)",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "lease_end": {
+          "name": "lease_end",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "usage_type": {
+          "name": "usage_type",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "legal_issue": {
+          "name": "legal_issue",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "resolution_date": {
+          "name": "resolution_date",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "disaster_type": {
+          "name": "disaster_type",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "disaster_description": {
+          "name": "disaster_description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "disaster_date": {
+          "name": "disaster_date",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "status_after_disaster": {
+          "name": "status_after_disaster",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "environmental_assessment_date": {
+          "name": "environmental_assessment_date",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "crime_type": {
+          "name": "crime_type",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "crime_date": {
+          "name": "crime_date",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "valuation_date": {
+          "name": "valuation_date",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "property_value": {
+          "name": "property_value",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "utility_type": {
+          "name": "utility_type",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "utility_installation_amount": {
+          "name": "utility_installation_amount",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "utility_installation_date": {
+          "name": "utility_installation_date",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "tenant_feedback": {
+          "name": "tenant_feedback",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "feedback_date": {
+          "name": "feedback_date",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "construction_date": {
+          "name": "construction_date",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "renovation_date": {
+          "name": "renovation_date",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "house_history_property_id_houses_property_id_fk": {
+          "name": "house_history_property_id_houses_property_id_fk",
+          "tableFrom": "house_history",
+          "tableTo": "houses",
+          "columnsFrom": [
+            "property_id"
+          ],
+          "columnsTo": [
+            "property_id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
     "public.houses": {
       "name": "houses",
       "schema": "",
@@ -194,8 +398,8 @@
           "primaryKey": false,
           "notNull": true
         },
-        "size": {
-          "name": "size",
+        "size_of_property": {
+          "name": "size_of_property",
           "type": "integer",
           "primaryKey": false,
           "notNull": true
@@ -217,6 +421,13 @@
           "type": "integer",
           "primaryKey": false,
           "notNull": false
+        },
+        "images": {
+          "name": "images",
+          "type": "json",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'[]'::json"
         },
         "created_at": {
           "name": "created_at",
@@ -259,6 +470,174 @@
             "address"
           ],
           "onDelete": "set null",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "public.land_history": {
+      "name": "land_history",
+      "schema": "",
+      "columns": {
+        "history_id": {
+          "name": "history_id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "property_id": {
+          "name": "property_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "previous_owner": {
+          "name": "previous_owner",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "transfer_date": {
+          "name": "transfer_date",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "tenant_name(For_Rental_Property)": {
+          "name": "tenant_name(For_Rental_Property)",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "lease_start": {
+          "name": "lease_start",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "lease_end": {
+          "name": "lease_end",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "legal_issue": {
+          "name": "legal_issue",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "resolution_date": {
+          "name": "resolution_date",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "permit_approval_date": {
+          "name": "permit_approval_date",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "disaster_type": {
+          "name": "disaster_type",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "disaster_description": {
+          "name": "disaster_description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "disaster_date": {
+          "name": "disaster_date",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "status_after_disaster": {
+          "name": "status_after_disaster",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "environmental_assessment_date": {
+          "name": "environmental_assessment_date",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "crime_type": {
+          "name": "crime_type",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "crime_date": {
+          "name": "crime_date",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "valuation_date": {
+          "name": "valuation_date",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "property_value": {
+          "name": "property_value",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "dispute_type": {
+          "name": "dispute_type",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "dispute_status": {
+          "name": "dispute_status",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "dispute_resolution_date": {
+          "name": "dispute_resolution_date",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "tenant_feedback(For_rental_properry)": {
+          "name": "tenant_feedback(For_rental_properry)",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "feedback_date": {
+          "name": "feedback_date",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "land_history_property_id_land_property_id_fk": {
+          "name": "land_history_property_id_land_property_id_fk",
+          "tableFrom": "land_history",
+          "tableTo": "land",
+          "columnsFrom": [
+            "property_id"
+          ],
+          "columnsTo": [
+            "property_id"
+          ],
+          "onDelete": "cascade",
           "onUpdate": "no action"
         }
       },
@@ -316,6 +695,13 @@
           "type": "text",
           "primaryKey": false,
           "notNull": false
+        },
+        "images": {
+          "name": "images",
+          "type": "json",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'[]'::json"
         },
         "created_at": {
           "name": "created_at",
@@ -517,263 +903,6 @@
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "public.property_history": {
-      "name": "property_history",
-      "schema": "",
-      "columns": {
-        "history_id": {
-          "name": "history_id",
-          "type": "serial",
-          "primaryKey": true,
-          "notNull": true
-        },
-        "property_type": {
-          "name": "property_type",
-          "type": "property_type",
-          "typeSchema": "public",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "property_id": {
-          "name": "property_id",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "previous_owner": {
-          "name": "previous_owner",
-          "type": "varchar(255)",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "transfer_date": {
-          "name": "transfer_date",
-          "type": "date",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "maintenance_type": {
-          "name": "maintenance_type",
-          "type": "varchar(255)",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "maintenance_date": {
-          "name": "maintenance_date",
-          "type": "date",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "service_provider": {
-          "name": "service_provider",
-          "type": "varchar(255)",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "maintenance_cost": {
-          "name": "maintenance_cost",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "tenant_name": {
-          "name": "tenant_name",
-          "type": "varchar(255)",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "lease_start": {
-          "name": "lease_start",
-          "type": "date",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "lease_end": {
-          "name": "lease_end",
-          "type": "date",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "usage_type": {
-          "name": "usage_type",
-          "type": "varchar(50)",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "tax_payment_date": {
-          "name": "tax_payment_date",
-          "type": "date",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "tax_amount": {
-          "name": "tax_amount",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "legal_issue": {
-          "name": "legal_issue",
-          "type": "varchar(255)",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "resolution_date": {
-          "name": "resolution_date",
-          "type": "date",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "permit_approval_date": {
-          "name": "permit_approval_date",
-          "type": "date",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "disaster_type": {
-          "name": "disaster_type",
-          "type": "varchar(255)",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "disaster_description": {
-          "name": "disaster_description",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "disaster_date": {
-          "name": "disaster_date",
-          "type": "date",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "status_after_disaster": {
-          "name": "status_after_disaster",
-          "type": "varchar(50)",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "environmental_assessment_date": {
-          "name": "environmental_assessment_date",
-          "type": "date",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "insurance_policy_number": {
-          "name": "insurance_policy_number",
-          "type": "varchar(50)",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "insurance_claim_date": {
-          "name": "insurance_claim_date",
-          "type": "date",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "insurance_claim_amount": {
-          "name": "insurance_claim_amount",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "crime_type": {
-          "name": "crime_type",
-          "type": "varchar(255)",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "crime_date": {
-          "name": "crime_date",
-          "type": "date",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "valuation_date": {
-          "name": "valuation_date",
-          "type": "date",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "property_value": {
-          "name": "property_value",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "utility_type": {
-          "name": "utility_type",
-          "type": "varchar(50)",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "utility_installation_amount": {
-          "name": "utility_installation_amount",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "utility_installation_date": {
-          "name": "utility_installation_date",
-          "type": "date",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "infrastructure_update_date": {
-          "name": "infrastructure_update_date",
-          "type": "date",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "dispute_type": {
-          "name": "dispute_type",
-          "type": "varchar(255)",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "dispute_status": {
-          "name": "dispute_status",
-          "type": "varchar(50)",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "dispute_resolution_date": {
-          "name": "dispute_resolution_date",
-          "type": "date",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "tenant_feedback": {
-          "name": "tenant_feedback",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "feedback_date": {
-          "name": "feedback_date",
-          "type": "date",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "construction_date": {
-          "name": "construction_date",
-          "type": "date",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "renovation_date": {
-          "name": "renovation_date",
-          "type": "date",
-          "primaryKey": false,
-          "notNull": false
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {},
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {}
-    },
     "public.reviews": {
       "name": "reviews",
       "schema": "",
@@ -911,6 +1040,216 @@
         }
       }
     },
+    "public.vehicles_history": {
+      "name": "vehicles_history",
+      "schema": "",
+      "columns": {
+        "history_id": {
+          "name": "history_id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "property_id": {
+          "name": "property_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "previous_owner": {
+          "name": "previous_owner",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "transfer_date": {
+          "name": "transfer_date",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "maintenance_type": {
+          "name": "maintenance_type",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "maintenance_date": {
+          "name": "maintenance_date",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "service_provider": {
+          "name": "service_provider",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "maintenance_cost": {
+          "name": "maintenance_cost",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "tenant_name(For_Rental_Vehilce)": {
+          "name": "tenant_name(For_Rental_Vehilce)",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "lease_start": {
+          "name": "lease_start",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "lease_end": {
+          "name": "lease_end",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "tax_payment_date": {
+          "name": "tax_payment_date",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "tax_amount": {
+          "name": "tax_amount",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "legal_issue": {
+          "name": "legal_issue",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "resolution_date": {
+          "name": "resolution_date",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "permit_approval_date": {
+          "name": "permit_approval_date",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "disaster_type": {
+          "name": "disaster_type",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "disaster_description": {
+          "name": "disaster_description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "disaster_date": {
+          "name": "disaster_date",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "status_after_disaster": {
+          "name": "status_after_disaster",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "environmental_assessment_date": {
+          "name": "environmental_assessment_date",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "insurance_policy_number": {
+          "name": "insurance_policy_number",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "insurance_claim_date": {
+          "name": "insurance_claim_date",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "insurance_claim_amount": {
+          "name": "insurance_claim_amount",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "crime_type": {
+          "name": "crime_type",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "crime_date": {
+          "name": "crime_date",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "valuation_date": {
+          "name": "valuation_date",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "property_value": {
+          "name": "property_value",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "dispute_type": {
+          "name": "dispute_type",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "dispute_status": {
+          "name": "dispute_status",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "dispute_resolution_date": {
+          "name": "dispute_resolution_date",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "vehicles_history_property_id_vehicles_property_id_fk": {
+          "name": "vehicles_history_property_id_vehicles_property_id_fk",
+          "tableFrom": "vehicles_history",
+          "tableTo": "vehicles",
+          "columnsFrom": [
+            "property_id"
+          ],
+          "columnsTo": [
+            "property_id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
     "public.vehicles": {
       "name": "vehicles",
       "schema": "",
@@ -981,23 +1320,12 @@
           "primaryKey": false,
           "notNull": false
         },
-        "image1": {
-          "name": "image1",
-          "type": "text",
+        "images": {
+          "name": "images",
+          "type": "json",
           "primaryKey": false,
-          "notNull": false
-        },
-        "image2": {
-          "name": "image2",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "image3": {
-          "name": "image3",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "default": "'[]'::json"
         },
         "created_at": {
           "name": "created_at",

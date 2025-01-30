@@ -31,18 +31,79 @@ CREATE TABLE IF NOT EXISTS "bookings" (
 	"location" varchar
 );
 --> statement-breakpoint
+CREATE TABLE IF NOT EXISTS "house_history" (
+	"history_id" serial PRIMARY KEY NOT NULL,
+	"property_id" integer,
+	"previous_owner" varchar(255),
+	"transfer_date" date,
+	"maintenance_date" date,
+	"maintenance_type" varchar(255),
+	"maintenance_provider" varchar(255),
+	"maintenance_cost" integer,
+	"tenant_name" varchar(255),
+	"lease_start(Rental_property)" date,
+	"lease_end" date,
+	"usage_type" varchar(50),
+	"legal_issue" varchar(255),
+	"resolution_date" date,
+	"disaster_type" varchar(255),
+	"disaster_description" text,
+	"disaster_date" date,
+	"status_after_disaster" varchar(50),
+	"environmental_assessment_date" date,
+	"crime_type" varchar(255),
+	"crime_date" date,
+	"valuation_date" date,
+	"property_value" integer,
+	"utility_type" varchar(50),
+	"utility_installation_amount" integer,
+	"utility_installation_date" date,
+	"tenant_feedback" text,
+	"feedback_date" date,
+	"construction_date" date,
+	"renovation_date" date
+);
+--> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "houses" (
 	"property_id" serial PRIMARY KEY NOT NULL,
 	"owner_id" integer,
 	"address" varchar,
 	"name_of_House" varchar(255) NOT NULL,
 	"number_of_rooms" integer NOT NULL,
-	"size" integer NOT NULL,
+	"size_of_property" integer NOT NULL,
 	"price" numeric(10, 2) NOT NULL,
 	"status" varchar(50) NOT NULL,
 	"year_built" integer,
+	"images" json DEFAULT '[]'::json,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL
+);
+--> statement-breakpoint
+CREATE TABLE IF NOT EXISTS "land_history" (
+	"history_id" serial PRIMARY KEY NOT NULL,
+	"property_id" integer,
+	"previous_owner" varchar(255),
+	"transfer_date" date NOT NULL,
+	"tenant_name(For_Rental_Property)" varchar(255),
+	"lease_start" date,
+	"lease_end" date,
+	"legal_issue" varchar(255),
+	"resolution_date" date,
+	"permit_approval_date" date,
+	"disaster_type" varchar(255),
+	"disaster_description" text,
+	"disaster_date" date,
+	"status_after_disaster" varchar(50),
+	"environmental_assessment_date" date,
+	"crime_type" varchar(255),
+	"crime_date" date,
+	"valuation_date" date,
+	"property_value" integer,
+	"dispute_type" varchar(255),
+	"dispute_status" varchar(50),
+	"dispute_resolution_date" date,
+	"tenant_feedback(For_rental_properry)" text,
+	"feedback_date" date
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "land" (
@@ -54,6 +115,7 @@ CREATE TABLE IF NOT EXISTS "land" (
 	"status" varchar(50) NOT NULL,
 	"land_type" varchar(50) NOT NULL,
 	"image" text,
+	"images" json DEFAULT '[]'::json,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL
 );
@@ -81,50 +143,6 @@ CREATE TABLE IF NOT EXISTS "payments" (
 	"payment_method" varchar(50) NOT NULL
 );
 --> statement-breakpoint
-CREATE TABLE IF NOT EXISTS "property_history" (
-	"history_id" serial PRIMARY KEY NOT NULL,
-	"property_type" "property_type" NOT NULL,
-	"property_id" integer NOT NULL,
-	"previous_owner" varchar(255),
-	"transfer_date" date NOT NULL,
-	"maintenance_type" varchar(255),
-	"maintenance_date" date,
-	"service_provider" varchar(255),
-	"maintenance_cost" integer,
-	"tenant_name" varchar(255),
-	"lease_start" date,
-	"lease_end" date,
-	"usage_type" varchar(50),
-	"tax_payment_date" date,
-	"tax_amount" integer,
-	"legal_issue" varchar(255),
-	"resolution_date" date,
-	"permit_approval_date" date,
-	"disaster_type" varchar(255),
-	"disaster_description" text,
-	"disaster_date" date,
-	"status_after_disaster" varchar(50),
-	"environmental_assessment_date" date,
-	"insurance_policy_number" varchar(50),
-	"insurance_claim_date" date,
-	"insurance_claim_amount" integer,
-	"crime_type" varchar(255),
-	"crime_date" date,
-	"valuation_date" date,
-	"property_value" integer,
-	"utility_type" varchar(50),
-	"utility_installation_amount" integer,
-	"utility_installation_date" date,
-	"infrastructure_update_date" date,
-	"dispute_type" varchar(255),
-	"dispute_status" varchar(50),
-	"dispute_resolution_date" date,
-	"tenant_feedback" text,
-	"feedback_date" date,
-	"construction_date" date,
-	"renovation_date" date
-);
---> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "reviews" (
 	"review_id" serial PRIMARY KEY NOT NULL,
 	"property_type" varchar(50) NOT NULL,
@@ -147,6 +165,40 @@ CREATE TABLE IF NOT EXISTS "users" (
 	CONSTRAINT "users_email_unique" UNIQUE("email")
 );
 --> statement-breakpoint
+CREATE TABLE IF NOT EXISTS "vehicles_history" (
+	"history_id" serial PRIMARY KEY NOT NULL,
+	"property_id" integer,
+	"previous_owner" varchar(255),
+	"transfer_date" date,
+	"maintenance_type" varchar(255),
+	"maintenance_date" date,
+	"service_provider" varchar(255),
+	"maintenance_cost" integer,
+	"tenant_name(For_Rental_Vehilce)" varchar(255),
+	"lease_start" date,
+	"lease_end" date,
+	"tax_payment_date" date,
+	"tax_amount" integer,
+	"legal_issue" varchar(255),
+	"resolution_date" date,
+	"permit_approval_date" date,
+	"disaster_type" varchar(255),
+	"disaster_description" text,
+	"disaster_date" date,
+	"status_after_disaster" varchar(50),
+	"environmental_assessment_date" date,
+	"insurance_policy_number" varchar(50),
+	"insurance_claim_date" date,
+	"insurance_claim_amount" integer,
+	"crime_type" varchar(255),
+	"crime_date" date,
+	"valuation_date" date,
+	"property_value" integer,
+	"dispute_type" varchar(255),
+	"dispute_status" varchar(50),
+	"dispute_resolution_date" date
+);
+--> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "vehicles" (
 	"property_id" serial PRIMARY KEY NOT NULL,
 	"owner_id" integer,
@@ -159,9 +211,7 @@ CREATE TABLE IF NOT EXISTS "vehicles" (
 	"mileage" integer NOT NULL,
 	"fuel_type" varchar(50),
 	"location" varchar,
-	"image1" text,
-	"image2" text,
-	"image3" text,
+	"images" json DEFAULT '[]'::json,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL,
 	CONSTRAINT "vehicles_vin_unique" UNIQUE("vin")
@@ -186,6 +236,12 @@ EXCEPTION
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
+ ALTER TABLE "house_history" ADD CONSTRAINT "house_history_property_id_houses_property_id_fk" FOREIGN KEY ("property_id") REFERENCES "public"."houses"("property_id") ON DELETE cascade ON UPDATE no action;
+EXCEPTION
+ WHEN duplicate_object THEN null;
+END $$;
+--> statement-breakpoint
+DO $$ BEGIN
  ALTER TABLE "houses" ADD CONSTRAINT "houses_owner_id_users_user_id_fk" FOREIGN KEY ("owner_id") REFERENCES "public"."users"("user_id") ON DELETE set null ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
@@ -193,6 +249,12 @@ END $$;
 --> statement-breakpoint
 DO $$ BEGIN
  ALTER TABLE "houses" ADD CONSTRAINT "houses_address_location_address_fk" FOREIGN KEY ("address") REFERENCES "public"."location"("address") ON DELETE set null ON UPDATE no action;
+EXCEPTION
+ WHEN duplicate_object THEN null;
+END $$;
+--> statement-breakpoint
+DO $$ BEGIN
+ ALTER TABLE "land_history" ADD CONSTRAINT "land_history_property_id_land_property_id_fk" FOREIGN KEY ("property_id") REFERENCES "public"."land"("property_id") ON DELETE cascade ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
@@ -223,6 +285,12 @@ END $$;
 --> statement-breakpoint
 DO $$ BEGIN
  ALTER TABLE "reviews" ADD CONSTRAINT "reviews_user_id_users_user_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."users"("user_id") ON DELETE cascade ON UPDATE no action;
+EXCEPTION
+ WHEN duplicate_object THEN null;
+END $$;
+--> statement-breakpoint
+DO $$ BEGIN
+ ALTER TABLE "vehicles_history" ADD CONSTRAINT "vehicles_history_property_id_vehicles_property_id_fk" FOREIGN KEY ("property_id") REFERENCES "public"."vehicles"("property_id") ON DELETE cascade ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
