@@ -46,7 +46,7 @@ export const authenticationsTable = pgTable("authentications", {
 // Houses Table
 export const housesTable = pgTable("houses", {
   property_id: serial("property_id").primaryKey(),
-  owner_id: integer("owner_id").references(() => usersTable.user_id, { onDelete: "set null" }),
+  // owner_id: integer("owner_id").references(() => usersTable.user_id, { onDelete: "set null" }),
   address: varchar("address").references(() => locationsTable.address, { onDelete: "set null" }),
   name: varchar("name_of_House", { length: 255 }).notNull(),
   number_of_rooms: integer("number_of_rooms").notNull(),
@@ -117,13 +117,11 @@ renovation_date: date("renovation_date"),
 // Land Table
 export const landTable = pgTable("land", {
   property_id: serial("property_id").primaryKey(),
-  owner_id: integer("owner_id").references(() => usersTable.user_id, { onDelete: "set null" }),
   location: varchar("location").references(() => locationsTable.address, { onDelete: "set null" }),
   size: integer("size").notNull(),
   price: decimal("price", { precision: 10, scale: 2 }).notNull(),
   status: varchar("status", { length: 50 }).notNull(),
   land_type: varchar("land_type", { length: 50 }).notNull(),
-  image: text("image"),
   images: json("images").default([]), // Array of image URLs
   created_at: timestamp("created_at", { mode: "string" }).notNull().defaultNow(),
   updated_at: timestamp("updated_at", { mode: "string" }).notNull().defaultNow(),
@@ -176,7 +174,7 @@ export const landHistoryTable = pgTable("land_history", {
 // Vehicles Table
 export const vehiclesTable = pgTable("vehicles", {
   property_id: serial("property_id").primaryKey(),
-  owner_id: integer("owner_id").references(() => usersTable.user_id, { onDelete: "set null" }),
+  // owner_id: integer("owner_id").references(() => usersTable.user_id, { onDelete: "set null" }),
   make: varchar("make", { length: 100 }).notNull(),
   model: varchar("model", { length: 100 }).notNull(),
   year: integer("year").notNull(),

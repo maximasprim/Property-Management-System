@@ -1,5 +1,5 @@
 {
-  "id": "b2ffedeb-da1b-4529-8eb6-214b0b9b9349",
+  "id": "49d7f205-10ba-41ff-813e-8853d56d7408",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -374,12 +374,6 @@
           "primaryKey": true,
           "notNull": true
         },
-        "owner_id": {
-          "name": "owner_id",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false
-        },
         "address": {
           "name": "address",
           "type": "varchar",
@@ -446,19 +440,6 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "houses_owner_id_users_user_id_fk": {
-          "name": "houses_owner_id_users_user_id_fk",
-          "tableFrom": "houses",
-          "tableTo": "users",
-          "columnsFrom": [
-            "owner_id"
-          ],
-          "columnsTo": [
-            "user_id"
-          ],
-          "onDelete": "set null",
-          "onUpdate": "no action"
-        },
         "houses_address_location_address_fk": {
           "name": "houses_address_location_address_fk",
           "tableFrom": "houses",
@@ -654,12 +635,6 @@
           "primaryKey": true,
           "notNull": true
         },
-        "owner_id": {
-          "name": "owner_id",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false
-        },
         "location": {
           "name": "location",
           "type": "varchar",
@@ -690,12 +665,6 @@
           "primaryKey": false,
           "notNull": true
         },
-        "image": {
-          "name": "image",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
         "images": {
           "name": "images",
           "type": "json",
@@ -720,19 +689,6 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "land_owner_id_users_user_id_fk": {
-          "name": "land_owner_id_users_user_id_fk",
-          "tableFrom": "land",
-          "tableTo": "users",
-          "columnsFrom": [
-            "owner_id"
-          ],
-          "columnsTo": [
-            "user_id"
-          ],
-          "onDelete": "set null",
-          "onUpdate": "no action"
-        },
         "land_location_location_address_fk": {
           "name": "land_location_location_address_fk",
           "tableFrom": "land",
@@ -1260,12 +1216,6 @@
           "primaryKey": true,
           "notNull": true
         },
-        "owner_id": {
-          "name": "owner_id",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false
-        },
         "make": {
           "name": "make",
           "type": "varchar(100)",
@@ -1344,19 +1294,6 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "vehicles_owner_id_users_user_id_fk": {
-          "name": "vehicles_owner_id_users_user_id_fk",
-          "tableFrom": "vehicles",
-          "tableTo": "users",
-          "columnsFrom": [
-            "owner_id"
-          ],
-          "columnsTo": [
-            "user_id"
-          ],
-          "onDelete": "set null",
-          "onUpdate": "no action"
-        },
         "vehicles_location_location_address_fk": {
           "name": "vehicles_location_location_address_fk",
           "tableFrom": "vehicles",

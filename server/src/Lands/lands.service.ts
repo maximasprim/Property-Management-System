@@ -1,46 +1,46 @@
 import db from "../Drizzle/db";
 import { eq } from "drizzle-orm";
-import { TIHouses,TSHouses,housesTable } from "../Drizzle/schema";
+import { TILand,TSLand,landTable } from "../Drizzle/schema";
 // import cloudinary from "../cloudinary";
 
 
 
-export const housesService = async ():Promise<TSHouses[] | null> =>{
-    return await db.query.housesTable.findMany();
+export const landService = async ():Promise<TSLand[] | null> =>{
+    return await db.query.landTable.findMany();
 
 }
 
-export const getHouseService = async (id: number): Promise<TSHouses | undefined> => {
-    return await db.query.housesTable.findFirst({
-        where: eq(housesTable.property_id, id)
+export const getLandService = async (id: number): Promise<TSLand | undefined> => {
+    return await db.query.landTable.findFirst({
+        where: eq(landTable.property_id, id)
     })
 }
 
-export const createHouseService = async (houses: TIHouses): Promise<TIHouses> => {
+export const createLandService = async (land: TILand): Promise<TILand> => {
     // Ensure images field contains URLs
-    if (!Array.isArray(houses.images)) {
+    if (!Array.isArray(land.images)) {
       throw new Error("Images must be an array of URLs");
     }
   
     // Insert house data directly into the database
-    await db.insert(housesTable).values(houses);
+    await db.insert(landTable).values(land);
   
-    return houses;
+    return land;
   };
-export const updateHouseService = async (id: number, house: TIHouses) => {
-    await db.update(housesTable).set(house).where(eq(housesTable.property_id, id))
+export const updateLandService = async (id: number, house: TILand) => {
+    await db.update(landTable).set(house).where(eq(landTable.property_id, id))
     return house;
 }
 
-export const deleteHouseService = async (id: number) => {
-    await db.delete(housesTable).where(eq(housesTable.property_id, id))
-    return "House deleted successfully";
+export const deleteLandService = async (id: number) => {
+    await db.delete(landTable).where(eq(landTable.property_id, id))
+    return "Land deleted successfully";
 }
 
-// export const getHouseWithBookingsService = async (): Promise<
-//   TSHouses[] | null
+// export const getLandWithBookingsService = async (): Promise<
+//   TSLand[] | null
 // > => {
-//   return await db.query.housesTable.findMany({
+//   return await db.query.landTable.findMany({
 //     with: {
 //       bookings: {
 //         columns: {
@@ -56,9 +56,9 @@ export const deleteHouseService = async (id: number) => {
 //   });
 // };
 
-// export const getSingleHouseWithBookingService = async (id:number): Promise<TSHouses[] | null> =>{
-//     return await db.query.housesTable.findMany({
-//         where: eq(housesTable.house_id,id),
+// export const getSingleLandWithBookingService = async (id:number): Promise<TSLand[] | null> =>{
+//     return await db.query.landTable.findMany({
+//         where: eq(landTable.house_id,id),
 //         with:{
 //             bookings: {
 //                 columns: {
@@ -74,10 +74,10 @@ export const deleteHouseService = async (id: number) => {
 //     })
 // }
 
-// export const getHouseWithTicketsService = async (): Promise<
-//   TSHouses[] | null
+// export const getLandWithTicketsService = async (): Promise<
+//   TSLand[] | null
 // > => {
-//   return await db.query.housesTable.findMany({
+//   return await db.query.landTable.findMany({
 //     with: {
 //       supportTickets: {
 //         columns: {
@@ -92,11 +92,11 @@ export const deleteHouseService = async (id: number) => {
 //     },
 //   });
 // };
-// export const getSingleHouseWithTicketsService = async (id:number): Promise<
-//   TSHouses[] | null
+// export const getSingleLandWithTicketsService = async (id:number): Promise<
+//   TSLand[] | null
 // > => {
-//   return await db.query.housesTable.findMany({
-//     where: eq(housesTable.house_id,id),
+//   return await db.query.landTable.findMany({
+//     where: eq(landTable.house_id,id),
 //     with: {
 //       supportTickets: {
 //         columns: {

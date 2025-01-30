@@ -180,10 +180,10 @@ DELETE http://localhost:3000/houses/1
 
 //propertyHistory queries
 ###
-GET http://localhost:3000/propertyHistory
-###
-GET http://localhost:3000/propertyHistory/1
-###
+# GET http://localhost:3000/propertyHistory
+# ###
+# GET http://localhost:3000/propertyHistory/1
+# ###
 POST http://localhost:3000/propertyHistory
 Content-Type: application/json
 
@@ -279,3 +279,44 @@ Content-Type: application/json
     "construction_date":"2021-09-09",
     "renovation_date":"2021-09-09"
 }
+
+###
+PUT http://localhost:3000/houseHistory/1
+Content-Type: application/json
+
+{
+    "status_after_disaster":"available"
+}
+###
+DELETE http://localhost:3000/houseHistory/1
+
+//land queries
+###
+GET http://localhost:3000/lands
+###
+GET http://localhost:3000/lands/1
+###
+POST http://localhost:3000/lands
+Content-Type: application/json
+
+{
+    "location":"eldoret",
+    "size":100,
+    "price":10000,
+    "status":"available",
+    "land_type":"commercial",
+    "images":[
+        "https://res.cloudinary.com/demo/image/upload/v1623456789/renovation1.jpg",
+        "https://res.cloudinary.com/demo/image/upload/v1623456789/renovation2.jpg"
+    ]
+}
+###
+PUT http://localhost:3000/lands/1
+Content-Type: application/json
+
+{
+    "status":"sold"
+}
+
+###
+DELETE http://localhost:3000/lands/1

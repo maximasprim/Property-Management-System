@@ -66,7 +66,6 @@ CREATE TABLE IF NOT EXISTS "house_history" (
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "houses" (
 	"property_id" serial PRIMARY KEY NOT NULL,
-	"owner_id" integer,
 	"address" varchar,
 	"name_of_House" varchar(255) NOT NULL,
 	"number_of_rooms" integer NOT NULL,
@@ -108,13 +107,11 @@ CREATE TABLE IF NOT EXISTS "land_history" (
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "land" (
 	"property_id" serial PRIMARY KEY NOT NULL,
-	"owner_id" integer,
 	"location" varchar,
 	"size" integer NOT NULL,
 	"price" numeric(10, 2) NOT NULL,
 	"status" varchar(50) NOT NULL,
 	"land_type" varchar(50) NOT NULL,
-	"image" text,
 	"images" json DEFAULT '[]'::json,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL
@@ -201,7 +198,6 @@ CREATE TABLE IF NOT EXISTS "vehicles_history" (
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "vehicles" (
 	"property_id" serial PRIMARY KEY NOT NULL,
-	"owner_id" integer,
 	"make" varchar(100) NOT NULL,
 	"model" varchar(100) NOT NULL,
 	"year" integer NOT NULL,
@@ -242,12 +238,6 @@ EXCEPTION
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
- ALTER TABLE "houses" ADD CONSTRAINT "houses_owner_id_users_user_id_fk" FOREIGN KEY ("owner_id") REFERENCES "public"."users"("user_id") ON DELETE set null ON UPDATE no action;
-EXCEPTION
- WHEN duplicate_object THEN null;
-END $$;
---> statement-breakpoint
-DO $$ BEGIN
  ALTER TABLE "houses" ADD CONSTRAINT "houses_address_location_address_fk" FOREIGN KEY ("address") REFERENCES "public"."location"("address") ON DELETE set null ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
@@ -255,12 +245,6 @@ END $$;
 --> statement-breakpoint
 DO $$ BEGIN
  ALTER TABLE "land_history" ADD CONSTRAINT "land_history_property_id_land_property_id_fk" FOREIGN KEY ("property_id") REFERENCES "public"."land"("property_id") ON DELETE cascade ON UPDATE no action;
-EXCEPTION
- WHEN duplicate_object THEN null;
-END $$;
---> statement-breakpoint
-DO $$ BEGIN
- ALTER TABLE "land" ADD CONSTRAINT "land_owner_id_users_user_id_fk" FOREIGN KEY ("owner_id") REFERENCES "public"."users"("user_id") ON DELETE set null ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
@@ -291,12 +275,6 @@ END $$;
 --> statement-breakpoint
 DO $$ BEGIN
  ALTER TABLE "vehicles_history" ADD CONSTRAINT "vehicles_history_property_id_vehicles_property_id_fk" FOREIGN KEY ("property_id") REFERENCES "public"."vehicles"("property_id") ON DELETE cascade ON UPDATE no action;
-EXCEPTION
- WHEN duplicate_object THEN null;
-END $$;
---> statement-breakpoint
-DO $$ BEGIN
- ALTER TABLE "vehicles" ADD CONSTRAINT "vehicles_owner_id_users_user_id_fk" FOREIGN KEY ("owner_id") REFERENCES "public"."users"("user_id") ON DELETE set null ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
