@@ -1,5 +1,19 @@
 ###
 GET http://localhost:3000
+
+//register queries
+###
+POST http://localhost:3000/register
+Content-Type: application/json
+
+{
+    "username":"Mwas",
+    "password":"pass",
+    "role":"admin",
+    "email":"mwas@gmail.com",
+    "address":"1234 Main St, City, State, 12345",
+    "contact_phone":"1234567890"
+}
 ###
 //users queries
 GET http://localhost:3000/users   

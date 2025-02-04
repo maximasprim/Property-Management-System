@@ -3,7 +3,7 @@ import { Context } from "hono";
 import { createAuthUserService, userloginService } from "./auth.service";
 import bycrpt from "bcrypt";
 import { sign } from "hono/jwt";
-import { mailFunction } from "../mail"
+// import { mailFunction } from "../mail"
 
 export const registerUser = async (c: Context) => {
   try {
@@ -51,14 +51,14 @@ export const loginUser = async (c: Context) => {
       //create a payload
       const payload = {
         sub: userExist?.username,
-        user_id: userExist?.user?.user_id,
+        user_id: userExist?.users?.user_id,
         fullName: userExist?.username,
         role: userExist?.role,
         exp: Math.floor(Date.now() / 1000) + 60 * 180, // 3 hour  => SESSION EXPIRATION
       }
       let secret = process.env.JWT_SECRET as string;
       const token = await sign(payload, secret);
-      let user = userExist?.user;
+      let user = userExist?.users;
       let role = userExist?.role;
       let pass = userExist?.password;
       

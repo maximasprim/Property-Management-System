@@ -8,6 +8,7 @@ import { paymentsRouter } from './Payments/payments.router'
 import { houseRouter } from './Houses/houses.router'
 import { houseHistoryRouter } from './Houses_History/houseHistory.router'
 import { landRouter } from './Lands/lands.router'
+import { authRouter } from './Authentication/auth.router'
 
 const app = new Hono()
 
@@ -31,3 +32,4 @@ app.route('/',paymentsRouter)
 app.route('/',houseRouter)
 app.route('/',houseHistoryRouter)
 app.route('/',landRouter)
+app.route('/',authRouter)

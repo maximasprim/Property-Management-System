@@ -1,7 +1,7 @@
-import { authenticationTable,usersTable, TIAuthentication, TSAuthentication } from "../drizzle/schema";
-import db from "../drizzle/db";
+import { authenticationsTable,usersTable, TIAuthentications, TSAuthentications } from "../Drizzle/schema";
+import db from "../Drizzle/db";
 import { sql } from "drizzle-orm";
-import { mailFunction } from "../mail"
+// import { mailFunction } from "../mail"
 
 export const createAuthUserService = async (user: any) => {
     try {
@@ -18,7 +18,7 @@ export const createAuthUserService = async (user: any) => {
       const userId = createdUser[0].user_id;
   
       // Insert user into `auth_user` table
-      await db.insert(authenticationTable).values({
+      await db.insert(authenticationsTable).values({
         user_id: userId,
         password: user.password,
         username: user.username,
@@ -41,17 +41,17 @@ export const createAuthUserService = async (user: any) => {
     }
   };
 
-export const userloginService = async (user: TSAuthentication) =>{
+export const userloginService = async (user: TSAuthentications) =>{
   const { username, password } = user;
-  return await db.query.authenticationTable.findFirst({
+  return await db.query.authenticationsTable.findFirst({
     columns:{
         auth_id: true,
         username: true,
         role: true,
         password: true
-    }, where: sql` ${authenticationTable.username} = ${username}`,
+    }, where: sql` ${authenticationsTable.username} = ${username}`,
     with: {
-        user: {
+        users: {
             columns:{
               user_id: true,
                 full_name: true,
