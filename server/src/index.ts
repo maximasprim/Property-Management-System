@@ -10,6 +10,7 @@ import { houseHistoryRouter } from './Houses_History/houseHistory.router'
 import { landRouter } from './Lands/lands.router'
 import { authRouter } from './Authentication/auth.router'
 import { landHistoryRouter } from './Land_History/landHistory.router'
+import { vehiclesHistoryRouter } from './vehicleHistory/vehiclesHistory.router'
 
 const app = new Hono()
 
@@ -35,3 +36,4 @@ app.route('/',houseHistoryRouter)
 app.route('/',landRouter)
 app.route('/',authRouter)
 app.route('/',landHistoryRouter)
+app.route('/',vehiclesHistoryRouter)

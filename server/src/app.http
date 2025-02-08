@@ -75,6 +75,63 @@ Content-Type: application/json
 
 ###
 DELETE http://localhost:3000/vehicles/1
+//vehiclesHistory queries
+###
+GET http://localhost:3000/vehiclesHistory
+###
+GET http://localhost:3000/vehiclesHistory/1
+###
+POST http://localhost:3000/vehiclesHistory
+Content-Type: application/json
+
+{
+    
+    "property_type":"land",
+    "property_id":4,
+    "previous_owner":"max",
+    "transfer_date":"2021-09-09",
+    "maintenance_type":"service",
+    "maintenance_date":"2021-09-09",
+    "service_provider":"max",
+    "maintenance_cost":10000,
+    "tenant_name":"max",
+    "lease_start":"2021-09-09",
+    "lease_end":"2021-09-09",
+    "usage_type":"rental",
+    "tax_payment_date":"2021-09-09",
+    "tax_amount":10000,
+    "legal_issue":"none",
+    "resolution_date":"2021-09-09",
+    "permit_approval_date":"2021-09-09",
+    "disaster_type":"fire",
+    "disaster_description":"fire",
+    "disaster_date":"2021-09-09",
+    "status_after_disaster":"sold",
+    "environmental_assessment_date":"2021-09-09",
+    "insurance_policy_number":"12345",
+    "claim_amount":10000,
+    "claim_date":"2021-09-09",
+    "crime_type":"theft",
+    "crime_date":"2021-09-09",
+    "valuation_date":"2021-09-09",
+    "property_value":10000,
+    "dispute_type":"none",
+    "dispute_status":"resolved",
+    "dispute_resolution_date":"2021-09-09"
+    
+}
+###
+PUT http://localhost:3000/vehiclesHistory/1
+Content-Type: application/json
+
+{
+    "status_after_disaster":"available"
+}
+###
+DELETE http://localhost:3000/vehiclesHistory/1
+
+
+
 //location queries
 ###
 GET http://localhost:3000/location
