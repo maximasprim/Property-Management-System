@@ -6,8 +6,12 @@
     "gen": "drizzle-kit generate",
     "migrate": "tsx src/drizzle/migrate.ts",
     "studio": "drizzle-kit studio",
-    "push": "drizzle-kit push"
+    "push": "drizzle-kit push"   
   },
+  "pnpm": {
+    "onlyBuiltDependencies": ["bcrypt", "esbuild"]
+  },
+  
   "dependencies": {
     "@hono/node-server": "^1.11.2",
     "@hono/prometheus": "^1.0.1",

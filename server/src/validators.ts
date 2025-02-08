@@ -29,6 +29,10 @@ export const paymentsSchema = z.object({
 export const landsSchema = z.object({
 
 });
+export const landHistorySchema=z.object({
+
+});
+
 export const locationSchema = z.object({
 
 });

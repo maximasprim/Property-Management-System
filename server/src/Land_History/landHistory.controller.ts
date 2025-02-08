@@ -1,43 +1,43 @@
 import { Context } from "hono";
-import { propertyHistoryService, getPropertyHistoryService, createPropertyHistoryService, updatePropertyHistoryService, deletePropertyHistoryService} from "./pHistory.service";
+import { landHistoryService, getLandHistoryService, createLandHistoryService, updateLandHistoryService, deleteLandHistoryService} from "./landHistory.service";
 
 
 
 
-export const listPropertyHistory = async (c: Context) =>{
-  const data = await propertyHistoryService();
+export const listLandHistory = async (c: Context) =>{
+  const data = await landHistoryService();
   if ( data == null){
-    return c.text("PropertyHistory not Found", 404)
+    return c.text("LandHistory not Found", 404)
   }
     return c.json(data, 200);
 }
 
-export const getSinglePropertyHistory = async (c: Context) => {
+export const getSingleLandHistory = async (c: Context) => {
   const id = parseInt(c.req.param("id"));
   if (isNaN(id)) 
       return c.text("invalid ID!", 400);
 
-  const history = await getPropertyHistoryService(id);
+  const history = await getLandHistoryService(id);
   if (history == undefined){
       return c.text("history not found!", 404);
   }
   return c.json(history, 200);
 } 
 
-export const createPropertyHistory = async (c: Context) => {
+export const createLandHistory = async (c: Context) => {
   try{
     const history = await c.req.json();
-    const createdPropertyHistory = await createPropertyHistoryService(history);
-   if (!createdPropertyHistory){
+    const createdLandHistory = await createLandHistoryService(history);
+   if (!createdLandHistory){
     return c.text("history not created!", 404)
    }
-    return c.json(createdPropertyHistory, 201);
+    return c.json(createdLandHistory, 201);
 } catch (error: any){
     return c.json({error: error?.message}, 400)
 }
 }
 
-export const updatePropertyHistory = async (c: Context) => {
+export const updateLandHistory = async (c: Context) => {
   try{
   const id = parseInt(c.req.param("id"));
   console.log
@@ -47,11 +47,11 @@ export const updatePropertyHistory = async (c: Context) => {
   const history = await c.req.json();
   console.log(history)
   //search for history
-  const foundhistory = await getPropertyHistoryService(id);
+  const foundhistory = await getLandHistoryService(id);
   if (foundhistory == undefined) 
       return c.text("history not found!", 404);
   //get the data and update
-  const res = await updatePropertyHistoryService(id, history);
+  const res = await updateLandHistoryService(id, history);
   //return the updated history
 if (!res ) return c.text("history not updated!", 404);
 
@@ -64,7 +64,7 @@ if (!res ) return c.text("history not updated!", 404);
 }
 
 //delete history
-export const deletePropertyHistory =  async (c: Context) => {
+export const deleteLandHistory =  async (c: Context) => {
   const id = Number(c.req.param("id"));
   if (isNaN(id)) 
       return c.text("invalid ID!", 400);
@@ -72,12 +72,12 @@ export const deletePropertyHistory =  async (c: Context) => {
   try{
 
  //search for the history
- const history = await getPropertyHistoryService(id);
+ const history = await getLandHistoryService(id);
  if (history == undefined) 
-     return c.text("PropertyHistory not found!👽", 404);
+     return c.text("LandHistory not found!👽", 404);
   //delete the history
-  const res = await deletePropertyHistoryService(id);
-  if (!res) return c.text("PropertyHistory not deleted!👽", 404);
+  const res = await deleteLandHistoryService(id);
+  if (!res) return c.text("LandHistory not deleted!👽", 404);
 
   return c.json({msg: res}, 201);
 
@@ -88,8 +88,8 @@ export const deletePropertyHistory =  async (c: Context) => {
 
 //history relations
 
-// export const listPropertyHistoryWithBookings = async (c: Context) =>{
-//   const data = await getPropertyHistoryWithBookingsService();
+// export const listLandHistoryWithBookings = async (c: Context) =>{
+//   const data = await getLandHistoryWithBookingsService();
 //   if ( data == null){
 //     return c.text("history not Found", 404)
 //   }
@@ -98,23 +98,23 @@ export const deletePropertyHistory =  async (c: Context) => {
 
 // export const listsinglehistorywithBooking = async (c: Context) =>{
 //   const id = parseInt(c.req.param("id"));
-//   const data = await getSinglePropertyHistoryWithBookingService(id);
+//   const data = await getSingleLandHistoryWithBookingService(id);
 //   if ( data == null){
 //     return c.text("history not Found", 404)
 //   }
 //     return c.json(data, 200);
 // }
 
-// export const listPropertyHistoryWithTickets = async (c: Context) =>{
-//   const data = await getPropertyHistoryWithTicketsService();
+// export const listLandHistoryWithTickets = async (c: Context) =>{
+//   const data = await getLandHistoryWithTicketsService();
 //   if ( data == null){
 //     return c.text("history not Found", 404)
 //   }
 //     return c.json(data, 200);
 // }
-// export const listSinglePropertyHistoryWithTickets = async (c: Context) =>{
+// export const listSingleLandHistoryWithTickets = async (c: Context) =>{
 //   const id = parseInt(c.req.param("id"));
-//   const data = await getSinglePropertyHistoryWithTicketsService(id);
+//   const data = await getSingleLandHistoryWithTicketsService(id);
 //   if ( data == null){
 //     return c.text("history not Found", 404)
 //   }

@@ -334,3 +334,48 @@ Content-Type: application/json
 
 ###
 DELETE http://localhost:3000/lands/1
+
+//landHistory queries
+###
+GET http://localhost:3000/landHistory
+###
+GET http://localhost:3000/landHistory/1
+###
+POST http://localhost:3000/landHistory
+Content-Type: application/json
+
+{
+    "property_type":"land",
+    "property_id":2,
+    "previous_owner":"max",
+    "transfer_date":"2021-09-09",
+    "tenant_name":"max",
+    "lease_start":"2021-09-09",
+    "lease_end":"2021-09-09",
+    "legal_issues":"none",
+    "resolution_date":"2021-09-09",
+    "permit_approval_date":"2021-09-09",
+    "disaster_type":"fire",
+    "disaster_description":"fire",
+    "disaster_date":"2021-09-09",
+    "status_after_disaster":"sold",
+    "environmental_assessment_date":"2021-09-09",
+    "crime_type":"theft",
+    "crime_date":"2021-09-09",
+    "valuation_date":"2021-09-09",
+    "property_value":10000,
+    "dispute_type":"none",
+    "dispute_status":"resolved",
+    "dispute_resolution_date":"2021-09-09",
+    "tenant_feedback":"good",
+    "feedback_date":"2021-09-09"
+}
+###
+PUT http://localhost:3000/landHistory/2
+Content-Type: application/json
+
+{
+    "status_after_disaster":"available"
+}
+###
+DELETE http://localhost:3000/landHistory/2

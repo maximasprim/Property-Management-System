@@ -10,7 +10,7 @@
 
 # deps
 node_modules/
-
+package.json
 # env
 .env
 .env.production
