@@ -46,3 +46,6 @@ export const  registerUserSchema= z.object({
 export const  loginUserSchema= z.object({
     
 });
+export const reviewSchema = z.object({
+    
+});

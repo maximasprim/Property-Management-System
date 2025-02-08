@@ -11,6 +11,7 @@ import { landRouter } from './Lands/lands.router'
 import { authRouter } from './Authentication/auth.router'
 import { landHistoryRouter } from './Land_History/landHistory.router'
 import { vehiclesHistoryRouter } from './vehicleHistory/vehiclesHistory.router'
+import { reviewRouter } from './Reviews/review.router'
 
 const app = new Hono()
 
@@ -37,3 +38,4 @@ app.route('/',landRouter)
 app.route('/',authRouter)
 app.route('/',landHistoryRouter)
 app.route('/',vehiclesHistoryRouter)
+app.route('/',reviewRouter)

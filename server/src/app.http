@@ -436,3 +436,29 @@ Content-Type: application/json
 }
 ###
 DELETE http://localhost:3000/landHistory/2
+
+//reviews queries
+###
+GET http://localhost:3000/reviews
+###
+GET http://localhost:3000/reviews/1
+###
+POST http://localhost:3000/reviews
+Content-Type: application/json
+
+{
+    "property_type":"vehicle",
+    "property_id":1,
+    "user_id":1,
+    "rating":5,
+    "comment":"good"
+}
+###
+PUT http://localhost:3000/reviews/1
+Content-Type: application/json
+
+{
+    "rating":4
+}
+###
+DELETE http://localhost:3000/reviews/1
