@@ -12,8 +12,19 @@ import { authRouter } from './Authentication/auth.router'
 import { landHistoryRouter } from './Land_History/landHistory.router'
 import { vehiclesHistoryRouter } from './vehicleHistory/vehiclesHistory.router'
 import { reviewRouter } from './Reviews/review.router'
+import {cors} from 'hono/cors'
 
 const app = new Hono()
+
+//enable cors
+app.use(cors());
+app.use('*', cors());
+
+app.use(cors({
+  origin: '*',
+  allowMethods : ['GET','POST','PUT','DELETE','OPTIONS'],
+  allowHeaders : ['Content-Type','Authorization'],
+}));
 
 app.get('/', (c) => {
   return c.text('Hello Hono!')

@@ -6,6 +6,8 @@ import About from './components/About'
 import AboutPage from './pages/AboutPage'
 import Testimonials from './components/Testimonials'
 import Contact from './pages/Contact'
+import LoginUser from './features/Login/login'
+import RegisterUser from './features/Register/Register'
 
 // import './App.css'
 
@@ -34,6 +36,16 @@ const App = () => {
     {
       path: 'contact',
       element: <Contact />,
+      errorElement: <Error />
+    },
+    {
+      path: 'register',
+      element: <RegisterUser />,
+      errorElement: <Error />
+    },
+    {
+      path: 'login',
+      element: <LoginUser />,
       errorElement: <Error />
     }
 

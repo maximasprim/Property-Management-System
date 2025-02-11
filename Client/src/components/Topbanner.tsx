@@ -1,4 +1,4 @@
-
+import { Link } from "react-router-dom";
 const Topbanner = () => {
 
 return(
@@ -11,8 +11,20 @@ return(
         </div>
         <div className="flex items-center space-x-4">
           <p className="text-gray-800 font-medium">Welcome!</p>
-          <button className="bg-green-600 text-white px-3 py-1 rounded-lg hover:bg-green-700 transition">Join Us !</button>
-          <p className="text-gray-600">Owner Login | Resident Login</p>
+          <Link to="/register">
+  <button className="bg-green-600 text-white px-3 py-1 rounded-lg hover:bg-green-700 transition">
+    Join Us !
+  </button>
+</Link>
+<p className="text-gray-600">
+      <Link to="/login" className="text-blue-600 hover:underline">
+        Owner Login
+      </Link>{" "}
+      |{" "}
+      <Link to="/login" className="text-blue-600 hover:underline">
+        Resident Login
+      </Link>
+    </p>
         </div>
       </div>
 )
