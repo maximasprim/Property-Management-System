@@ -41,26 +41,26 @@ export const createAuthUserService = async (user: any) => {
     }
   };
 
-export const userloginService = async (user: TSAuthentications) =>{
-  const { username, password } = user;
-  return await db.query.authenticationsTable.findFirst({
-    columns:{
-        auth_id: true,
-        username: true,
-        role: true,
-        password: true
-    }, where: sql` ${authenticationsTable.username} = ${username}`,
-    with: {
-        users: {
-            columns:{
-              user_id: true,
-                full_name: true,
-                contact_phone: true,
-                address: true,
-                role: true,
-            }
-        }
-    }
-
-  })
-}
+  export const userloginService = async (user: TSAuthentications) =>{
+    const { username, password } = user;
+    return await db.query.authenticationsTable.findFirst({
+      columns:{
+          auth_id: true,
+          username: true,
+          role: true,
+          password: true
+      }, where: sql` ${authenticationsTable.username} = ${username}`,
+      with: {
+          users: {
+              columns:{
+                user_id: true,
+                  full_name: true,
+                  contact_phone: true,
+                  address: true,
+                  role: true,
+              }
+          }
+      }
+  
+    })
+  }

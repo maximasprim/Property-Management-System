@@ -304,7 +304,10 @@ export const userRelations = relations(usersTable, ({ one,many }) => ({
 }));
 
 export const authenticationsRelations = relations(authenticationsTable, ({ one }) => ({
-  users: one(usersTable),
+  users: one(usersTable,{
+    fields:[authenticationsTable.user_id],
+    references:[usersTable.user_id]
+  }),
 }));
 
 export const houseRelations = relations(housesTable, ({ many }) => ({
