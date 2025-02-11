@@ -8,6 +8,9 @@ import Testimonials from './components/Testimonials'
 import Contact from './pages/Contact'
 import LoginUser from './features/Login/login'
 import RegisterUser from './features/Register/Register'
+import Appi from './features/ADMIN/Dashboard'
+// import Layout from './features/USER/layout'
+import Dashboard from './features/USER/dashboard'
 
 // import './App.css'
 
@@ -47,7 +50,28 @@ const App = () => {
       path: 'login',
       element: <LoginUser />,
       errorElement: <Error />
+    },
+
+    //ADMIN DASHBOARD
+    {
+      path:'admin',
+      element: <Appi />,
+      errorElement: <Error />,
+      children:[
+
+      ]
+    },
+
+    //USER DASHBOARD
+    {
+      path:'dashboard',
+      element: <Dashboard/>,
+      errorElement: <Error />,
+      children:[
+
+      ]
     }
+   
 
   ])
   return (

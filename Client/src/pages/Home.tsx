@@ -5,7 +5,7 @@ import Topbanner from '../components/Topbanner';
 import FeaturedProperties from '../components/Featured properties';
 import Footer from '../components/Footer';
 import About from '../components/About';
-import LoginUser from '../features/Login/login'
+
 
 const Home = () => {
     return (
@@ -18,6 +18,8 @@ const Home = () => {
                 <FeaturedProperties />
                 <About />
                 <Footer />
+                                
+                
             
             </Container>
         </div>
