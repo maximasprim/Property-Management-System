@@ -14,14 +14,24 @@ Content-Type: application/json
     "address":"1234 Main St, City, State, 12345",
     "contact_phone":"1234567890"
 }
+
+###
+POST http://localhost:3000/login
+Content-Type: application/json
+
+{
+    "username":"Mwasame",
+    "role":"admin",
+    "password":"pass"
+}
 ###
 POST http://localhost:3000/login
 Content-Type: application/json
 
 {
     
-    "username":"mee",
-    "role":"user",
+    "username":"Mwasame",
+    "role":"admin",
     "password":"pass"
 }
     
