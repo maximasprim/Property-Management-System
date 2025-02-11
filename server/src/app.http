@@ -7,13 +7,25 @@ POST http://localhost:3000/register
 Content-Type: application/json
 
 {
-    "username":"Mwasame",
+    "username":"mee",
     "password":"pass",
-    "role":"admin",
-    "email":"mwasame@gmail.com",
+    "role":"user",
+    "email":"mee@gmail.com",
     "address":"1234 Main St, City, State, 12345",
     "contact_phone":"1234567890"
 }
+###
+POST http://localhost:3000/login
+Content-Type: application/json
+
+{
+    
+    "username":"mee",
+    "role":"user",
+    "password":"pass"
+}
+    
+    
 ###
 //users queries
 GET http://localhost:3000/users   
@@ -249,58 +261,6 @@ Content-Type: application/json
 ###
 DELETE http://localhost:3000/houses/1
 
-//propertyHistory queries
-###
-# GET http://localhost:3000/propertyHistory
-# ###
-# GET http://localhost:3000/propertyHistory/1
-# ###
-POST http://localhost:3000/propertyHistory
-Content-Type: application/json
-
-{
-    "property_type":"land",
-    "property_id":1,
-    "previous_owner":"max",
-    "transfer_date":"2021-09-09",
-    "maintenance_type":"service",
-    "maintenance_date":"2021-09-09",
-    "service_provider":"max",
-    "maintenance_cost":10000,
-    "tenant_name":"max",
-    "lease_start":"2021-09-09",
-    "lease_end":"2021-09-09",
-    "usage_type":"rental",
-    "tax_payment_date":"2021-09-09",
-    "tax_amount":10000,
-    "legal_issues":"none",
-    "resolution_date":"2021-09-09",
-    "permit_approval_date":"2021-09-09",
-    "disaster_type":"fire",
-    "disaster_description":"fire",
-    "disaster_date":"2021-09-09",
-    "status_after_disaster":"sold",
-    "environmental_assessment_date":"2021-09-09",
-    "insurance_policy_number":"12345",
-    "claim_amount":10000,
-    "claim_date":"2021-09-09",
-    "crime_type":"theft",
-    "crime_date":"2021-09-09",
-    "valuation_date":"2021-09-09",
-    "property_value":10000,
-    "utility_type":"electricity",
-    "utility_installation_amount":10000,
-    "utility_installation_date":"2021-09-09",
-    "infrastructure_update_date":"2021-09-09",
-    "dispute_type":"none",
-    "dispute_status":"resolved",
-    "dispute_resolution_date":"2021-09-09",
-    "tenant_feedback":"good",
-    "feedback_date":"2021-09-09",
-    "construction_date":"2021-09-09",
-    "renovation_date":"2021-09-09"
-
-}
 
 //houses history queries
 ###
