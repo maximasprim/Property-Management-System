@@ -30,8 +30,8 @@ Content-Type: application/json
 
 {
     
-    "username":"mee",
-    "role":"user",
+    "username":"Mwasame",
+    "role":"admin",
     "password":"pass"
 }
     
