@@ -1,7 +1,10 @@
 import  { useState } from 'react';
 import background from '../assets/mansion6.jpg';
-import mansion7 from '../assets/mansion7.jpg';
 import { Link } from 'react-router-dom';
+import image1 from '../assets/managementlogo.jpg'
+import  image2 from '../assets/vehiclehero (2).jpg'
+import  image3 from '../assets/houselogo.jpg'
+import image4 from '../assets/landhero.jpg'
 
 const HeroSection = () => {
   const [searchType, setSearchType] = useState('For Rent');
@@ -38,32 +41,32 @@ const HeroSection = () => {
           <div className="mt-10 grid grid-cols-2 md:grid-cols-4 gap-6">
               <Link to="/managementServices">
             <div className="flex flex-col items-center">
-              <div className="bg-green-700 p-4 rounded-full mb-2">
-                <img src="icon1.png" alt="Management" className="h-8 w-8" />
+            <div className="bg-green-700 rounded-full mb-2 flex items-center justify-center">
+                <img src={image1} alt="Services" className="h-16 w-16 rounded-full" />
               </div>
               <button className="text-lg font-medium">MANAGEMENT SERVICES</button>
             </div>
               </Link>
               <Link to="/housesServices">
             <div className="flex flex-col items-center">
-              <div className="bg-green-700 p-4 rounded-full mb-2">
-                <img src={mansion7} alt="Services" className="h-8 w-8" />
+              <div className="bg-green-700 rounded-full mb-2 flex items-center justify-center">
+                <img src={image3} alt="Services" className="h-16 w-16 rounded-full" />
               </div>
               <button className="text-lg font-medium">Housing SERVICES</button>
             </div>
               </Link>
             <Link to="/vehiclesServices">
             <div className="flex flex-col items-center">
-              <div className="bg-green-700 p-4 rounded-full mb-2">
-                <img src="icon3.png" alt="Tenant Resources" className="h-8 w-8" />
+            <div className="bg-green-700 rounded-full mb-2 flex items-center justify-center">
+                <img src={image2} alt="Services" className="h-16 w-16 rounded-full" />
               </div>
               <button className="text-lg font-medium">Vehicle Services</button>
             </div>
             </Link>
             <Link to="/landServices">
             <div className="flex flex-col items-center">
-              <div className="bg-green-700 p-4 rounded-full mb-2">
-                <img src="icon4.png" alt="Quote" className="h-8 w-8" />
+            <div className="bg-green-700 rounded-full mb-2 flex items-center justify-center">
+                <img src={image4} alt="Services" className="h-16 w-16 rounded-full" />
               </div>
               <button className="text-lg font-medium">Land Services</button>
             </div>
