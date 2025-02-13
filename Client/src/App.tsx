@@ -15,6 +15,10 @@ import ManagementServices from './components/ManagementServices'
 import VehiclesServ from './components/VehiclesSev'
 import HousesServ from './components/HousesServ'
 import LandServ from './components/LandServ'
+import Team from './components/Team'
+import OurServices from './components/Services'
+import Location from './features/Location/location'
+import Reviews from './features/Reviews/Review'
 
 // import './App.css'
 
@@ -61,6 +65,11 @@ const App = () => {
       errorElement: <Error />
     },
     {
+      path: 'ourServices',
+      element: <OurServices />,
+      errorElement: <Error />
+    },
+    {
       path: 'vehiclesServices',
       element: <VehiclesServ/>,
       errorElement: <Error />
@@ -73,6 +82,21 @@ const App = () => {
     {
       path: 'housesServices',
       element: <HousesServ/>,
+      errorElement: <Error />
+    },
+    {
+      path: 'ourTeam',
+      element: <Team/>,
+      errorElement: <Error />
+    },
+    {
+      path: 'locations',
+      element: <Location/>,
+      errorElement: <Error />
+    },
+    {
+      path: 'reviews',
+      element: <Reviews/>,
       errorElement: <Error />
     },
 

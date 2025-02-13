@@ -6,8 +6,8 @@ const Navbar = () => {
         <ul className="flex justify-center space-x-6 text-sm font-semibold">
           <li><a href="/" className="hover:text-green-400">Home</a></li>
           <li><a href="/aboutUs" className="hover:text-green-400">About Us</a></li>
-          <li><a href="/testimonials" className="hover:text-green-400">Services</a></li>
-          <li><a href="#owners" className="hover:text-green-400">Locations</a></li>
+          <li><a href="/ourServices" className="hover:text-green-400">Services</a></li>
+          <li><a href="/locations" className="hover:text-green-400">Locations</a></li>
           <li className="relative group">
       <a href="#properties" className="hover:text-green-400 cursor-pointer">Properties</a>
       <ul className="absolute left-0 hidden group-hover:block bg-gray-800 mt-2 rounded-lg shadow-lg w-40 z-50 transition-all duration-50">
@@ -29,7 +29,7 @@ const Navbar = () => {
       </ul>
     </li>
           
-          <li><a href="#tenants" className="hover:text-green-400">Our Team</a></li>
+          <li><a href="/ourTeam" className="hover:text-green-400">Our Team</a></li>
           <li><a href="/testimonials" className="hover:text-green-400">Testimonials</a></li>
           <li><a href="/contact" className="hover:text-green-400">Our Contact</a></li>
           

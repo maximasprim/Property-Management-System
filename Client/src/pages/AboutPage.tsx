@@ -1,14 +1,14 @@
 import About from '../components/About'
-import Testimonials from '../components/Testimonials'
 import Footer from '../components/Footer'
 import Navbar from '../components/Navbar'
+import Reviews from '../features/Reviews/Review'
 
 const AboutPage =()=>{
     return (
     <div>
     <Navbar />
     <About />
-    <Testimonials />
+    <Reviews />
     <Footer />
     </div>
     )
