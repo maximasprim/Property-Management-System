@@ -18,11 +18,11 @@ return(
 </Link>
 <p className="text-gray-600">
       <Link to="/login" className="text-blue-600 hover:underline">
-        Owner Login
+        User Login
       </Link>{" "}
       |{" "}
       <Link to="/login" className="text-blue-600 hover:underline">
-        Resident Login
+        Admin Login
       </Link>
     </p>
         </div>

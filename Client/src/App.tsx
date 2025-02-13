@@ -11,6 +11,10 @@ import RegisterUser from './features/Register/Register'
 import Appi from './features/ADMIN/Dashboard'
 // import Layout from './features/USER/layout'
 import Dashboard from './features/USER/dashboard'
+import ManagementServices from './components/ManagementServices'
+import VehiclesServ from './components/VehiclesSev'
+import HousesServ from './components/HousesServ'
+import LandServ from './components/LandServ'
 
 // import './App.css'
 
@@ -49,6 +53,26 @@ const App = () => {
     {
       path: 'login',
       element: <LoginUser />,
+      errorElement: <Error />
+    },
+    {
+      path: 'managementServices',
+      element: <ManagementServices />,
+      errorElement: <Error />
+    },
+    {
+      path: 'vehiclesServices',
+      element: <VehiclesServ/>,
+      errorElement: <Error />
+    },
+    {
+      path: 'landServices',
+      element: <LandServ/>,
+      errorElement: <Error />
+    },
+    {
+      path: 'housesServices',
+      element: <HousesServ/>,
       errorElement: <Error />
     },
 
