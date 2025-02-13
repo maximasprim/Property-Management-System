@@ -1,6 +1,6 @@
 import { authenticationsTable,usersTable, TIAuthentications, TSAuthentications } from "../Drizzle/schema";
 import db from "../Drizzle/db";
-import { sql } from "drizzle-orm";
+import { sql } from "Drizzle-orm";
 // import { mailFunction } from "../mail"
 
 export const createAuthUserService = async (user: any) => {
@@ -46,15 +46,17 @@ export const createAuthUserService = async (user: any) => {
     return await db.query.authenticationsTable.findFirst({
       columns:{
           auth_id: true,
+          user_id: true,
           username: true,
           role: true,
           password: true
       }, where: sql` ${authenticationsTable.username} = ${username}`,
       with: {
-          users: {
+          user: {
               columns:{
                 user_id: true,
                   full_name: true,
+                  email: true,
                   contact_phone: true,
                   address: true,
                   role: true,

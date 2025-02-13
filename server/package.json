@@ -8,9 +8,7 @@
     "studio": "drizzle-kit studio",
     "push": "drizzle-kit push"   
   },
-  "pnpm": {
-    "onlyBuiltDependencies": ["bcrypt", "esbuild"]
-  },
+  
   
   "dependencies": {
     "@hono/node-server": "^1.11.2",

@@ -5,7 +5,7 @@ EXCEPTION
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
- CREATE TYPE "public"."role" AS ENUM('user', 'admin', 'buyer');
+ CREATE TYPE "public"."role" AS ENUM('user', 'admin', 'both');
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;

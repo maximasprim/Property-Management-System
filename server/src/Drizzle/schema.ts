@@ -16,7 +16,7 @@ import { relations } from "drizzle-orm";
 import { stat } from "fs";
 
 // Role Enum
-export const roleEnum = pgEnum("role", ["user", "admin", "buyer"]);
+export const roleEnum = pgEnum("role", ["user", "admin","both"]);
 
 // //property type
 export const propertyTypeEnum = pgEnum("property_type", ["house", "land", "vehicle"]);
@@ -304,7 +304,7 @@ export const userRelations = relations(usersTable, ({ one,many }) => ({
 }));
 
 export const authenticationsRelations = relations(authenticationsTable, ({ one }) => ({
-  users: one(usersTable,{
+  user: one(usersTable,{
     fields:[authenticationsTable.user_id],
     references:[usersTable.user_id]
   }),
