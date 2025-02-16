@@ -19,9 +19,10 @@ import Team from './components/Team'
 import OurServices from './components/Services'
 import Location from './features/Location/location'
 import Reviews from './features/Reviews/Review'
-import Houses from './features/Houses/Houses'
+// import Houses from './features/Houses/Houses'
 import FeaturedVehicles from './features/Vehicles/Vehicle'
 import LandsList from './features/Lands/Lands'
+import HousesList from './features/Houses/Houses'
 
 // import './App.css'
 
@@ -102,11 +103,11 @@ const App = () => {
       element: <Reviews/>,
       errorElement: <Error />
     },
-    {
-      path: 'houses',
-      element: <Houses/>,
-      errorElement: <Error />
-    },
+    // {
+    //   path: 'houses',
+    //   element: <Houses/>,
+    //   errorElement: <Error />
+    // },
     {
       path: 'vehicleshistory',
       element: <FeaturedVehicles/>,
@@ -115,6 +116,11 @@ const App = () => {
     {
       path: 'lands',
       element: <LandsList/>,
+      errorElement: <Error />
+    },
+    {
+      path: 'houses',
+      element: <HousesList/>,
       errorElement: <Error />
     },
 

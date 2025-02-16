@@ -129,14 +129,7 @@ const Navbar = () => {
                   Vehicles
                 </a>
               </li>
-              <li className="px-4 py-2 hover:bg-gray-700">
-                <a
-                  href="#industrial"
-                  className="text-white hover:text-green-400 block"
-                >
-                  Industrial
-                </a>
-              </li>
+              
               <li className="px-4 py-2 hover:bg-gray-700">
                 <a
                   href="/lands"

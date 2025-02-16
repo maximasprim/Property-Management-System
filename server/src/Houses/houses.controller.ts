@@ -34,7 +34,7 @@ export const createHouse = async (c: Context) => {
 
     // Validate required fields
     const requiredFields = [
-      "owner_id",
+      
       "address",
       "name",
       "number_of_rooms",

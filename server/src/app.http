@@ -249,7 +249,7 @@ POST http://localhost:3000/houses
 Content-Type: application/json
 
 {
-    "owner_id":1,
+    
     "address":"eldoret",
     "name":"max",
     "number_of_rooms":3,
@@ -258,8 +258,10 @@ Content-Type: application/json
     "status":"available",
     "year_built":2021,
     "images":[
-        "https://res.cloudinary.com/demo/image/upload/v1623456789/renovation1.jpg",
-        "https://res.cloudinary.com/demo/image/upload/v1623456789/renovation2.jpg"
+        "https://i.pinimg.com/236x/08/8d/cc/088dcce619dc0b04573aacfe40ffe288.jpg",
+        "https://i.pinimg.com/736x/2f/7b/fd/2f7bfd22c1f1f6bd4287ca397ba1e9b8.jpg",
+        "https://i.pinimg.com/236x/f5/dc/d8/f5dcd801f5a563d294c37c0ab708e35f.jpg",
+        "https://i.pinimg.com/236x/47/0a/f9/470af9362057e14e2bdc9d3f4778956e.jpg"
     ]
 
 }
@@ -268,7 +270,12 @@ PUT http://localhost:3000/houses/1
 Content-Type: application/json
 
 {
-    "status":"sold"
+    "images":[
+        "https://i.pinimg.com/236x/08/8d/cc/088dcce619dc0b04573aacfe40ffe288.jpg",
+        "https://i.pinimg.com/736x/2f/7b/fd/2f7bfd22c1f1f6bd4287ca397ba1e9b8.jpg",
+        "https://i.pinimg.com/236x/f5/dc/d8/f5dcd801f5a563d294c37c0ab708e35f.jpg",
+        "https://i.pinimg.com/236x/47/0a/f9/470af9362057e14e2bdc9d3f4778956e.jpg"
+    ]
 }
 ###
 DELETE http://localhost:3000/houses/1
