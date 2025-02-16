@@ -1,9 +1,9 @@
 import { Hono } from "hono";
-import { createVehicle, getSingleVehicle, listVehicles, updateVehicle, deleteVehicle } from "./vehicles.controller";
+import { createVehicle, getSingleVehicle, listVehicles, updateVehicle, deleteVehicle,listVehiclesWithHistories } from "./vehicles.controller";
 import {zValidator} from "@hono/zod-validator"
 import { type Context } from "hono";
 import { vehicleSchema } from "../validators";
-import { adminRoleAuth, bothRolesAuth } from "../middleware/Auth";
+// import { adminRoleAuth, bothRolesAuth } from "../middleware/Auth";
 
 
 
@@ -16,7 +16,7 @@ vehiclesRouter.get("/vehicles", listVehicles)
 
 //get a single vehicle    
 
-vehiclesRouter.get("/vehicles/:id",bothRolesAuth, getSingleVehicle)
+vehiclesRouter.get("/vehicles/:id", getSingleVehicle)
 
 // 
 
@@ -30,7 +30,9 @@ vehiclesRouter.post("/vehicles", zValidator('json', vehicleSchema, (results, c) 
 
 //update vehicle
 
-vehiclesRouter.put("/vehicles/:id",adminRoleAuth, updateVehicle)
+vehiclesRouter.put("/vehicles/:id", updateVehicle)
 
 // delete Driver
 vehiclesRouter.delete("/vehicles/:id", deleteVehicle)
+
+vehiclesRouter.get("/vehicleshistory", listVehiclesWithHistories)

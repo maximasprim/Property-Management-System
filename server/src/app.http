@@ -65,28 +65,41 @@ POST http://localhost:3000/vehicles
 Content-Type: application/json
 
 {
-    "owner_id": 1,
     "make":"nissan",
     "model":"teana",
     "year": 2021,
-    "vin":"12335",
+    "vin":"12865675",
     "status":"available",
     "price":128934.23,
     "mileage":10000,
     "fuel_type":"diesel",
-    "location": "eldoret"
+    "location": "eldoret",
+    "images":[
+        "https://i.pinimg.com/236x/3e/0a/56/3e0a56392a2588fd70dbe71b63951f16.jpg",
+        "https://i.pinimg.com/236x/0a/6b/1e/0a6b1e51a55186aed93c30ae491bddd3.jpg",
+        "https://i.pinimg.com/236x/dd/8a/b6/dd8ab68cd072b00eed72eaf29d14d855.jpg",
+        "https://i.pinimg.com/236x/ed/e5/85/ede5859dac368665c0fc0092485f8024.jpg"
+    ]
 }
 
 ###
-PUT http://localhost:3000/vehicles/1
+PUT http://localhost:3000/vehicles/5
 Content-Type: application/json
 
 {
-    "status":"sold"
+    "images":[
+        "https://i.pinimg.com/236x/3e/0a/56/3e0a56392a2588fd70dbe71b63951f16.jpg",
+        "https://i.pinimg.com/236x/0a/6b/1e/0a6b1e51a55186aed93c30ae491bddd3.jpg",
+        "https://i.pinimg.com/236x/dd/8a/b6/dd8ab68cd072b00eed72eaf29d14d855.jpg",
+        "https://i.pinimg.com/236x/ed/e5/85/ede5859dac368665c0fc0092485f8024.jpg"
+    ]
 }
 
 ###
 DELETE http://localhost:3000/vehicles/1
+###
+
+GET http://localhost:3000/vehicleshistory
 //vehiclesHistory queries
 ###
 GET http://localhost:3000/vehiclesHistory
@@ -98,8 +111,7 @@ Content-Type: application/json
 
 {
     
-    "property_type":"land",
-    "property_id":4,
+    "property_id":9,
     "previous_owner":"max",
     "transfer_date":"2021-09-09",
     "maintenance_type":"service",
@@ -342,11 +354,17 @@ Content-Type: application/json
     ]
 }
 ###
-PUT http://localhost:3000/lands/1
+PUT http://localhost:3000/lands/2
 Content-Type: application/json
 
 {
-    "status":"sold"
+    "images":[
+        "https://i.pinimg.com/236x/ac/1f/65/ac1f657fd8bb7ee744e678485745de63.jpg",
+        "https://i.pinimg.com/736x/7a/76/1d/7a761d0c69df3858fceff11ef8708f48.jpg",
+        "https://i.pinimg.com/236x/73/93/c0/7393c077d7cbe8f7e79b7aba9389c94e.jpg",
+        "https://i.pinimg.com/236x/ec/35/56/ec35562d5528acc21faa961d80433694.jpg",
+        "https://i.pinimg.com/236x/76/41/85/76418554a92e73173ffe28608e65f45d.jpg"
+    ]
 }
 
 ###

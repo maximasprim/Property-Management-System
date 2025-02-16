@@ -343,7 +343,10 @@ export const vehicleRelations = relations(vehiclesTable, ({ many }) => ({
 }));
 
 export const vehicleHistoryRelations = relations(vehiclesHistoryTable, ({ one }) => ({
-  vehicle: one(vehiclesTable),
+  vehicle: one(vehiclesTable,{
+    fields:[vehiclesHistoryTable.property_id],
+    references:[vehiclesTable.property_id]
+  }),
 }));
 
 export const locationsRelations = relations(locationsTable, ({ many }) => ({

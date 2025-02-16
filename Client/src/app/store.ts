@@ -5,6 +5,8 @@ import { authApi } from '../features/Login/loginApi';
 import authReducer from '../features/Login/loginSlice';
 // import registerSlice from '../features/Register/RegisterSlice';
 import { registerApi } from '../features/Register/RegisterApi';
+import { vehiclesApi } from '../features/Vehicles/VehicleApi';
+import {landsApi} from '../features/Lands/LandsApi';
 
 
 
@@ -13,6 +15,8 @@ const rootReducer = combineReducers({
     auth: authReducer,
     [authApi.reducerPath]:authApi.reducer,
     [registerApi.reducerPath]: registerApi.reducer,
+    [vehiclesApi.reducerPath]: vehiclesApi.reducer,
+    [landsApi.reducerPath]: landsApi.reducer,
 
 });
 
@@ -27,7 +31,8 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 export const store = configureStore({
   reducer: persistedReducer,
   middleware: (getDefaultMiddleware) => 
-    getDefaultMiddleware().concat(authApi.middleware).concat(registerApi.middleware),
+    getDefaultMiddleware().concat(authApi.middleware).concat(registerApi.middleware).concat(vehiclesApi.middleware)
+    .concat(landsApi.middleware),
 
 }) as any;
 
