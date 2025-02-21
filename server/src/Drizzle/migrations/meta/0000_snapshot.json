@@ -1,5 +1,5 @@
 {
-  "id": "5d2f927c-8301-4a91-9a92-12477f033897",
+  "id": "517a8225-a5f8-4448-9a77-98b345e6c3da",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -1048,8 +1048,8 @@
           "primaryKey": false,
           "notNull": false
         },
-        "tenant_name(For_Rental_Vehilce)": {
-          "name": "tenant_name(For_Rental_Vehilce)",
+        "tenant_name": {
+          "name": "tenant_name",
           "type": "varchar(255)",
           "primaryKey": false,
           "notNull": false

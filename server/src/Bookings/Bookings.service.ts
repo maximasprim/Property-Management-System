@@ -22,13 +22,16 @@ export const createBookingsService = async (booking: TIBookings): Promise<TIBook
 
     // Create a payment record
     const paymentRecord: TIPayments = {
+      property_type: "",
+      property_id: 0,
       payment_id: booking_id,
       booking_id: booking_id,
       amount: Number(total_amount),
-      payment_status: "Pending", // or appropriate status
-      payment_date: new Date().toISOString(), // Current date
+      status: "Pending", // or appropriate status
+      transaction_date: new Date(), // Current date
       payment_method: "Credit Card", // or appropriate method
-      transaction_id: `${booking_id}_${new Date().getTime()}`, // Example transaction ID
+      transaction_id: `${booking_id}_${new Date().getTime()}`,
+     
     };
 
     // Insert booking into bookings table

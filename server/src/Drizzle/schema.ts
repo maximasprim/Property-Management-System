@@ -204,7 +204,7 @@ service_provider: varchar("service_provider", { length: 255 }),
 maintenance_cost: integer("maintenance_cost"),
 
 // Rental or Occupancy History
-tenant_name: varchar("tenant_name(For_Rental_Vehilce)", { length: 255 }),
+tenant_name: varchar("tenant_name", { length: 255 }),
 lease_start: date("lease_start"),
 lease_end: date("lease_end"),
 

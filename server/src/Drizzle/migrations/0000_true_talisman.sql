@@ -171,7 +171,7 @@ CREATE TABLE IF NOT EXISTS "vehicles_history" (
 	"maintenance_date" date,
 	"service_provider" varchar(255),
 	"maintenance_cost" integer,
-	"tenant_name(For_Rental_Vehilce)" varchar(255),
+	"tenant_name" varchar(255),
 	"lease_start" date,
 	"lease_end" date,
 	"tax_payment_date" date,

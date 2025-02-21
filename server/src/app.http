@@ -111,7 +111,7 @@ Content-Type: application/json
 
 {
     
-    "property_id":9,
+    "property_id":11,
     "previous_owner":"max",
     "transfer_date":"2021-09-09",
     "maintenance_type":"service",
