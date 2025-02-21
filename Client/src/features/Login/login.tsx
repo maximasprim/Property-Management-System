@@ -6,6 +6,7 @@ import { setCredentials } from './loginSlice';
 import { Facebook,Twitter } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
+import Navbar from '../../components/Navbar';
 
 interface CustomJwtPayload {
   sub: string;
@@ -52,6 +53,8 @@ const LoginUser: React.FC = () => {
   };
 
   return (
+    <>
+    <Navbar/>
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-400 to-green-500">
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-sm">
         <h1 className="text-2xl font-semibold mb-6 text-center">Sign In</h1>
@@ -97,6 +100,7 @@ const LoginUser: React.FC = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

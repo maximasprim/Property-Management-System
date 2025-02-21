@@ -2,17 +2,17 @@ import logo from "../assets/mansion3.jpg";
 const Footer = () => {
   return (
     <>
-      <footer className="relative z-10 bg-zinc-800	background-color: rgb(39 39 42) pb-10 pt-20 dark:bg-dark lg:pb-20 lg:pt-[120px] w-full">
+      <footer className="relative z-10 bg-zinc-800	 lg:pb-10 lg:pt-[40px] rounded-t-2xl ">
         <div className="container">
-          <div className="-mx-4 flex flex-wrap gap-5">
+          <div className="-mx-4 flex flex-wrap gap-16">
             <div className="w-full px-4 sm:w-2/3 lg:w-3/12">
-              <div className="mb-10 w-full">
+              <div className="mb-10 w-full mx-10">
                 <a href="/#" className="mb-6 inline-block max-w-[160px]">
                   
                  <img src= {logo} alt="logo" />
                 </a>
                 <p className="mb-7 text-base text-body-color dark:text-dark-6">
-                 Enjoy Your Ride With Us
+                 Enjoy Your Stay With Us
                 </p>
                 <p className="flex items-center text-sm font-medium text-dark dark:text-white">
                   <span className="mr-3 text-primary">
@@ -131,7 +131,7 @@ const Footer = () => {
 
                 </div>
                 <p className="text-base text-body-color dark:text-dark-6">
-                  &copy; 2024 Maximus CarBook
+                  &copy; 2025 TrueEstate Property Mangement
                 </p>
               </div>
             </div>

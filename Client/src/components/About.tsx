@@ -1,8 +1,8 @@
 
 
 import vehicle1 from "../assets/WhatsApp Image 2024-07-14 at 16.08.03_bf576b84.jpg";
-import vehicle2 from "../assets/WhatsApp Image 2024-07-14 at 16.08.04_11cf44c0.jpg";
-import vehicle3 from "../assets/WhatsApp Image 2024-07-14 at 16.08.04_441b8dfa.jpg";
+import vehicle2 from "../assets/abtpik5.jpg";
+import vehicle3 from "../assets/abtpik3.jpg";
 
 
 const About = () => {
@@ -605,8 +605,8 @@ const About = () => {
                 <span className="text-5xl font-size: 3rem block mb-4  font-semibold text-primary">
                   Why Choose Us
                 </span>
-                <h2 className="mb-5 text-3xl font-bold text-dark dark:text-white sm:text-[40px]/[48px]">
-                  Make your customers happy by giving services.
+                <h2 className="mb-5 text-3xl font-bold text-dark dark:text-gray sm:text-[40px]/[48px]">
+                  Make our customers happy by giving services.
                 </h2>
                 <p className="text-xl line-height: 1.75rem mb-5  text-body-color dark:text-dark-6">
                   Choosing to hire from us means opting for reliability,
