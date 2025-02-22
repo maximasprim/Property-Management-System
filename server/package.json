@@ -8,6 +8,12 @@
     "studio": "drizzle-kit studio",
     "push": "drizzle-kit generate || tsx src/drizzle/migrate.ts"
   },
+  
+    "pnpm": {
+      "onlyBuiltDependencies": ["bcrypt", "esbuild"]
+    }
+  ,
+  
   "dependencies": {
     "@hono/node-server": "^1.11.2",
     "@hono/prometheus": "^1.0.1",
