@@ -1,6 +1,6 @@
 import { authenticationsTable,usersTable, TIAuthentications, TSAuthentications } from "../Drizzle/schema";
 import db from "../Drizzle/db";
-import { sql } from "Drizzle-orm";
+import { sql } from "drizzle-orm";
 // import { mailFunction } from "../mail"
 
 export const createAuthUserService = async (user: any) => {
