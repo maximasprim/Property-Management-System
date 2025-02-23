@@ -23,6 +23,8 @@ import Reviews from './features/Reviews/Review'
 import FeaturedVehicles from './features/Vehicles/Vehicle'
 import LandsList from './features/Lands/Lands'
 import HousesList from './features/Houses/Houses'
+import UsersList from './features/users/users'
+import ReusableForm from './components/inputForm'
 
 // import './App.css'
 
@@ -114,6 +116,15 @@ const App = () => {
       errorElement: <Error />
     },
     {
+      path: 'inputform',
+      element: <ReusableForm 
+        fields={[]} 
+        initialValues={{}} 
+        onSubmit={() => {}} 
+      />,
+      errorElement: <Error />
+    },
+    {
       path: 'lands',
       element: <LandsList/>,
       errorElement: <Error />
@@ -130,7 +141,11 @@ const App = () => {
       element: <Appi />,
       errorElement: <Error />,
       children:[
-
+        {
+          path:'users',
+          element: <UsersList/>,
+          errorElement: <Error />,
+        }
       ]
     },
 
@@ -140,6 +155,7 @@ const App = () => {
       element: <Dashboard/>,
       errorElement: <Error />,
       children:[
+        
 
       ]
     }

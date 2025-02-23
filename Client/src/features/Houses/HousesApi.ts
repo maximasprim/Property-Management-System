@@ -16,7 +16,7 @@ export interface House {
 
 export const HousesApi = createApi({
   reducerPath: "housesApi",
-  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3000" }),
+  baseQuery: fetchBaseQuery({ baseUrl: "https://property-management-system-api.onrender.com" }),
   endpoints: (builder) => ({
     fetchHouses: builder.query<House[], void>({
       query: () => "/houses",
