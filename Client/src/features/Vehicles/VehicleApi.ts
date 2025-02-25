@@ -59,7 +59,23 @@ export const vehiclesApi = createApi({
     fetchVehiclesWithHistory: builder.query<Vehicle[], void>({
       query: () => 'vehicleshistory',
     }),
+    getVehicles: builder.query({
+      query: () => 'vehicles',
+    }),
+    getVehicleById: builder.query({
+      query: (id) => `vehicles/${id}`,
+    }),
+    getVehicleHistory: builder.query({
+      query: (id) => `vehiclesHistory/${id}`,
+    }),
+    createVehicle: builder.mutation<Vehicle, Partial<Vehicle>>({
+      query: (newVehicle: Vehicle) => ({
+        url: 'vehicles',
+        method: 'POST',
+        body: newVehicle,
+      }),
+    }),
   }),
 });
 
-export const { useFetchVehiclesWithHistoryQuery } = vehiclesApi;
+export const { useFetchVehiclesWithHistoryQuery,useGetVehiclesQuery,useGetVehicleHistoryQuery, useCreateVehicleMutation } = vehiclesApi;

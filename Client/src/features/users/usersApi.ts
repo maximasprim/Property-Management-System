@@ -14,7 +14,7 @@ export interface User {
 
 export const usersApi = createApi({
   reducerPath: 'usersApi',
-  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3000' }), // Replace with your actual API URL
+  baseQuery: fetchBaseQuery({ baseUrl: 'https://property-management-system-api.onrender.com' }), // Replace with your actual API URL
   tagTypes: ['Users'],
   endpoints: (builder) => ({
     fetchUsers: builder.query<any[], void>({
@@ -23,7 +23,7 @@ export const usersApi = createApi({
     }),
     fetchUserById: builder.query<User, number>({
         query: (user_id) => ({
-          url: `users/${user_id}`,
+          url: `/users/${user_id}`,
           method: 'GET',
         }),
       }),

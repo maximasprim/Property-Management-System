@@ -17,7 +17,7 @@ const Sidebar: React.FC = () => {
   };
 
   return (
-    <div className="w-64 bg-gray-300 shadow-md h-screen overflow-y-auto ">
+    <div className="w-64 bg-gray-300 shadow-md h-full overflow-y-auto ">
       <Toaster
         toastOptions={{
           classNames: {
@@ -29,10 +29,10 @@ const Sidebar: React.FC = () => {
         }}
       />
       <div className="p-6">
-        <h2 className="text-2xl font-semibold">Admin Dashboard</h2>
+        <h2 className="text-2xl font-semibold ">Admin Dashboard</h2>
       </div>
       <nav className="p-4 " >
-      <ul className="menu font-semibold	font-weight: 600 text-lg	font-size: 0.875rem w-[200px] gap-5  min-h-full text-black	color: rgb(255 255 255)">
+      <ul className="menu font-semibold	font-weight: 600 text-lg	font-size: 0.875rem w-[200px] gap-5  min-h-screen text-black	color: rgb(255 255 255)">
                
           <li>
               <Link to="">Dashboard</Link>
@@ -41,11 +41,9 @@ const Sidebar: React.FC = () => {
               <Link to="users">Users</Link>
           </li>
           <li>
-              <Link to="vehicles">Vehicles</Link>
+              <Link to="vehicles_details">Vehicles</Link>
           </li>
-          <li>
-              <Link to="vehiclesSpecifications">Vehicles Specifications</Link>
-          </li>
+          
           <li>
           <details>
           <summary>
@@ -63,10 +61,10 @@ const Sidebar: React.FC = () => {
         </details>
           </li>
           <li>
-              <Link to="payments">Revenue</Link>
+              <Link to="payments">Houses</Link>
           </li>
           <li>
-              <Link to="fleetManagement">Fleet Management</Link>
+              <Link to="fleetManagement">Lands</Link>
           </li>
           <li>
               <Link to="ticket">Customer Tickets</Link>
@@ -75,7 +73,10 @@ const Sidebar: React.FC = () => {
               <Link to="locations">Locations & Branches</Link>
           </li>
           <li>
-              <Link to="cloudinaryform">Upload Vehicles Images</Link>
+              <Link to="locations">Customer Reviews</Link>
+          </li>
+          <li>
+              <Link to="add_property">Add Property </Link>
           </li>
           
           <li>

@@ -2,14 +2,15 @@ import React, { useEffect, useState } from 'react';
 // import { useNavigate } from 'react-router-dom';
 import { useFetchUsersQuery, useAddUserMutation, useUpdateUserMutation, useDeleteUserMutation } from './usersApi';
 import UserDetails from './singleUserComponent';
+import {useNavigate} from 'react-router-dom'
 
 const UsersList: React.FC = () => {
   const { data: users = [], isLoading, error, refetch } = useFetchUsersQuery();
   const [addUser] = useAddUserMutation();
   const [updateUser] = useUpdateUserMutation();
   const [deleteUser] = useDeleteUserMutation();
-  const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
-//   const navigate = useNavigate();
+  const [selectedUserId] = useState<number | null>(null);
+  const navigate = useNavigate();
 
   const initialUserState = { user_id: 0, full_name: '', email: '', contact_phone: '', address: '', role: 'user' };
   const [newUser, setNewUser] = useState(initialUserState);
@@ -60,6 +61,11 @@ const UsersList: React.FC = () => {
     }
   };
 
+  const handleViewUser = (id: number) => {
+    // setSelectedUserId(id);
+    navigate(`/users/${id}`);
+  };
+
   if (isLoading) return <div>Loading...</div>;
   if (error) {
     const errorMessage = 'status' in error ? `Error: ${error.status}` : error.message;
@@ -86,7 +92,7 @@ const UsersList: React.FC = () => {
         )}
       </div>
 
-      <table className="table-auto w-full border border-gray-700">
+      <table className="table-auto w-full border border-gray-700 ">
         <thead>
           <tr className="bg-gray-700">
             <th>#</th>
@@ -111,7 +117,7 @@ const UsersList: React.FC = () => {
                 <div className="flex space-x-2">
                   <button className="btn btn-sm btn-info" onClick={() => handleEditUser(user)}>Edit</button>
                   <button className="btn btn-sm btn-error" onClick={() => handleDeleteUser(user.user_id)}>Delete</button>
-                  <button className="btn btn-sm btn-primary" onClick={() => setSelectedUserId(user.user_id)}>View</button>
+                  <button className="btn btn-sm btn-primary" onClick={() => handleViewUser(user.user_id)}>View</button>
                 </div>
               </td>
             </tr>

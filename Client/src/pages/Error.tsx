@@ -1,9 +1,11 @@
 import { Link, useRouteError } from "react-router-dom";
 
-import {ArrowLeft} from 'lucide-react'
+// import {ArrowLeft} from 'lucide-react'
+import { useNavigate } from "react-router-dom";
 
 function Error() {
 const error : any = useRouteError()
+const navigate = useNavigate()
 
   return (
     <div className="py-10  bg:base-100">
@@ -19,9 +21,9 @@ const error : any = useRouteError()
             {error?.statusText || error.message}
         </p>
         <div className="mt-4 flex items-center justify-center gap-x-3">
-            <Link to="/" className="inline-flex items-center btn btn-sm btn-info text-sm font-semibold"><ArrowLeft size={16} className="mr-2" />Go back
-            </Link>
-            <Link to="/" className="rounded-md btn btn-primary btn-sm  text-sm font-semibold"> Contact us
+        <button onClick={() => navigate(-1)} className="rounded-md btn btn-primary btn-sm  text-sm font-semibold">Go Back</button>
+            
+            <Link to="/contact" className="rounded-md btn btn-primary btn-sm  text-sm font-semibold"> Contact us
             </Link>
         </div>
     </div>

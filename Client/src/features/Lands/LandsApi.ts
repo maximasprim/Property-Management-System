@@ -20,7 +20,14 @@ export const landsApi = createApi({
     fetchLands: builder.query<Land[], void>({
       query: () => "/lands",
     }),
+    createLand: builder.mutation<Land, Partial<Land>>({
+              query: (newLand: Land) => ({
+                url: '/lands',
+                method: 'POST',
+                body: newLand,
+              }),
+      }),
   }),
 });
 
-export const { useFetchLandsQuery } = landsApi;
+export const { useFetchLandsQuery,useCreateLandMutation } = landsApi;

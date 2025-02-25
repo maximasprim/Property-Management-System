@@ -21,7 +21,14 @@ export const HousesApi = createApi({
     fetchHouses: builder.query<House[], void>({
       query: () => "/houses",
     }),
+    createHouse: builder.mutation<House, Partial<House>>({
+          query: (newHouse: House) => ({
+            url: '/houses',
+            method: 'POST',
+            body: newHouse,
+          }),
+  }),
   }),
 });
 
-export const { useFetchHousesQuery } = HousesApi;
+export const { useFetchHousesQuery,useCreateHouseMutation } = HousesApi;

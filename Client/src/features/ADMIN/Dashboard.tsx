@@ -4,6 +4,7 @@ import Sidebar from './Sidebar'
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import { Outlet } from 'react-router-dom';
+// import AdminDashboard from './Dashboardlayout';
 
 const Appi: React.FC = () => {
   return (
@@ -12,7 +13,7 @@ const Appi: React.FC = () => {
     <div className="flex min-h-screen bg-gray-100">
       
       <Sidebar />
-      {/* <Dashboard /> */}
+      {/* <AdminDashboard/> */}
       <Outlet />
     </div>
     <Footer />

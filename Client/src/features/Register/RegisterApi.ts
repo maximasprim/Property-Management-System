@@ -4,7 +4,7 @@ import { RegisterUser } from './RegisterSlice';
 
 export const registerApi = createApi({
   reducerPath: 'registerApi',
-  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3000' }), // Adjust baseUrl as per your API endpoint
+  baseQuery: fetchBaseQuery({ baseUrl: 'https://property-management-system-api.onrender.com' }), // Adjust baseUrl as per your API endpoint
   endpoints: (builder) => ({
     registerUser: builder.mutation<any, RegisterUser>({
       query: (userData) => ({

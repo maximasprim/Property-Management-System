@@ -20,11 +20,16 @@ import OurServices from './components/Services'
 import Location from './features/Location/location'
 import Reviews from './features/Reviews/Review'
 // import Houses from './features/Houses/Houses'
-import FeaturedVehicles from './features/Vehicles/Vehicle'
+import FeaturedVehicles from './features/Vehicles/FeaturedVehicle'
 import LandsList from './features/Lands/Lands'
-import HousesList from './features/Houses/Houses'
+import HousesList from './features/Houses/FeaturedHouses'
 import UsersList from './features/users/users'
 import ReusableForm from './components/inputForm'
+import UserDetails from './features/users/singleUserComponent'
+import AdminDashboard from './features/ADMIN/Dashboardlayout'
+import Vehicles from './features/Vehicles/Vehicles'
+import AddForm from './pages/AddComponent'
+
 
 // import './App.css'
 
@@ -142,10 +147,36 @@ const App = () => {
       errorElement: <Error />,
       children:[
         {
+          index: true,
+          element: <AdminDashboard />,
+          errorElement:<Error/>,
+        },
+        {
           path:'users',
           element: <UsersList/>,
           errorElement: <Error />,
-        }
+        },
+        {
+          path:'dashboardpage',
+          element: <AdminDashboard/>,
+          errorElement: <Error />,
+        },
+        {
+          path:'users/:id',
+          element: <UserDetails/>,
+          errorElement: <Error />,
+        },
+        {
+          path:'vehicles_details',
+          element: <Vehicles/>,
+          errorElement: <Error />,
+        },
+        {
+          path:'add_property',
+          element: <AddForm/>,
+          errorElement: <Error />,
+        },
+        
       ]
     },
 

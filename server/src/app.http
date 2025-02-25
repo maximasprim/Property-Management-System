@@ -59,7 +59,7 @@ DELETE http://localhost:3000/users/4
 GET http://localhost:3000/vehicles
 
 ###
-GET http://localhost:3000/vehicle/1
+GET http://localhost:3000/vehicles/1
 ###
 POST http://localhost:3000/vehicles
 Content-Type: application/json
