@@ -4,6 +4,7 @@ import { useCreateLandMutation } from "./LandsApi"; // Adjust the import based o
 interface Land {
   location?: string;
   size: number;
+  property_name: string;
   price: number;
   status: string;
   land_type: string;
@@ -13,6 +14,7 @@ interface Land {
 const LandForm: React.FC = () => {
   const [land, setLand] = useState<Land>({
     location: "",
+    property_name: "",
     size: 0,
     price: 0,
     status: "Available",
@@ -45,6 +47,7 @@ const LandForm: React.FC = () => {
       alert("Land added successfully!");
       setLand({
         location: "",
+        property_name: "",
         size: 0,
         price: 0,
         status: "Available",
@@ -67,6 +70,7 @@ const LandForm: React.FC = () => {
         <input type="number" name="price" placeholder="Enter Price ($)" value={land.price || ""} onChange={handleChange} className="input input-bordered w-full" required />
         <input type="text" name="status" placeholder="Status" value={land.status} onChange={handleChange} className="input input-bordered w-full" required />
         <input type="text" name="land_type" placeholder="Land Type" value={land.land_type} onChange={handleChange} className="input input-bordered w-full" required />
+        <input type="text" name="property_name" placeholder="Property Name" value={land.property_name} onChange={handleChange} className="input input-bordered w-full" required />
 
         {/* Image URLs Field */}
         <input 

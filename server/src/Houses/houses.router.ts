@@ -1,5 +1,5 @@
 import { Hono } from "hono";
-import { createHouse, getSingleHouse, listHouses, updateHouse, deleteHouse} from "./houses.controller";
+import { createHouse, getSingleHouse, listHouses, updateHouse, deleteHouse,listHousesWithHistories} from "./houses.controller";
 import {zValidator} from "@hono/zod-validator"
 import { type Context } from "hono";
 import { housesSchema } from "../validators";
@@ -34,6 +34,7 @@ houseRouter.put("/houses/:id", updateHouse)
 
 // delete Driver
 houseRouter.delete("/houses/:id", deleteHouse)
+houseRouter.get("/housesWithHistory",listHousesWithHistories)
 
 //get houses with bookings
 // houseRouter.get("/housesWithBookings", listHouseWithBookings)

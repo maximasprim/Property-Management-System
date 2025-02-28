@@ -37,6 +37,43 @@ export const deleteLandService = async (id: number) => {
     return "Land deleted successfully";
 }
 
+export const getLandsWithHistoryService = async (): Promise<
+  TSLand[] | null
+> => {
+  return await db.query.landTable.findMany({
+    with: {
+      history: {
+        columns: {
+          property_id: true,
+          previous_owner: true,
+          transfer_date: true,
+          tenant_name: true,
+          lease_start: true,
+          lease_end: true,
+            legal_issue: true,
+            resolution_date: true,
+            permit_approval_date: true,
+            disaster_type: true,
+            disaster_date: true,
+            disaster_description: true,
+            status_after_disaster: true,
+            environmental_assessment_date: true,
+            crime_type: true,
+            crime_date: true,
+            valuation_date: true,
+            property_value: true,
+            dispute_type: true,
+            dispute_status: true,
+            dispute_resolution_date: true,
+            feedback_date: true,
+            tenant_feedback: true
+
+        },
+      },
+    },
+  });
+};
+
 // export const getLandWithBookingsService = async (): Promise<
 //   TSLand[] | null
 // > => {
@@ -45,7 +82,7 @@ export const deleteLandService = async (id: number) => {
 //       bookings: {
 //         columns: {
 //           booking_id: true,
-//           vehicle_id: true,
+//           land_id: true,
 //           location_id: true,
 //           booking_date: true,
 //           return_date: true,
@@ -63,7 +100,7 @@ export const deleteLandService = async (id: number) => {
 //             bookings: {
 //                 columns: {
 //                   booking_id: true,
-//                   vehicle_id: true,
+//                   land_id: true,
 //                   location_id: true,
 //                   booking_date: true,
 //                   return_date: true,

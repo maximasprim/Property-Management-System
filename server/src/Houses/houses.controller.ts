@@ -1,5 +1,5 @@
 import { Context } from "hono";
-import { housesService, getHouseService, createHouseService, updateHouseService, deleteHouseService} from "./houses.service";
+import { housesService, getHouseService, createHouseService, updateHouseService, deleteHouseService,getHousesWithHistoryService} from "./houses.service";
 
 
 
@@ -116,6 +116,14 @@ export const deleteHouse =  async (c: Context) => {
   }catch(error: any){
       return c.json({error: error?.message}, 400)
   }
+}
+
+export const listHousesWithHistories = async (c: Context) =>{
+  const data = await getHousesWithHistoryService();
+  if ( data == null){
+    return c.text("user not Found", 404)
+  }
+    return c.json(data, 200);
 }
 
 //house relations

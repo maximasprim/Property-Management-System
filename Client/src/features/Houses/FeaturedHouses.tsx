@@ -1,10 +1,10 @@
 import Footer from "../../components/Footer";
 import Navbar from "../../components/Navbar";
-import { House, useFetchHousesQuery } from "./HousesApi"; // Adjust based on your API slice
+import { House, useGetHousesQuery } from "./HousesApi"; // Adjust based on your API slice
 import { useState } from "react";
 
 const HousesList = () => {
-  const { data: houses, isLoading, isError } = useFetchHousesQuery();
+  const { data: houses, isLoading, isError } = useGetHousesQuery();
   // const [visibleCount, setVisibleCount] = useState(3);
   const [selectedHouse, setSelectedHouse] = useState<any>(null);
   const [showGallery, setShowGallery] = useState(false); // New state for gallery view

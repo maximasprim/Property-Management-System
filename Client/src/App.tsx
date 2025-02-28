@@ -21,7 +21,7 @@ import Location from './features/Location/location'
 import Reviews from './features/Reviews/Review'
 // import Houses from './features/Houses/Houses'
 import FeaturedVehicles from './features/Vehicles/FeaturedVehicle'
-import LandsList from './features/Lands/Lands'
+import LandsList from './features/Lands/FeaturedLands'
 import HousesList from './features/Houses/FeaturedHouses'
 import UsersList from './features/users/users'
 import ReusableForm from './components/inputForm'
@@ -29,6 +29,14 @@ import UserDetails from './features/users/singleUserComponent'
 import AdminDashboard from './features/ADMIN/Dashboardlayout'
 import Vehicles from './features/Vehicles/Vehicles'
 import AddForm from './pages/AddComponent'
+import Houses from './features/Houses/Houses'
+import Lands from './features/Lands/Lands'
+import Locations from './features/Location/Locations'
+import PropertiesList from './features/All_PropertyTypes/Property'
+import PropertyDetails from './features/All_PropertyTypes/PropertyDetails'
+import CustomerReviews from './features/Reviews/Reviews'
+import ImageUploadWidget from './components/CloudinaryUploadForm'
+
 
 
 // import './App.css'
@@ -58,6 +66,21 @@ const App = () => {
     {
       path: 'contact',
       element: <Contact />,
+      errorElement: <Error />
+    },
+    {
+      path: 'properties',
+      element: <PropertiesList />,
+      errorElement: <Error />
+    },
+    {
+      path: 'properties/:id',
+      element: <PropertyDetails />,
+      errorElement: <Error />
+    },
+    {
+      path: 'imageUpload',
+      element: <ImageUploadWidget />,
       errorElement: <Error />
     },
     {
@@ -172,8 +195,29 @@ const App = () => {
           errorElement: <Error />,
         },
         {
+          path:'houses_details',
+          element: <Houses/>,
+          errorElement: <Error />,
+        },
+        {
+          path:'lands_details',
+          element: <Lands/>,
+          errorElement: <Error />,
+        },
+        {
           path:'add_property',
           element: <AddForm/>,
+          errorElement: <Error />,
+        },
+        {
+          path:'locations',
+          element: <Locations/>,
+          errorElement: <Error />,
+        },
+        
+        {
+          path:'customer_reviews',
+          element: <CustomerReviews/>,
           errorElement: <Error />,
         },
         

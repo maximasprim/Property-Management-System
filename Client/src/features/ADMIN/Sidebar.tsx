@@ -17,7 +17,7 @@ const Sidebar: React.FC = () => {
   };
 
   return (
-    <div className="w-64 bg-gray-300 shadow-md h-full overflow-y-auto ">
+    <div className="w-64 bg-gray-300 shadow-md h-screen overflow-y-auto ">
       <Toaster
         toastOptions={{
           classNames: {
@@ -43,7 +43,12 @@ const Sidebar: React.FC = () => {
           <li>
               <Link to="vehicles_details">Vehicles</Link>
           </li>
-          
+          <li>
+              <Link to="houses_details">Houses</Link>
+          </li>
+          <li>
+              <Link to="lands_details">Lands</Link>
+          </li>
           <li>
           <details>
           <summary>
@@ -60,20 +65,13 @@ const Sidebar: React.FC = () => {
           </ul>
         </details>
           </li>
-          <li>
-              <Link to="payments">Houses</Link>
-          </li>
-          <li>
-              <Link to="fleetManagement">Lands</Link>
-          </li>
-          <li>
-              <Link to="ticket">Customer Tickets</Link>
-          </li>
+          
+          
           <li>
               <Link to="locations">Locations & Branches</Link>
           </li>
           <li>
-              <Link to="locations">Customer Reviews</Link>
+              <Link to="customer_reviews">Customer Reviews</Link>
           </li>
           <li>
               <Link to="add_property">Add Property </Link>

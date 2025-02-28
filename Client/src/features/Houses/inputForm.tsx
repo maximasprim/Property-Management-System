@@ -5,6 +5,7 @@ interface House {
   name: string;
   address?: string;
   number_of_rooms: number;
+  house_type?: string;
   size: number;
   price: number;
   status: string;
@@ -16,6 +17,7 @@ const HouseForm: React.FC = () => {
   const [house, setHouse] = useState<House>({
     name: "",
     address: "",
+    house_type: "",
     number_of_rooms: 0,
     size: 0,
     price: 0,
@@ -50,6 +52,7 @@ const HouseForm: React.FC = () => {
       setHouse({
         name: "",
         address: "",
+        house_type: "",
         number_of_rooms: 0,
         size: 0,
         price: 0,
@@ -70,6 +73,7 @@ const HouseForm: React.FC = () => {
       <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
         <input type="text" name="name" placeholder="House Name" value={house.name} onChange={handleChange} className="input input-bordered w-full" required />
         <input type="text" name="address" placeholder="Address" value={house.address} onChange={handleChange} className="input input-bordered w-full" />
+        <input type="text" name="house_type" placeholder="Type of House" value={house.house_type} onChange={handleChange} className="input input-bordered w-full" />
         <input type="number" name="number_of_rooms" placeholder="Enter Number of Rooms" value={house.number_of_rooms || ""} onChange={handleChange} className="input input-bordered w-full" required />
         <input type="number" name="size" placeholder="Enter Property Size (sq ft)" value={house.size || ""} onChange={handleChange} className="input input-bordered w-full" required />
         <input type="number" name="price" placeholder="Enter Price ($)" value={house.price || ""} onChange={handleChange} className="input input-bordered w-full" required />

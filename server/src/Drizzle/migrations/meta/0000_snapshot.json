@@ -1,5 +1,5 @@
 {
-  "id": "517a8225-a5f8-4448-9a77-98b345e6c3da",
+  "id": "6471ce05-5369-4654-8276-dd5fbf609e19",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -218,8 +218,8 @@
           "primaryKey": false,
           "notNull": false
         },
-        "lease_start(Rental_property)": {
-          "name": "lease_start(Rental_property)",
+        "lease_start": {
+          "name": "lease_start",
           "type": "date",
           "primaryKey": false,
           "notNull": false
@@ -386,6 +386,12 @@
           "primaryKey": false,
           "notNull": true
         },
+        "house_type": {
+          "name": "house_type",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
         "number_of_rooms": {
           "name": "number_of_rooms",
           "type": "integer",
@@ -485,8 +491,8 @@
           "primaryKey": false,
           "notNull": true
         },
-        "tenant_name(For_Rental_Property)": {
-          "name": "tenant_name(For_Rental_Property)",
+        "tenant_name": {
+          "name": "tenant_name",
           "type": "varchar(255)",
           "primaryKey": false,
           "notNull": false
@@ -593,8 +599,8 @@
           "primaryKey": false,
           "notNull": false
         },
-        "tenant_feedback(For_rental_properry)": {
-          "name": "tenant_feedback(For_rental_properry)",
+        "tenant_feedback": {
+          "name": "tenant_feedback",
           "type": "text",
           "primaryKey": false,
           "notNull": false
@@ -633,6 +639,12 @@
           "name": "property_id",
           "type": "serial",
           "primaryKey": true,
+          "notNull": true
+        },
+        "property_name": {
+          "name": "property_name",
+          "type": "varchar(255)",
+          "primaryKey": false,
           "notNull": true
         },
         "location": {

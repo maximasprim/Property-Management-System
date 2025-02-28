@@ -5,8 +5,8 @@ import Topbanner from '../components/Topbanner';
 import FeaturedProperties from '../components/Featured properties';
 import Footer from '../components/Footer';
 import About from '../components/About';
-// import UsersList from '../features/users/users';
-// import ReusableForm from '../components/inputForm';
+import ImageUploadWidget from '../components/CloudinaryUploadForm';
+import ParentComponent from '../components/parent';
 
 
 const Home = () => {
@@ -20,6 +20,8 @@ const Home = () => {
                 <FeaturedProperties />
                 <About />
                 <Footer />
+                {/* <ImageUploadWidget />
+                <ParentComponent /> */}
                
             
             </Container>

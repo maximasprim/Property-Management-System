@@ -1,5 +1,5 @@
 import { Context } from "hono";
-import { landService, getLandService, createLandService, updateLandService, deleteLandService} from "./lands.service";
+import { landService, getLandService, createLandService, updateLandService, deleteLandService,getLandsWithHistoryService} from "./lands.service";
 
 
 
@@ -114,6 +114,14 @@ export const deleteLand =  async (c: Context) => {
       return c.json({error: error?.message}, 400)
   }
 }
+export const listLandsWithHistories = async (c: Context) =>{
+  const data = await getLandsWithHistoryService();
+  if ( data == null){
+    return c.text("user not Found", 404)
+  }
+    return c.json(data, 200);
+}
+
 
 //land relations
 

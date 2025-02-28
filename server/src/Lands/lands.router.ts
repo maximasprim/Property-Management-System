@@ -1,5 +1,5 @@
 import { Hono } from "hono";
-import { createLand, getSingleLand, listLand, updateLand, deleteLand} from "./lands.controller";
+import { createLand, getSingleLand, listLand, updateLand, deleteLand,listLandsWithHistories} from "./lands.controller";
 import {zValidator} from "@hono/zod-validator"
 import { type Context } from "hono";
 import { landsSchema } from "../validators";
@@ -34,7 +34,7 @@ landRouter.put("/lands/:id", updateLand)
 
 // delete Driver
 landRouter.delete("/lands/:id", deleteLand)
-
+landRouter.get("/landWithHistory", listLandsWithHistories)
 //get lands with bookings
 // landRouter.get("/landsWithBookings", listLandWithBookings)
 // // landRouter.get("/lands/withBookings/:id", listLandWithBookings)

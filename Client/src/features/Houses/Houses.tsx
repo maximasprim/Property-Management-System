@@ -1,133 +1,143 @@
 import {
-  useFetchLandsWithHistoryQuery,
-  useDeleteLandMutation,
-  LandHistory,
-  Land,
-} from "./LandsApi";
-import UpdateLandModal from "./LandModal";
+  useFetchHousesWithHistoryQuery,
+  useDeleteHouseMutation,
+  HouseHistory,
+  House,
+} from "./HousesApi";
+import UpdateHouseModal from "./houseModal";
 
-import { useState, useEffect } from "react";
+import { useState,useEffect } from "react";
 import { debounce } from "lodash";
 
-const Lands = () => {
+const Houses = () => {
   const {
-    data: lands,
+    data: houses,
     isLoading,
-    isError,
-    refetch,
-  } = useFetchLandsWithHistoryQuery();
-
-  const [selectedLand, setSelectedLand] = useState<any>(null);
-  const [deleteLand] = useDeleteLandMutation();
+    isError,refetch
+  } = useFetchHousesWithHistoryQuery();
+  console.log(houses);
+  const [selectedHouse, setSelectedHouse] = useState<any>(null);
+  const [deleteHouse] = useDeleteHouseMutation();
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
 
   useEffect(() => {
-    const debouncedRefetch = debounce(refetch, 300);
+    const debouncedRefetch = debounce(refetch, 100); // Adjust delay as needed
     debouncedRefetch();
     return () => debouncedRefetch.cancel();
-  }, [lands]);
+  }, [houses]);
 
-  const handleCardClick = (land: any) => {
-    setSelectedLand(land);
+  const handleCardClick = (house: any) => {
+    console.log("Selected House:", house);
+    setSelectedHouse(house); // Set the selected house when clicked
   };
 
-  const handleUpdateClick = (land: Land) => {
-    setSelectedLand(land);
+  const handleUpdateClick = (house: House) => {
+    setSelectedHouse(house);
     setIsUpdateModalOpen(true);
   };
 
-  const handleDeleteClick = async (propertyId: number) => {
-    if (window.confirm("Are you sure you want to delete this land?")) {
-      await deleteLand(propertyId);
+  const handleDeleteClick = async (houseId: number) => {
+    if (window.confirm("Are you sure you want to delete this house?")) {
+      await deleteHouse(houseId);
     }
   };
 
   const handleBack = () => {
-    setSelectedLand(null);
+    setSelectedHouse(null); // Clear the selected house to go back to the list
   };
 
-  if (isLoading) return <div className="text-center">Loading lands...</div>;
-  if (isError)
+  if (isLoading) {
+    return <div className="text-center">Loading houses...</div>;
+  }
+
+  if (isError) {
     return (
       <div className="text-center text-red-600">
-        Failed to load lands. Please try again later.
+        Failed to load houses. Please try again later.
       </div>
     );
+  }
 
   return (
     <section className="bg-gray-800 flex flex-col min-h-screen w-full">
-      {selectedLand ? (
-        (console.log("Selected Land History:", selectedLand?.lands_history),
+      {selectedHouse ? (
+        (console.log(
+          "Selected House History:",
+          selectedHouse?.houses_history
+        ),
         (
-          // Detailed View for Selected Land
+          // Detailed View for Selected House
           <div className="max-w-8xl mx-auto bg-white rounded-lg shadow-md p-6 ">
             <button
               onClick={handleBack}
               className="text-blue-600 font-semibold mb-4"
             >
-              &larr; Back to lands
+              &larr; Back to houses
             </button>
             <div className="flex flex-col md:flex-col gap-4">
-              {/* Land Images */}
+              {/* House Images */}
               <div className="flex overflow-x-auto space-x-2 scrollbar-thin scrollbar-thumb-blue-600 scrollbar-track-gray-300">
-                {selectedLand.images.map((image: string, index: number) => (
+                {selectedHouse.images.map((image: string, index: number) => (
                   <img
                     key={index}
                     src={image || "https://via.placeholder.com/300"}
-                    alt={`Land Image ${index + 1}`}
+                    alt={`House Image ${index + 1}`}
                     className="w-64 h-48 object-cover rounded-md"
                   />
                 ))}
               </div>
-              {/* Land Details */}
+              {/* House Details */}
               <div>
                 <div className="flex flex-row gap-32">
                   <div>
-                    {/* Land Info */}
-                    <h3 className="text-2xl font-semibold">
-                      <span className="text-orange-500">Property Name:</span>{" "}
-                      <span className="text-green-500">
-                        {selectedLand.property_name || "N/A"}
-                      </span>
+                    <h3 className="text-2xl font-semibold "><span className="text-orange-500">Property Name:</span>{" "} <span className="text-green-500">{selectedHouse.name}</span>{" "}
+                      
                     </h3>
-
-                    <p className="text-lg text-gray-600">
-                      <span className="font-bold">Size in Acres:</span>{" "}
-                      {selectedLand.size || "N/A"}
+                    <p className="text-lg text-gray-600"><span className="font-bold">Type of House:</span>{" "}
+                      {selectedHouse.house_type || "N/A"}
                     </p>
+                    <p className="text-lg text-gray-600"><span className="font-bold">Size in Square Feet:</span>{" "}
+                      {selectedHouse.size || "N/A"}
+                    </p>
+                    <p className="text-lg text-gray-600"><span className="font-bold">Number of Rooms:</span>{" "}
+                      {selectedHouse.number_of_rooms || "N/A"}
+                    </p>
+                    
                   </div>
                   <div>
                     <p className="text-lg text-gray-600">
-                      <span className="font-bold">Location:</span>{" "}
-                      {selectedLand.location || "N/A"}
+                      Location: {selectedHouse.location || "N/A"}
+                    </p>
+                    <p className="text-lg text-gray-600">
+                      Size Of Property: {selectedHouse.size || "N/A"}
                     </p>
                     <p className="mt-2 text-xl font-semibold text-blue-300">
-                      <span className="font-bold">Price:</span> Ksh{" "}
-                      {selectedLand.price || "N/A"}
+                      Price :Ksh {selectedHouse.price}
                     </p>
                   </div>
                   <div>
                     <p className="text-lg text-gray-600">
-                      <span className="font-bold">Year Acquired:</span>{" "}
-                      {selectedLand.year_acquired || "N/A"}
+                      Year Built: {selectedHouse.year_built || "N/A"}
                     </p>
                     <p
                       className={`mt-1 font-semibold ${
-                        selectedLand.status === "Available"
+                        selectedHouse.status === "Available"
                           ? "text-green-600"
                           : "text-red-600"
                       }`}
                     >
-                      <span className="font-bold">Status:</span>{" "}
-                      {selectedLand.status}
+                      {" "}
+                      Status:
+                      {selectedHouse.status}
                     </p>
+
                   </div>
                 </div>
 
-                {/* Land History */}
+                {/* House History */}
                 <div className="grid gap-6 -screen overflow-y-auto">
-                  {selectedLand.history.map(
-                    (historyItem: LandHistory, index: number) => (
+                  {selectedHouse.history.map(
+                    (historyItem: HouseHistory, index: number) => (
                       <div
                         key={index}
                         className="p-6 border rounded-lg shadow-lg bg-gray-100 h"
@@ -151,11 +161,12 @@ const Lands = () => {
                               {historyItem.transfer_date || "N/A"}
                             </p>
 
+
                             <h6 className="font-bold text-gray-700 mt-4">
                               Leasing
                             </h6>
                             <p>
-                              <span className="font-bold">Tenant:</span>{" "}
+                              <span className="font-bold">Tenant Information:</span>{" "}
                               {historyItem.tenant_name || "N/A"}
                             </p>
                             <p>
@@ -166,12 +177,31 @@ const Lands = () => {
                               <span className="font-bold">Lease End:</span>{" "}
                               {historyItem.lease_end || "N/A"}
                             </p>
-
                             <h6 className="font-bold text-gray-700 mt-4">
-                              Legal Information
+                              Dispute History
                             </h6>
                             <p>
-                              <span className="font-bold">Legal issues:</span>{" "}
+                              <span className="font-bold">Type of Dispute:</span>{" "}
+                              {historyItem.dispute_type || "N/A"}
+                            </p>
+                            <p>
+                              <span className="font-bold">Dispute Status:</span>{" "}
+                              {historyItem.dispute_status || "N/A"}
+                            </p>
+                            <p>
+                              <span className="font-bold">Dispute Resolution Date:</span>{" "}
+                              {historyItem.dispute_resolution_date || "N/A"}
+                            </p>
+
+                          </div>
+
+                          {/* Column 2 */}
+                          <div>
+                            <h6 className="font-bold text-gray-700">
+                              Legal Infomation
+                            </h6>
+                            <p>
+                              <span className="font-bold">Issue:</span>{" "}
                               {historyItem.legal_issue || "N/A"}
                             </p>
                             <p>
@@ -180,72 +210,40 @@ const Lands = () => {
                               </span>{" "}
                               {historyItem.resolution_date || "N/A"}
                             </p>
-                          </div>
-                          {/* Column 2 */}
-                          <div>
-                            <h6 className="font-bold text-gray-700">
-                              Dispute Information
-                            </h6>
                             <p>
-                              <span className="font-bold">Dispute Type:</span>{" "}
-                              {historyItem.dispute_type || "N/A"}
-                            </p>
-                            <p>
-                              <span className="font-bold">
-                                Resolution Date:
-                              </span>{" "}
-                              {historyItem.dispute_resolution_date || "N/A"}
-                            </p>
-
-                            <p>
-                              <span className="font-bold">Status:</span>{" "}
-                              {historyItem.dispute_status || "N/A"}
-                            </p>
-                            <p>
-                              <span className="font-bold">
-                                Permit Approval:
-                              </span>{" "}
+                              <span className="font-bold">Permit Approval Date:</span>{" "}
                               {historyItem.permit_approval_date || "N/A"}
                             </p>
+                            
 
                             <h6 className="font-bold text-gray-700 mt-4">
                               Disaster History
                             </h6>
                             <p>
-                              <span className="font-bold">
-                                Type of History:
-                              </span>{" "}
+                              <span className="font-bold">Type of Disaster:</span>{" "}
                               {historyItem.disaster_type || "N/A"}
                             </p>
                             <p>
-                              <span className="font-bold">
-                                Description of Disaster:
-                              </span>{" "}
+                              <span className="font-bold">Description Of Disaster:</span>{" "}
                               {historyItem.disaster_description || "N/A"}
                             </p>
                             <p>
-                              <span className="font-bold">
-                                Date of Disaster:
-                              </span>{" "}
+                              <span className="font-bold">Date of Disaster:</span>{" "}
                               {historyItem.disaster_date || "N/A"}
                             </p>
                             <p>
-                              <span className="font-bold">
-                                Status After Disaster:
-                              </span>{" "}
-                              {historyItem.status_after_disaster || "N/A"}
-                            </p>
-                            <p>
-                              <span className="font-bold">
-                                Environmental Assessment Date:
-                              </span>{" "}
+                            <span className="font-bold">Disaster Assessmet Report :</span>{" "}
                               {historyItem.environmental_assessment_date ||
                                 "N/A"}
                             </p>
+                            <p>
+                              <span className="font-bold">Status After Disaster:</span>{" "}
+                              {historyItem.status_after_disaster || "N/A"}
+                            </p>
                           </div>
-
                           <div>
                             {/* Column 3 */}
+
 
                             <h6 className="font-bold text-gray-700 mt-4">
                               Crime Reports
@@ -268,7 +266,7 @@ const Lands = () => {
                             </p>
                             <p>
                               <span className="font-bold">Property Value:</span>{" "}
-                              Ksh
+                              $
                               {historyItem.property_value?.toLocaleString() ||
                                 "N/A"}
                             </p>
@@ -276,9 +274,7 @@ const Lands = () => {
                               Feedback Information
                             </h6>
                             <p>
-                              <span className="font-bold">
-                                Tenant's Feedback:
-                              </span>{" "}
+                              <span className="font-bold">Tenant Feedback:</span>{" "}
                               {historyItem.tenant_feedback || "N/A"}
                             </p>
                             <p>
@@ -296,26 +292,26 @@ const Lands = () => {
           </div>
         ))
       ) : (
-        // Land Cards List
+        // House Cards List
         <div className="h-screen overflow-y-auto">
           <h2 className="text-center text-blue-600 font-semibold uppercase">
-            Featured Lands
+            Featured Houses
           </h2>
-          <h1 className="text-center text-3xl font-bold mb-6">Our Lands</h1>
+          <h1 className="text-center text-3xl font-bold mb-6">Our Houses</h1>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-4 md:px-10">
-            {lands &&
-              lands.map(
-                (land) =>
-                  land &&
-                  land.images &&
-                  land.images.length > 0 && (
+            {houses &&
+              houses.map(
+                (house) =>
+                  house &&
+                  house.images &&
+                  house.images.length > 0 && (
                     <div
-                      key={land.property_id}
+                      key={house.property_id}
                       onClick={(e) => {
-                        // Prevent selecting land if a button was clicked
+                        // Prevent selecting house if a button was clicked
                         if ((e.target as HTMLElement).tagName !== "BUTTON") {
-                          handleCardClick(land);
+                          handleCardClick(house);
                         }
                       }}
                       className="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer hover:shadow-lg transition-shadow"
@@ -323,68 +319,62 @@ const Lands = () => {
                       <div className="relative">
                         {/* Horizontal Scrollable Images */}
                         <div className="flex overflow-x-auto space-x-2 scrollbar-thin scrollbar-thumb-blue-600 scrollbar-track-gray-300">
-                          {land.images.map((image, index) => (
+                          {house.images.map((image, index) => (
                             <img
                               key={index}
                               src={image || "https://via.placeholder.com/300"}
-                              alt={`Land Image ${index + 1}`}
+                              alt={`House Image ${index + 1}`}
                               className="w-64 h-48 object-cover rounded-md"
                             />
                           ))}
                         </div>
                       </div>
                       <div className="p-4">
-                        {/* Land Info */}
-                        <h3
-                          className="text-3xl
-font-size: var(--text-3xl) font-bold "
-                        >
-                          <span className="text-orange-500">
-                            Property Name:
-                          </span>{" "}
-                          <span className="text-green-500">
-                            {land.property_name}
-                          </span>{" "}
+                        {/* House Info */}
+                        <h3 className="text-3xl
+font-size: var(--text-3xl) font-bold "><span className="text-orange-500">Property Name:</span>{" "} <span className="text-green-500">{house.name}</span>{" "}
+                           
                         </h3>
-                        <p className="text-lg text-gray-600">
-                          <span className="font-bold">Location:</span>{" "}
-                          {land.location || "N/A"}
+                        <p className="text-lg text-gray-600"><span className="font-bold">Type of House:</span>{" "}
+                           {house.house_type}
                         </p>
-                        <p className="text-lg text-gray-600">
-                          <span className="font-bold">Size in Acres:</span>{" "}
-                          {land.size}
+                        <p className="text-lg text-gray-600"><span className="font-bold">Size in Square Feet:</span>{" "}
+                           {house.size}
                         </p>
-                        <p className="text-lg text-gray-600">
-                          <span className="font-bold">Price:</span> Ksh{" "}
-                          {land.price}
+                        <p className="text-lg text-gray-600"><span className="font-bold">Number of Rooms:</span>{" "}
+                        {house.number_of_rooms}
                         </p>
-
+                        <p className="text-lg text-gray-600"><span className="font-bold">Location:</span>{" "}
+                           {house.address}
+                        </p>                        
+                       
                         <p className="mt-2 text-xl font-semibold text-blue-600">
-                          Ksh {land.price}
+                          Ksh {house.price}
                         </p>
                         <p
                           className={`mt-1 font-semibold ${
-                            land.status === "Available"
+                            house.status === "Available"
                               ? "text-green-600"
                               : "text-red-600"
                           }`}
                         >
-                          {land.status}
+                          {house.status}
                         </p>
-
                         <div className="flex justify-between mt-4">
                           <button
                             onClick={(e) => {
                               e.stopPropagation(); // Prevent the card click from triggering
-                              console.log("Update button clicked:", land); // Debugging log
-                              handleUpdateClick(land);
+                              console.log("Update button clicked:", house); // Debugging log
+                              handleUpdateClick(house);
                             }}
                             className="bg-blue-500 text-white px-4 py-2 rounded"
                           >
                             Update
                           </button>
                           <button
-                            onClick={() => handleDeleteClick(land.property_id)}
+                            onClick={() =>
+                              handleDeleteClick(house.property_id)
+                            }
                             className="bg-red-500 text-white px-4 py-2 rounded"
                           >
                             Delete
@@ -398,14 +388,14 @@ font-size: var(--text-3xl) font-bold "
         </div>
       )}
       {isUpdateModalOpen && (
-        <UpdateLandModal
-          land={selectedLand}
+        <UpdateHouseModal
+          house={selectedHouse}
           onClose={() => setIsUpdateModalOpen(false)}
-          onUpdate={(updatedLand) => setSelectedLand(updatedLand)}
+          onUpdate={(updatedHouse) => setSelectedHouse(updatedHouse)}
         />
       )}
     </section>
   );
 };
 
-export default Lands;
+export default Houses;

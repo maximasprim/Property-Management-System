@@ -166,9 +166,9 @@ POST http://localhost:3000/location
 Content-Type: application/json
 
 {
-    "name_of_branch":"eldoret branch",
+    "name_of_branch":"Kutus branch",
     "city":"nairobi",
-    "address":"eldoret",
+    "address":"Kutus",
     "country":"Kenya",
     "zip_code":"00100"
 }
@@ -251,8 +251,9 @@ Content-Type: application/json
 {
     
     "address":"eldoret",
-    "name":"max",
-    "number_of_rooms":3,
+    "name":"Amani offices",
+    "house_type":"offices",
+    "number_of_rooms":20,
     "size":100,
     "price":10000,
     "status":"available",
@@ -279,6 +280,8 @@ Content-Type: application/json
 }
 ###
 DELETE http://localhost:3000/houses/1
+###
+GET http://localhost:3000/housesWithHistory
 
 
 //houses history queries
@@ -291,7 +294,7 @@ POST http://localhost:3000/houseHistory
 Content-Type: application/json
 
 {    
-    "property_id":1,
+    "property_id":4,
     "previous_owner":"max",
     "transfer_date":"2021-09-09",
     "maintenance_type":"service",
@@ -350,7 +353,8 @@ POST http://localhost:3000/lands
 Content-Type: application/json
 
 {
-    "location":"eldoret",
+    "location":"Kerugoya",
+    "property_name":"Executice lands",
     "size":100,
     "price":10000,
     "status":"available",
@@ -376,6 +380,8 @@ Content-Type: application/json
 
 ###
 DELETE http://localhost:3000/lands/1
+###
+GET http://localhost:3000/landWithHistory
 
 //landHistory queries
 ###
@@ -388,7 +394,7 @@ Content-Type: application/json
 
 {
     "property_type":"land",
-    "property_id":2,
+    "property_id":4,
     "previous_owner":"max",
     "transfer_date":"2021-09-09",
     "tenant_name":"max",

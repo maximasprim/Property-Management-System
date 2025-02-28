@@ -49,6 +49,7 @@ export const housesTable = pgTable("houses", {
   // owner_id: integer("owner_id").references(() => usersTable.user_id, { onDelete: "set null" }),
   address: varchar("address").references(() => locationsTable.address, { onDelete: "set null" }),
   name: varchar("name_of_House", { length: 255 }).notNull(),
+  house_type: varchar("house_type", { length: 50 }).notNull(),
   number_of_rooms: integer("number_of_rooms").notNull(),
   size: integer("size_of_property").notNull(),
   price: decimal("price", { precision: 10, scale: 2 }).notNull(),
@@ -73,7 +74,7 @@ maintenance_cost: integer("maintenance_cost"),
 
 // Rental or Occupancy History
 tenant_name: varchar("tenant_name", { length: 255 }),
-lease_start: date("lease_start(Rental_property)"),
+lease_start: date("lease_start"),
 lease_end: date("lease_end"),
 usage_type: varchar("usage_type", { length: 50 }), // e.g., 'residential', 'commercial'
 // Legal and Regulatory History
@@ -117,6 +118,7 @@ renovation_date: date("renovation_date"),
 // Land Table
 export const landTable = pgTable("land", {
   property_id: serial("property_id").primaryKey(),
+  property_name: varchar("property_name", { length: 255 }).notNull(),
   location: varchar("location").references(() => locationsTable.address, { onDelete: "set null" }),
   size: integer("size").notNull(),
   price: decimal("price", { precision: 10, scale: 2 }).notNull(),
@@ -136,7 +138,7 @@ export const landHistoryTable = pgTable("land_history", {
   transfer_date: date("transfer_date").notNull(),
  
   // Rental or Occupancy History
-  tenant_name: varchar("tenant_name(For_Rental_Property)", { length: 255 }),
+  tenant_name: varchar("tenant_name", { length: 255 }),
   lease_start: date("lease_start"),
   lease_end: date("lease_end"),
   
@@ -166,7 +168,7 @@ export const landHistoryTable = pgTable("land_history", {
   dispute_resolution_date: date("dispute_resolution_date"),
 
   // Tenant Feedback or Reviews
-  tenant_feedback: text("tenant_feedback(For_rental_properry)"),
+  tenant_feedback: text("tenant_feedback"),
   feedback_date: date("feedback_date"),
   
 });
@@ -319,7 +321,10 @@ export const houseRelations = relations(housesTable, ({ many }) => ({
 }));
 
 export const houseHistoryRelations = relations(houseHistoryTable, ({ one }) => ({
-  house: one(housesTable),
+  house: one(housesTable,{
+    fields:[houseHistoryTable.property_id],
+    references:[housesTable.property_id]
+  }),
 }));
 
 export const landRelations = relations(landTable, ({ many }) => ({
@@ -331,7 +336,10 @@ export const landRelations = relations(landTable, ({ many }) => ({
 }));
 
 export const landHistoryRelations = relations(landHistoryTable, ({ one }) => ({
-  land: one(landTable),
+  land: one(landTable,{
+    fields:[landHistoryTable.property_id],
+    references:[landTable.property_id]
+  }),
 }));
 
 export const vehicleRelations = relations(vehiclesTable, ({ many }) => ({

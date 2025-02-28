@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import mansion7 from '../assets/mansion7.jpg';
 import mansion from '../assets/01_l_gal.jpg';
+import { Link } from 'react-router-dom';
 
 const properties = [
   {
@@ -10,7 +11,7 @@ const properties = [
     beds: 3,
     baths: 2,
     sqft: 1150,
-    price: '$7250.00',
+    price: 'Ksh7250.00',
     featured: true,
     forSale: true,
     image: mansion, // Replace with actual image URLs
@@ -24,7 +25,7 @@ const properties = [
     beds: 3,
     baths: 2,
     sqft: 1150,
-    price: '$7250.00',
+    price: 'Ksh7250.00',
     featured: true,
     forSale: true,
     image: mansion, // Replace with actual image URLs
@@ -38,7 +39,7 @@ const properties = [
     beds: 3,
     baths: 2,
     sqft: 1150,
-    price: '$7250.00',
+    price: 'Ksh7250.00',
     featured: true,
     forSale: true,
     image: mansion, // Replace with actual image URLs
@@ -52,7 +53,7 @@ const properties = [
     beds: 3,
     baths: 2,
     sqft: 1150,
-    price: '$7250.00',
+    price: 'Ksh7250.00',
     featured: true,
     forSale: true,
     image: mansion, // Replace with actual image URLs
@@ -66,7 +67,7 @@ const properties = [
     beds: 3,
     baths: 2,
     sqft: 1150,
-    price: '$7250.00',
+    price: 'Ksh7250.00',
     featured: true,
     forSale: true,
     image: mansion, // Replace with actual image URLs
@@ -80,7 +81,7 @@ const properties = [
     beds: 3,
     baths: 2,
     sqft: 1150,
-    price: '$7250.00',
+    price: 'Ksh7250.00',
     featured: true,
     forSale: true,
     image: mansion, // Replace with actual image URLs
@@ -92,15 +93,15 @@ const properties = [
 
 const FeaturedProperties = () => {
   const [activeFilter, setActiveFilter] = useState('View All');
-  const [visibleCount, setVisibleCount] = useState(3);
+  // const [visibleCount, setVisibleCount] = useState(3);
 
   const handleFilterClick = (filter:any) => {
     setActiveFilter(filter);
     // Implement filter logic based on property type if needed
   };
-  const handleViewMore = () => {
-    setVisibleCount((prevCount) => prevCount + 6); // Show 3 more properties each time
-  };
+  // const handleViewMore = () => {
+  //   setVisibleCount((prevCount) => prevCount + 6); // Show 3 more properties each time
+  // };
 
 
   return (
@@ -113,7 +114,7 @@ const FeaturedProperties = () => {
         {['View All', 'Lands', 'Houses', 'Offices', 'Vehicles', 'Companies'].map((filter) => (
           <button
             key={filter}
-            className={`px-4 py-2 rounded-full font-semibold ${activeFilter === filter ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-800'}`}
+            className={`px-4 py-2 rounded-full font-semibold Ksh{activeFilter === filter ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-800'}`}
             onClick={() => handleFilterClick(filter)}
           >
             {filter}
@@ -122,9 +123,10 @@ const FeaturedProperties = () => {
       </div>
 
       {/* Property Cards */}
+      <Link to='/properties'>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-4 md:px-10">
         {properties.map((property) => (
-          <div key={property.id} className="bg-white rounded-lg shadow-md overflow-hidden">
+          <div key={property.id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-black transition duration-300 ease-in-out">
             {/* Property Image */}
             <div className="relative">
               <img src={property.image} alt={property.title} className="w-full h-56 object-cover" />
@@ -169,8 +171,18 @@ const FeaturedProperties = () => {
           </div>
         ))}
       </div>
+      </Link>
+
       {/* View More Button */}
-      {visibleCount < properties.length && (
+
+      <div className=' flex justify-center mt-8'>
+        <Link to='/properties'>
+        <button className='bg-blue-600 text-white px-4 py-2 rounded-full font-semibold hover:bg-green-700'>View More</button>
+        </Link>
+      </div>
+      <div/>
+      {/* View More Button */}
+      {/* {visibleCount < properties.length && (
         <div className="flex justify-center mt-8">
           <button
             onClick={handleViewMore}
@@ -179,7 +191,7 @@ const FeaturedProperties = () => {
             View More
           </button>
         </div>
-      )}
+      )}/ */}
     </section>
   );
 };

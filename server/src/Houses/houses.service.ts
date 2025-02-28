@@ -36,7 +36,47 @@ export const deleteHouseService = async (id: number) => {
     await db.delete(housesTable).where(eq(housesTable.property_id, id))
     return "House deleted successfully";
 }
+export const getHousesWithHistoryService = async (): Promise<
+  TSHouses[] | null
+> => {
+  return await db.query.housesTable.findMany({
+    with: {
+      history: {
+        columns: {
+          property_id: true,
+          previous_owner: true,
+          transfer_date: true,
+          maintenance_cost: true,
+          maintenance_date: true,
+          maintenance_type: true,
+          service_provider: true,
+          tenant_name: true,
+          lease_start: true,
+          lease_end: true,
+            legal_issue: true,
+            resolution_date: true,
+            disaster_type: true,
+            disaster_date: true,
+            disaster_description: true,
+            status_after_disaster: true,
+            environmental_assessment_date: true,
+            crime_type: true,
+            crime_date: true,
+            valuation_date: true,
+            property_value: true,
+            utility_type: true,
+            utility_installation_amount: true,
+            utility_installation_date: true,
+            tenant_feedback: true,
+            feedback_date: true,
+            construction_date: true,
+            renovation_date: true,
 
+        },
+      },
+    },
+  });
+};
 // export const getHouseWithBookingsService = async (): Promise<
 //   TSHouses[] | null
 // > => {

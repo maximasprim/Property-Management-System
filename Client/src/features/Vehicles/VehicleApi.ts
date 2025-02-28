@@ -55,27 +55,56 @@ export interface Vehicle {
 export const vehiclesApi = createApi({
   reducerPath: 'vehiclesApi',
   baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3000/' }),
+  tagTypes: ['Vehicles'], // ✅ Tag for automatic refetching
   endpoints: (builder) => ({
     fetchVehiclesWithHistory: builder.query<Vehicle[], void>({
       query: () => 'vehicleshistory',
+      providesTags: ['Vehicles'], // ✅ Refetch when invalidated
     }),
-    getVehicles: builder.query({
+    getVehicles: builder.query<Vehicle[], void>({
       query: () => 'vehicles',
+      providesTags: ['Vehicles'], // ✅ Refetch when invalidated
     }),
-    getVehicleById: builder.query({
+    getVehicleById: builder.query<Vehicle, number>({
       query: (id) => `vehicles/${id}`,
+      providesTags: ['Vehicles'], // ✅ Ensures fresh data
     }),
-    getVehicleHistory: builder.query({
+    getVehicleHistory: builder.query<VehicleHistory[], number>({
       query: (id) => `vehiclesHistory/${id}`,
+      providesTags: ['Vehicles'],
     }),
     createVehicle: builder.mutation<Vehicle, Partial<Vehicle>>({
-      query: (newVehicle: Vehicle) => ({
+      query: (newVehicle) => ({
         url: 'vehicles',
         method: 'POST',
         body: newVehicle,
       }),
+      invalidatesTags: ['Vehicles'], // ✅ Triggers refetch
+    }),
+    updateVehicle: builder.mutation<Vehicle, Partial<Vehicle>>({
+      query: ({ property_id, ...rest }) => ({
+        url: `vehicles/${property_id}`,
+        method: 'PUT',
+        body: rest,
+      }),
+      invalidatesTags: ['Vehicles'], // ✅ Triggers refetch
+    }),
+    deleteVehicle: builder.mutation<{ success: boolean; property_id: number }, number>({
+      query: (property_id) => ({
+        url: `vehicles/${property_id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['Vehicles'], // ✅ Triggers refetch
     }),
   }),
 });
 
-export const { useFetchVehiclesWithHistoryQuery,useGetVehiclesQuery,useGetVehicleHistoryQuery, useCreateVehicleMutation } = vehiclesApi;
+export const { 
+  useFetchVehiclesWithHistoryQuery, 
+  useGetVehiclesQuery, 
+  useGetVehicleByIdQuery, 
+  useGetVehicleHistoryQuery, 
+  useCreateVehicleMutation, 
+  useUpdateVehicleMutation, 
+  useDeleteVehicleMutation 
+} = vehiclesApi;

@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS "house_history" (
 	"maintenance_provider" varchar(255),
 	"maintenance_cost" integer,
 	"tenant_name" varchar(255),
-	"lease_start(Rental_property)" date,
+	"lease_start" date,
 	"lease_end" date,
 	"usage_type" varchar(50),
 	"legal_issue" varchar(255),
@@ -68,6 +68,7 @@ CREATE TABLE IF NOT EXISTS "houses" (
 	"property_id" serial PRIMARY KEY NOT NULL,
 	"address" varchar,
 	"name_of_House" varchar(255) NOT NULL,
+	"house_type" varchar(50) NOT NULL,
 	"number_of_rooms" integer NOT NULL,
 	"size_of_property" integer NOT NULL,
 	"price" numeric(10, 2) NOT NULL,
@@ -83,7 +84,7 @@ CREATE TABLE IF NOT EXISTS "land_history" (
 	"property_id" integer,
 	"previous_owner" varchar(255),
 	"transfer_date" date NOT NULL,
-	"tenant_name(For_Rental_Property)" varchar(255),
+	"tenant_name" varchar(255),
 	"lease_start" date,
 	"lease_end" date,
 	"legal_issue" varchar(255),
@@ -101,12 +102,13 @@ CREATE TABLE IF NOT EXISTS "land_history" (
 	"dispute_type" varchar(255),
 	"dispute_status" varchar(50),
 	"dispute_resolution_date" date,
-	"tenant_feedback(For_rental_properry)" text,
+	"tenant_feedback" text,
 	"feedback_date" date
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "land" (
 	"property_id" serial PRIMARY KEY NOT NULL,
+	"property_name" varchar(255) NOT NULL,
 	"location" varchar,
 	"size" integer NOT NULL,
 	"price" numeric(10, 2) NOT NULL,

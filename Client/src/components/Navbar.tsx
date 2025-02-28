@@ -71,7 +71,7 @@ const Navbar = () => {
     </li>
     <li className="px-4 py-2 hover:bg-gray-700">
       <a
-        href="/houses/apartments"
+        href="/properties"
         className="text-white hover:text-green-400 block"
       >
         Apartments
