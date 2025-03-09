@@ -3,6 +3,7 @@ import { useGetLocationsQuery, useDeleteLocationMutation } from "./LocationApi";
 import UpdateLocationModal from "./LocationModal";
 import { Location } from "./LocationApi";
 import NewLocationForm from "./inputForm";
+import { PropagateLoader } from "react-spinners";
 
 const Locations: React.FC = () => {
   const { data: locations, error, isLoading, refetch } = useGetLocationsQuery();
@@ -25,7 +26,11 @@ const Locations: React.FC = () => {
     <div className="p-6 w-full bg-gray-800 h-screen overflow-y-auto">
       <h2 className="text-2xl font-bold mb-4">Locations</h2>
       <NewLocationForm/>
-      {isLoading && <p>Loading...</p>}
+      {isLoading && (
+  <div className="fixed inset-0 flex items-center justify-center bg-gray-900">
+    <PropagateLoader color="#ffffff" />
+  </div>
+)}
       {error && <p className="text-red-500">Error fetching locations</p>}
 
       <table className="min-w-full bg-gray-800 border border-gray-300 ">

@@ -1,11 +1,12 @@
 import { Link } from "react-router-dom";
+import logo from "../assets/Business_logo-removebg-preview.png";
 const Topbanner = () => {
 
 return(
-<div className="flex items-center justify-between bg-gray-100 p-4 shadow-md">
+<div className="flex items-center justify-between bg-gray-400 p-4 h-[60px] shadow-md">
         <div className="flex items-center space-x-4">
-          <img src="logo.png" alt="TrueEstae Property Management" className="h-12" />
-          <div className="text-green-700 text-sm font-medium">
+          <img src={logo} alt="TrueEstae Property Management" className="h-12" />
+          <div className="text-green-800 text-sm font-medium">
             <p>"We are your local resource and caring professional serving You From Wherever You Are"</p>
           </div>
         </div>
@@ -17,11 +18,11 @@ return(
   </button>
 </Link>
 <p className="text-gray-600">
-      <Link to="/login" className="text-blue-600 hover:underline">
+      <Link to="/login" className="text-blue-700 hover:underline">
         User Login
       </Link>{" "}
       |{" "}
-      <Link to="/login" className="text-blue-600 hover:underline">
+      <Link to="/login" className="text-blue-700 hover:underline">
         Admin Login
       </Link>
     </p>

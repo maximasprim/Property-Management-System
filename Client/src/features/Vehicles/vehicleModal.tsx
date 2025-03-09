@@ -41,7 +41,7 @@ const UpdateVehicleModal: React.FC<UpdateVehicleModalProps> = ({
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 ">
-      <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md h-screen overflow-y-auto">
+      <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md h-[700px] overflow-y-auto">
         <h2 className="text-xl font-semibold mb-4">Update Vehicle</h2>
         {error && <p className="text-red-500">Error updating vehicle</p>}
         <form onSubmit={handleSubmit} className="space-y-4">

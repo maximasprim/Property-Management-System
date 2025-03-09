@@ -55,7 +55,7 @@ const LoginUser: React.FC = () => {
   return (
     <>
     <Navbar/>
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-400 to-green-500">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-700 to-orange-900">
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-sm">
         <h1 className="text-2xl font-semibold mb-6 text-center">Sign In</h1>
         <form onSubmit={handleSubmit} className="space-y-4">

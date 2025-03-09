@@ -1,5 +1,5 @@
 import { Hono } from "hono";
-import { createBooking, getSingleBooking, listBookings, updateBooking, deleteBooking} from "./Bookings.controller";
+import { createBooking, getSingleBooking, listBookings, updateBooking, deleteBooking,SingleBookingWithPaymentsAndUserService,listBookingsWithUserAndPayments} from "./Bookings.controller";
 import {zValidator} from "@hono/zod-validator"
 import { type Context } from "hono";
 import {bookingsSchema } from "../validators";
@@ -35,6 +35,6 @@ bookingsRouter.put("/bookings/:id", updateBooking)
 // delete Driver
 bookingsRouter.delete("/bookings/:id", deleteBooking)
 
-// bookingsRouter.get("/bookingsWith-vehicle-and-user-and-payments", listBookingsWithVehicleAndUserAndPayments)
+bookingsRouter.get("/bookingsSummary", listBookingsWithUserAndPayments)
 
-// bookingsRouter.get("/bookingsWith-vehicle-and-user-and-payments/:id", getSingleBookingWithVehicleAndPaymentsAndUser)
+bookingsRouter.get("/bookingsWithUserAndPayments/:id", SingleBookingWithPaymentsAndUserService)

@@ -12,6 +12,8 @@ import {usersApi} from '../features/users/usersApi';
 import {locationsApi} from '../features/Location/LocationApi';
 import {propertiesApi} from '../features/All_PropertyTypes/PropertyApi';
 import {reviewApi} from '../features/Reviews/ReviewApi';
+import {vehicleHistoryApi} from '../features/VehiclesHistory/historyApi';
+import {bookingApi} from '../features/Bookings/BookingApi';
 
 
 const rootReducer = combineReducers({
@@ -26,6 +28,8 @@ const rootReducer = combineReducers({
     [locationsApi.reducerPath]: locationsApi.reducer,
     [propertiesApi.reducerPath]: propertiesApi.reducer,
     [reviewApi.reducerPath]: reviewApi.reducer,
+    [vehicleHistoryApi.reducerPath]: vehicleHistoryApi.reducer,
+    [bookingApi.reducerPath]: bookingApi.reducer,
 
 });
 
@@ -42,7 +46,7 @@ export const store = configureStore({
   middleware: (getDefaultMiddleware) => 
     getDefaultMiddleware().concat(authApi.middleware).concat(registerApi.middleware).concat(vehiclesApi.middleware)
     .concat(landsApi.middleware).concat(HousesApi.middleware).concat(usersApi.middleware).concat(locationsApi.middleware)
-    .concat(propertiesApi.middleware).concat(reviewApi.middleware),
+    .concat(propertiesApi.middleware).concat(reviewApi.middleware).concat(vehicleHistoryApi.middleware).concat(bookingApi.middleware),
 
 }) as any;
 

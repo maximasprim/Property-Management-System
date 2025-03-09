@@ -1,5 +1,5 @@
 {
-  "id": "6471ce05-5369-4654-8276-dd5fbf609e19",
+  "id": "b33ba013-2ac8-4b10-ac86-a7c1c5d68903",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -90,9 +90,9 @@
           "primaryKey": false,
           "notNull": true
         },
-        "property_id": {
-          "name": "property_id",
-          "type": "integer",
+        "property_name": {
+          "name": "property_name",
+          "type": "varchar",
           "primaryKey": false,
           "notNull": true
         },
@@ -788,9 +788,9 @@
           "primaryKey": false,
           "notNull": true
         },
-        "property_id": {
-          "name": "property_id",
-          "type": "integer",
+        "property_name": {
+          "name": "property_name",
+          "type": "varchar",
           "primaryKey": false,
           "notNull": true
         },
@@ -887,9 +887,15 @@
           "primaryKey": false,
           "notNull": true
         },
-        "property_id": {
-          "name": "property_id",
-          "type": "integer",
+        "property_name": {
+          "name": "property_name",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "user_name": {
+          "name": "user_name",
+          "type": "varchar",
           "primaryKey": false,
           "notNull": true
         },
@@ -915,7 +921,7 @@
           "name": "created_at",
           "type": "timestamp",
           "primaryKey": false,
-          "notNull": true,
+          "notNull": false,
           "default": "now()"
         }
       },

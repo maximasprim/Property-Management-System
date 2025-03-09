@@ -81,7 +81,8 @@ export const deletePaymentsService = async (id: number) => {
               await db.update(bookingsTable).set({ status: "confirmed" }).where(eq(bookingsTable.booking_id, booking_id));
               const property_id = 1; // or assign the appropriate value
               const buyer_id = 1; // or assign the appropriate value
-              await db.insert(paymentsTable).values({property_type:"land || vehicle || house", property_id:property_id, amount: amount , booking_id, buyer_id,status: "payed",payment_method: 'credit card',transaction_id:payment_intent.id ,}) .execute();
+              const property_name = "Default Property Name"; // or assign the appropriate value
+              await db.insert(paymentsTable).values({property_type:"land || vehicle || house",  property_name:property_name,amount: amount , booking_id, buyer_id,status: "payed",payment_method: 'credit card',transaction_id:payment_intent.id ,}) .execute();
         return session;
       },
   

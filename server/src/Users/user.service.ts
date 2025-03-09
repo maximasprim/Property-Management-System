@@ -49,23 +49,24 @@ export const deleteUserService = async (id: number) => {
 //   });
 // };
 
-// export const getSingleUserWithBookingService = async (id:number): Promise<TSUsers[] | null> =>{
-//     return await db.query.usersTable.findMany({
-//         where: eq(usersTable.user_id,id),
-//         with:{
-//             bookings: {
-//                 columns: {
-//                   booking_id: true,
-//                   vehicle_id: true,
-//                   location_id: true,
-//                   booking_date: true,
-//                   return_date: true,
-//                   total_amount: true,
-//                 },
-//               },
-//             }
-//     })
-// }
+export const getSingleUserWithBookingService = async (id:number): Promise<TSUsers[] | null> =>{
+    return await db.query.usersTable.findMany({
+        where: eq(usersTable.user_id,id),
+        with:{
+            bookings: {
+                columns: {
+                  booking_id: true,
+                  property_name: true,
+                  property_type: true,
+                  booking_date: true,
+                  status: true,
+                  total_amount: true,
+                  location: true,
+                },
+              },
+            }
+    })
+}
 
 // export const getUserWithTicketsService = async (): Promise<
 //   TSUsers[] | null

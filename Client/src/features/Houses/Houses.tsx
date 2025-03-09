@@ -5,7 +5,7 @@ import {
   House,
 } from "./HousesApi";
 import UpdateHouseModal from "./houseModal";
-
+import { RingLoader } from "react-spinners";
 import { useState,useEffect } from "react";
 import { debounce } from "lodash";
 
@@ -46,9 +46,11 @@ const Houses = () => {
     setSelectedHouse(null); // Clear the selected house to go back to the list
   };
 
-  if (isLoading) {
-    return <div className="text-center">Loading houses...</div>;
-  }
+  if (isLoading) return (
+    <div className="fixed inset-0 flex items-center justify-center">
+      <RingLoader color="#2563eb" size={80} />
+    </div>
+  );
 
   if (isError) {
     return (
@@ -59,6 +61,7 @@ const Houses = () => {
   }
 
   return (
+    
     <section className="bg-gray-800 flex flex-col min-h-screen w-full">
       {selectedHouse ? (
         (console.log(

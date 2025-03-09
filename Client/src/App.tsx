@@ -35,7 +35,14 @@ import Locations from './features/Location/Locations'
 import PropertiesList from './features/All_PropertyTypes/Property'
 import PropertyDetails from './features/All_PropertyTypes/PropertyDetails'
 import CustomerReviews from './features/Reviews/Reviews'
-import ImageUploadWidget from './components/CloudinaryUploadForm'
+import Bookings from './features/Bookings/Bookings'
+import AllBookings from './features/Bookings/Summary'
+import UserDashboard from './features/USER/dashboardLayout'
+import UserProfile from './features/users/UserProfile'
+import UserBookings from './features/Bookings/BookingsWithUser'
+// import BookingDetails from './features/Bookings/SingleBookingDetails'
+// import ImageUploadWidget from './components/CloudinaryUploadForm'
+// import VehicleHistoryForm from './features/VehiclesHistory/inputhistoryform'
 
 
 
@@ -78,11 +85,11 @@ const App = () => {
       element: <PropertyDetails />,
       errorElement: <Error />
     },
-    {
-      path: 'imageUpload',
-      element: <ImageUploadWidget />,
-      errorElement: <Error />
-    },
+    // {
+    //   path: 'imageUpload',
+    //   element: <ImageUploadWidget />,
+    //   errorElement: <Error />
+    // },
     {
       path: 'register',
       element: <RegisterUser />,
@@ -162,6 +169,11 @@ const App = () => {
       element: <HousesList/>,
       errorElement: <Error />
     },
+    // {
+    //   path:'vehicle_history_input',
+    //   element: <VehicleHistoryForm/>,
+    //   errorElement: <Error />,
+    // },
 
     //ADMIN DASHBOARD
     {
@@ -185,7 +197,7 @@ const App = () => {
           errorElement: <Error />,
         },
         {
-          path:'users/:id',
+          path:'users/:user_id',
           element: <UserDetails/>,
           errorElement: <Error />,
         },
@@ -194,6 +206,7 @@ const App = () => {
           element: <Vehicles/>,
           errorElement: <Error />,
         },
+        
         {
           path:'houses_details',
           element: <Houses/>,
@@ -204,10 +217,14 @@ const App = () => {
           element: <Lands/>,
           errorElement: <Error />,
         },
+        
         {
           path:'add_property',
           element: <AddForm/>,
           errorElement: <Error />,
+          children:[
+            
+          ]
         },
         {
           path:'locations',
@@ -220,6 +237,21 @@ const App = () => {
           element: <CustomerReviews/>,
           errorElement: <Error />,
         },
+        {
+          path:'bookings',
+          element: <Bookings/>,
+          errorElement: <Error />,
+        },
+        {
+          path:'bookingsSummary',
+          element: <AllBookings/>,
+          errorElement: <Error />,
+        },
+        // {
+        //   path:'booking_details/:id',
+        //   element: <BookingDetails/>,
+        //   errorElement: <Error />,
+        // },
         
       ]
     },
@@ -231,7 +263,21 @@ const App = () => {
       errorElement: <Error />,
       children:[
         
-
+        {
+          index: true,
+          element: <UserDashboard />,
+          errorElement:<Error/>,
+        },
+        {
+          path:'my_profile',
+          element: < UserProfile/>,
+          errorElement: <Error />,
+        },
+        {
+          path:'mybookings',
+          element: <UserBookings/>,
+          errorElement: <Error />,
+        }
       ]
     }
    

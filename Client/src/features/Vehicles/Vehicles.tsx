@@ -5,20 +5,33 @@ import {
   Vehicle,
 } from "./VehicleApi";
 import UpdateVehicleModal from "./vehicleModal";
-
-import { useState,useEffect } from "react";
+import { RingLoader } from "react-spinners";
+import { useState, useEffect } from "react";
 import { debounce } from "lodash";
+import VehicleHistoryModal from "../VehiclesHistory/inputhistoryform";
+import UpdateVehicleHistoryModal from "../VehiclesHistory/updateModal";
+import { toast } from "react-toastify";
+import {useDeleteVehicleHistoryMutation} from "../VehiclesHistory/historyApi"
+// import { Suspense } from "react";
+// import { InputHistoryModalProps } from "../VehiclesHistory/inputhistoryform";
 
 const Vehicles = () => {
   const {
     data: vehicles,
     isLoading,
-    isError,refetch
+    isError,
+    refetch,
   } = useFetchVehiclesWithHistoryQuery();
+  
   console.log(vehicles);
   const [selectedVehicle, setSelectedVehicle] = useState<any>(null);
   const [deleteVehicle] = useDeleteVehicleMutation();
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+  const [initialData, setInitialData] = useState<Vehicle | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isVehicleHistoryModalOpen, setIsVehicleHistoryModalOpen] =
+    useState(false);
+  const [deleteVehicleHistory] = useDeleteVehicleHistoryMutation()
 
   useEffect(() => {
     const debouncedRefetch = debounce(refetch, 300); // Adjust delay as needed
@@ -31,6 +44,17 @@ const Vehicles = () => {
     setSelectedVehicle(vehicle); // Set the selected vehicle when clicked
   };
 
+  const handleDeleteHistory = async (history_id: number) => {
+    try {
+      await deleteVehicleHistory(history_id).unwrap();
+      alert("Vehicle history deleted successfully");
+    } catch (error) {
+      console.error("Failed to delete vehicle history:", error);
+      alert("Failed to delete vehicle history");
+    }
+  };
+
+
   const handleUpdateClick = (vehicle: Vehicle) => {
     setSelectedVehicle(vehicle);
     setIsUpdateModalOpen(true);
@@ -39,6 +63,7 @@ const Vehicles = () => {
   const handleDeleteClick = async (vehicleId: number) => {
     if (window.confirm("Are you sure you want to delete this vehicle?")) {
       await deleteVehicle(vehicleId);
+      toast.success("Vehicle deleted successfully!");
     }
   };
 
@@ -46,9 +71,11 @@ const Vehicles = () => {
     setSelectedVehicle(null); // Clear the selected vehicle to go back to the list
   };
 
-  if (isLoading) {
-    return <div className="text-center">Loading vehicles...</div>;
-  }
+  if (isLoading) return (
+    <div className="fixed inset-0 flex items-center justify-center">
+      <RingLoader color="#2563eb" size={80} />
+    </div>
+  );
 
   if (isError) {
     return (
@@ -76,7 +103,7 @@ const Vehicles = () => {
             </button>
             <div className="flex flex-col md:flex-col gap-4">
               {/* Vehicle Images */}
-              <div className="flex overflow-x-auto space-x-2 scrollbar-thin scrollbar-thumb-blue-600 scrollbar-track-gray-300">
+              <div className="flex overflow-x-auto space-x-2 scrollbar-hidden scrollbar-thumb-blue-600 scrollbar-track-gray-300">
                 {selectedVehicle.images.map((image: string, index: number) => (
                   <img
                     key={index}
@@ -91,40 +118,48 @@ const Vehicles = () => {
                 <div className="flex flex-row gap-32">
                   <div>
                     {/* Vehicle Info */}
-<h3 className="text-2xl font-semibold">
-  <span className="text-orange-500">Property Name:</span>{" "}
-  <span className="text-green-500">{selectedVehicle.year} {selectedVehicle.make} {selectedVehicle.model}</span>
-</h3>
+                    <h3 className="text-2xl font-semibold">
+                      <span className="text-orange-500">Property Name:</span>{" "}
+                      <span className="text-green-500">
+                        {selectedVehicle.year} {selectedVehicle.make}{" "}
+                        {selectedVehicle.model}
+                      </span>
+                    </h3>
 
-<p className="text-lg text-gray-600">
-  <span className="font-bold">VIN:</span> {selectedVehicle.vin || "N/A"}
-</p>
-
-</div>
-<div>
-<p className="text-lg text-gray-600">
-  <span className="font-bold">Location:</span> {selectedVehicle.location || "N/A"}
-</p>
-<p className="text-lg text-gray-600">
-  <span className="font-bold">Mileage:</span> {selectedVehicle.mileage || "N/A"}
-</p>
-<p className="mt-2 text-xl font-semibold text-blue-300">
-  <span className="font-bold">Price:</span> Ksh {selectedVehicle.price || "N/A"}
-</p>
-</div>
-<div>
-<p className="text-lg text-gray-600">
-  <span className="font-bold">Fuel Type:</span> {selectedVehicle.fuel_type || "N/A"}
-</p>
-<p
-  className={`mt-1 font-semibold ${
-    selectedVehicle.status === "Available" ? "text-green-600" : "text-red-600"
-  }`}
->
-  <span className="font-bold">Status:</span> {selectedVehicle.status}
-</p>
-
-
+                    <p className="text-lg text-gray-600">
+                      <span className="font-bold">VIN:</span>{" "}
+                      {selectedVehicle.vin || "N/A"}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-lg text-gray-600">
+                      <span className="font-bold">Location:</span>{" "}
+                      {selectedVehicle.location || "N/A"}
+                    </p>
+                    <p className="text-lg text-gray-600">
+                      <span className="font-bold">Mileage:</span>{" "}
+                      {selectedVehicle.mileage || "N/A"}
+                    </p>
+                    <p className="mt-2 text-xl font-semibold text-blue-300">
+                      <span className="font-bold">Price:</span> Ksh{" "}
+                      {selectedVehicle.price || "N/A"}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-lg text-gray-600">
+                      <span className="font-bold">Fuel Type:</span>{" "}
+                      {selectedVehicle.fuel_type || "N/A"}
+                    </p>
+                    <p
+                      className={`mt-1 font-semibold ${
+                        selectedVehicle.status === "Available"
+                          ? "text-green-600"
+                          : "text-red-600"
+                      }`}
+                    >
+                      <span className="font-bold">Status:</span>{" "}
+                      {selectedVehicle.status}
+                    </p>
                   </div>
                 </div>
 
@@ -322,6 +357,48 @@ const Vehicles = () => {
                             </p>
                           </div>
                         </div>
+                        <div className="flex justify-between w-full gap-4">
+                          <button
+                            onClick={() => setIsModalOpen(true)}
+                            className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+                          >
+                            Add Vehicle History
+                          </button>
+
+                          {isModalOpen && (
+                            <VehicleHistoryModal
+                              isOpen={isModalOpen}
+                              onClose={() => setIsModalOpen(false)}
+                              property_id={selectedVehicle.property_id} // Pass the property_id here
+                            />
+                          )}
+                          <button
+                            onClick={() => {
+                              setIsVehicleHistoryModalOpen(true);
+                              setInitialData(selectedVehicle); // Set the selected vehicle data for update
+                            }}
+                            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+                          >
+                            Update Vehicle History
+                          </button>
+
+                          {isVehicleHistoryModalOpen && initialData && (
+                            <UpdateVehicleHistoryModal
+                              isOpen={isVehicleHistoryModalOpen}
+                              onClose={() =>
+                                setIsVehicleHistoryModalOpen(false)
+                              }
+                              // property_id={selectedVehicle.property_id} // Pass the property_id here
+                              initialData={initialData} // Pass the selected data for update
+                            />
+                          )}
+                          <button
+                      onClick={() => handleDeleteHistory(historyItem.history_id)}
+                      className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
+                    >
+                      Delete Vehicle History
+                    </button>
+                        </div>
                       </div>
                     )
                   )}
@@ -338,7 +415,9 @@ const Vehicles = () => {
           </h2>
           <h1 className="text-center text-3xl font-bold mb-6">Our Vehicles</h1>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-4 md:px-10">
+          
+
+             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-4 md:px-10">
             {vehicles &&
               vehicles.map(
                 (vehicle) =>
@@ -370,35 +449,47 @@ const Vehicles = () => {
                       </div>
                       <div className="p-4">
                         {/* Vehicle Info */}
-                        
-<h3 className="text-3xl font-bold">
-  <span className="text-orange-500">Property Name:</span>{" "}
-  <span className="text-green-500">{vehicle.year} {vehicle.make} {vehicle.model}</span>
-</h3>
 
-<p className="text-lg text-gray-600">
-  <span className="font-bold">VIN:</span> {vehicle.vin || "N/A"}
-</p>
-<p className="text-lg text-gray-600">
-  <span className="font-bold">Mileage:</span> {vehicle.mileage || "N/A"}
-</p>
-<p className="text-lg text-gray-600">
-  <span className="font-bold">Fuel Type:</span> {vehicle.fuel_type || "N/A"}
-</p>
-<p className="text-lg text-gray-600">
-  <span className="font-bold">Location:</span> {vehicle.location || "N/A"}
-</p>
+                        <h3 className="text-3xl font-bold">
+                          <span className="text-orange-500">
+                            Property Name:
+                          </span>{" "}
+                          <span className="text-green-500">
+                            {vehicle.year} {vehicle.make} {vehicle.model}
+                          </span>
+                        </h3>
 
-<p className="mt-2 text-xl font-semibold text-blue-600">
-  <span className="font-bold">Price:</span> Ksh {vehicle.price || "N/A"}
-</p>
-<p
-  className={`mt-1 font-semibold ${
-    vehicle.status === "Available" ? "text-green-600" : "text-red-600"
-  }`}
->
-  <span className="font-bold">Status:</span> {vehicle.status}
-</p>
+                        <p className="text-lg text-gray-600">
+                          <span className="font-bold">VIN:</span>{" "}
+                          {vehicle.vin || "N/A"}
+                        </p>
+                        <p className="text-lg text-gray-600">
+                          <span className="font-bold">Mileage:</span>{" "}
+                          {vehicle.mileage || "N/A"}
+                        </p>
+                        <p className="text-lg text-gray-600">
+                          <span className="font-bold">Fuel Type:</span>{" "}
+                          {vehicle.fuel_type || "N/A"}
+                        </p>
+                        <p className="text-lg text-gray-600">
+                          <span className="font-bold">Location:</span>{" "}
+                          {vehicle.location || "N/A"}
+                        </p>
+
+                        <p className="mt-2 text-xl font-semibold text-blue-600">
+                          <span className="font-bold">Price:</span> Ksh{" "}
+                          {vehicle.price || "N/A"}
+                        </p>
+                        <p
+                          className={`mt-1 font-semibold ${
+                            vehicle.status === "Available"
+                              ? "text-green-600"
+                              : "text-red-600"
+                          }`}
+                        >
+                          <span className="font-bold">Status:</span>{" "}
+                          {vehicle.status}
+                        </p>
 
                         <div className="flex justify-between mt-4">
                           <button
@@ -424,7 +515,9 @@ const Vehicles = () => {
                     </div>
                   )
               )}
-          </div>
+
+             </div>
+
         </div>
       )}
       {isUpdateModalOpen && (

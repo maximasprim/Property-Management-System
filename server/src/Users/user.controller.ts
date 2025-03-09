@@ -1,5 +1,5 @@
 import { Context } from "hono";
-import { usersService, getUserService, createUserService, updateUserService, deleteUserService} from "./user.service";
+import { usersService, getUserService, createUserService, updateUserService, deleteUserService,getSingleUserWithBookingService} from "./user.service";
 
 
 
@@ -96,14 +96,14 @@ export const deleteUser =  async (c: Context) => {
 //     return c.json(data, 200);
 // }
 
-// export const listsingleuserwithBooking = async (c: Context) =>{
-//   const id = parseInt(c.req.param("id"));
-//   const data = await getSingleUserWithBookingService(id);
-//   if ( data == null){
-//     return c.text("user not Found", 404)
-//   }
-//     return c.json(data, 200);
-// }
+export const listsingleuserwithBooking = async (c: Context) =>{
+  const id = parseInt(c.req.param("id"));
+  const data = await getSingleUserWithBookingService(id);
+  if ( data == null){
+    return c.text("user not Found", 404)
+  }
+    return c.json(data, 200);
+}
 
 // export const listUserWithTickets = async (c: Context) =>{
 //   const data = await getUserWithTicketsService();

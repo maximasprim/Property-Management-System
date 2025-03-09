@@ -3,13 +3,14 @@ import React, { useEffect, useState } from 'react';
 import { useFetchUsersQuery, useAddUserMutation, useUpdateUserMutation, useDeleteUserMutation } from './usersApi';
 import UserDetails from './singleUserComponent';
 import {useNavigate} from 'react-router-dom'
+import { RingLoader } from "react-spinners";
 
 const UsersList: React.FC = () => {
   const { data: users = [], isLoading, error, refetch } = useFetchUsersQuery();
   const [addUser] = useAddUserMutation();
   const [updateUser] = useUpdateUserMutation();
   const [deleteUser] = useDeleteUserMutation();
-  const [selectedUserId] = useState<number | null>(null);
+  const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
   const navigate = useNavigate();
 
   const initialUserState = { user_id: 0, full_name: '', email: '', contact_phone: '', address: '', role: 'user' };
@@ -62,11 +63,15 @@ const UsersList: React.FC = () => {
   };
 
   const handleViewUser = (id: number) => {
-    // setSelectedUserId(id);
+    setSelectedUserId(id);
     navigate(`/users/${id}`);
   };
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return (
+    <div className="fixed inset-0 flex items-center justify-center">
+      <RingLoader color="#2563eb" size={80} />
+    </div>
+  );
   if (error) {
     const errorMessage = 'status' in error ? `Error: ${error.status}` : error.message;
     return <div>{errorMessage}</div>;

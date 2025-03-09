@@ -95,7 +95,8 @@ const VehicleForm: React.FC = () => {
           required 
         />
         
-        <button type="submit" className="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700">
+        
+      <button type="submit" className="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700">
           Add Vehicle
         </button>
       </form>

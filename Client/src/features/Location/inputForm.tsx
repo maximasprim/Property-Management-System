@@ -41,7 +41,7 @@ const NewLocationForm: React.FC = () => {
       <h2 className="text-xl font-semibold mb-4">Add New Location</h2>
       {error && <p className="text-red-500">Error creating location</p>}
 
-      <form onSubmit={handleSubmit} className="space-y-4 grid grid-cols-1 md:grid-cols-2 gap-4 mb-4 ">
+      <form onSubmit={handleSubmit} className=" grid grid-cols-1 md:grid-cols-2 gap-4 mb-4 ">
         <div>
           <label className="block text-sm font-medium">Branch Name</label>
           <input
@@ -102,10 +102,10 @@ const NewLocationForm: React.FC = () => {
           />
         </div>
 
-        <div className="flex justify-end">
+        <div>
           <button
             type="submit"
-            className="bg-green-600 text-white px-4 py-2 rounded w-48 h-10"
+            className="bg-green-600 text-white px-4 py-2 rounded w-full h-10"
             disabled={isLoading}
           >
             {isLoading ? "Adding..." : "Add Location"}

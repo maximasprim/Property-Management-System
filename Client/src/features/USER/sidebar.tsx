@@ -6,6 +6,7 @@ import { clearCredentials } from "../../features/Login/loginSlice";
 function SideNav() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  // const user_id = localStorage.getItem("user_id"); // Replace with actual user ID logic
 
   // const userDetails = JSON.parse(localStorage.getItem('userDetails') || '{}');
 
@@ -17,7 +18,7 @@ function SideNav() {
   // Get the first booking of the logged-in user
 
   return (
-    <ul className="menu bg-base-200 w-[200px] gap-10 text-base-content min-h-full">
+    <ul className="menu bg-base-200 w-[140px] gap-10 text-base-content min-h-full">
       
       <li>
         <Link to={``}>
@@ -26,21 +27,22 @@ function SideNav() {
         </Link>
       </li>
       <li>
-        <Link to={`/vehicleslist`}>
+        <Link to={`/propertie`}>
           <Car />
-          Available Vehicles
+          Available Properties
         </Link>
       </li>
       <li>
         <details>
           <summary>
             <Users />
-            Bookings History{" "}
+            Transactions
+             History{" "}
           </summary>
           <ul>
             {/* <li><Link to="/payments"> My Payments</Link></li> */}
             <li>
-              <Link to="singlebookingsummary">My Bookings</Link>
+              <Link to="mybookings">My Bookings</Link>
             </li>
           </ul>
         </details>
@@ -52,7 +54,7 @@ function SideNav() {
         </Link>
       </li>
       <li>
-        <Link to="/usersById">
+        <Link to="userbyid">
           <SquareUserRound />
           My Profile
         </Link>
@@ -63,7 +65,7 @@ function SideNav() {
           Logout
         </button>
       </li>
-      <li>
+      {/* <li>
         <Link to="/">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -82,7 +84,7 @@ function SideNav() {
           </svg>
           Home
         </Link>
-      </li>
+      </li> */}
     </ul>
   );
 }

@@ -5,7 +5,7 @@ import {
   Land,
 } from "./LandsApi";
 import UpdateLandModal from "./LandModal";
-
+import { RingLoader } from "react-spinners";
 import { useState, useEffect } from "react";
 import { debounce } from "lodash";
 
@@ -46,7 +46,11 @@ const Lands = () => {
     setSelectedLand(null);
   };
 
-  if (isLoading) return <div className="text-center">Loading lands...</div>;
+  if (isLoading) return (
+    <div className="fixed inset-0 flex items-center justify-center">
+      <RingLoader color="#2563eb" size={80} />
+    </div>
+  );
   if (isError)
     return (
       <div className="text-center text-red-600">

@@ -263,7 +263,8 @@ export const locationsTable = pgTable("location", {
 export const bookingsTable = pgTable("bookings", {
   booking_id: serial("booking_id").primaryKey(),
   property_type: varchar("property_type", { length: 50 }).notNull(), // 'house', 'land', or 'vehicle'
-  property_id: integer("property_id").notNull(),
+  property_name: varchar("property_name").notNull(),
+  // property_id: integer("property_id").notNull(),
   total_amount: integer("total_amount").notNull(),
   user_id: integer("user_id").references(() => usersTable.user_id, { onDelete: "cascade" }),
   booking_date: timestamp("booking_date").notNull().defaultNow(),
@@ -275,7 +276,8 @@ export const bookingsTable = pgTable("bookings", {
 export const paymentsTable = pgTable("payments", {
   payment_id: serial("payment_id").primaryKey(),
   property_type: varchar("property_type", { length: 50 }).notNull(), // 'house', 'land', or 'vehicle'
-  property_id: integer("property_id").notNull(),
+  property_name: varchar("property_name").notNull(),
+  // property_id: integer("property_id").notNull(),
   amount:integer("amount").notNull(),
   booking_id: integer("booking_id").references(() => bookingsTable.booking_id, { onDelete: "set null" }),
   buyer_id: integer("buyer_id").references(() => usersTable.user_id, { onDelete: "set null" }),
@@ -289,11 +291,12 @@ export const paymentsTable = pgTable("payments", {
 export const reviewsTable = pgTable("reviews", {
   review_id: serial("review_id").primaryKey(),
   property_type: varchar("property_type", { length: 50 }).notNull(), // 'house', 'land', or 'vehicle'
-  property_id: integer("property_id").notNull(),
+  property_name: varchar("property_name").notNull(),
+  user_name:varchar("user_name").notNull(),
   user_id: integer("user_id").references(() => usersTable.user_id, { onDelete: "cascade" }),
   rating: integer("rating").notNull(),
   comment: text("comment"),
-  created_at: timestamp("created_at").notNull().defaultNow(),
+  created_at: timestamp("created_at").defaultNow(),
 });
 
 
@@ -302,7 +305,8 @@ export const reviewsTable = pgTable("reviews", {
 export const userRelations = relations(usersTable, ({ one,many }) => ({
   auth: one(authenticationsTable),
   reviews: many(reviewsTable),
-  payments: many(paymentsTable)
+  payments: many(paymentsTable),
+  bookings: many(bookingsTable),
 }));
 
 export const authenticationsRelations = relations(authenticationsTable, ({ one }) => ({
@@ -369,8 +373,14 @@ export const paymentsRelations = relations(paymentsTable, ({ one }) => ({
 }));
 
 export const bookingsRelations = relations(bookingsTable, ({ one,many }) => ({
-  payments: one(paymentsTable),
-  users: one(usersTable),
+  payments: one(paymentsTable,{
+    fields:[bookingsTable.booking_id],
+    references:[paymentsTable.booking_id]
+  }),
+  users: one(usersTable,{
+    fields:[bookingsTable.user_id],
+    references:[usersTable.user_id]
+  }),
 }));
 
 export const reviewsRelations = relations(reviewsTable, ({ many }) => ({

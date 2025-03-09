@@ -54,6 +54,17 @@ const UpdateLocationModal: React.FC<UpdateLocationModalProps> = ({
             />
           </div>
           <div>
+            <label className="block text-sm font-medium">Address</label>
+            <input
+              type="text"
+              name="address"
+              value={updatedLocation.address}
+              onChange={handleChange}
+              className="w-full border rounded p-2"
+              required
+            />
+          </div>
+          <div>
             <label className="block text-sm font-medium">City</label>
             <input
               type="text"

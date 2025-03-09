@@ -60,7 +60,7 @@ const Sidebar: React.FC = () => {
               <Link to="bookings">Bookings</Link>
           </li>
             <li>
-              <Link to="bookingByUserId">Bookings History</Link>
+              <Link to="bookingsSummary">Bookings History</Link>
             </li>
           </ul>
         </details>
@@ -77,10 +77,7 @@ const Sidebar: React.FC = () => {
               <Link to="add_property">Add Property </Link>
           </li>
           
-          <li>
-              <Link to="cloudinary">My Gallery</Link>
-          </li>
-        
+         
         </ul>
       </nav>
       <div className="p-4">

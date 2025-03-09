@@ -173,11 +173,11 @@ Content-Type: application/json
     "zip_code":"00100"
 }
 ###
-PUT http://localhost:3000/location/eldoret
+PUT http://localhost:3000/location/00100
 Content-Type: application/json
 
 {
-    "zip_code":"00200"
+    "address":"Nairobi"
 }
 ###
 DELETE http://localhost:3000/location/1234
@@ -193,15 +193,15 @@ Content-Type: application/json
 
 {
     "property_type":"vehicle",
-    "property_id":1,
+    "property_name":"nissan",
     "total_amount":10000,
-    "user_id":1,
+    "user_id":15,
     "status":"pending",
     "location":"eldoret"
 }
 
 ###
-put http://localhost:3000/bookings/2
+put http://localhost:3000/bookings/1
 Content-Type: application/json
     
     {
@@ -209,6 +209,12 @@ Content-Type: application/json
     }
 ###
 DELETE http://localhost:3000/bookings/1
+###
+GET http://localhost:3000/bookingsSummary
+###
+GET http://localhost:3000/bookingsWithUserAndPayments/1
+###
+GET http://localhost:3000/users/withBookings/15
 
 //payments queries
 ###
@@ -216,11 +222,20 @@ GET http://localhost:3000/payments
 ###
 GET http://localhost:3000/payments/1
 ###
+# POST http://localhost:3000/create-checkout-session
+# Content-Type: application/json
+
+# {
+#   "amount": 1000,
+#   "payment-method": "credit card"
+# }
+###
 POST http://localhost:3000/payments
 Content-Type: application/json
 
 {
     "property_type":"vehicle",
+    "property_name":"nissan",
     "property_id":1,
     "amount":10000,
     "booking_id":1,
@@ -237,7 +252,7 @@ Content-Type: application/json
     "status":"approved"
 }
 ###
-DELETE http://localhost:3000/payments/1
+DELETE http://localhost:3000/payments/2
 
 //Houses queries
 ###
@@ -438,8 +453,9 @@ POST http://localhost:3000/reviews
 Content-Type: application/json
 
 {
-    "property_type":"vehicle",
-    "property_id":1,
+    "property_type":"land",
+    "property_name":"Amani lands",
+    "user_name":"daniel",
     "user_id":1,
     "rating":5,
     "comment":"good"

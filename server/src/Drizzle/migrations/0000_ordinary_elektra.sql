@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS "authentications" (
 CREATE TABLE IF NOT EXISTS "bookings" (
 	"booking_id" serial PRIMARY KEY NOT NULL,
 	"property_type" varchar(50) NOT NULL,
-	"property_id" integer NOT NULL,
+	"property_name" varchar NOT NULL,
 	"total_amount" integer NOT NULL,
 	"user_id" integer,
 	"booking_date" timestamp DEFAULT now() NOT NULL,
@@ -132,7 +132,7 @@ CREATE TABLE IF NOT EXISTS "location" (
 CREATE TABLE IF NOT EXISTS "payments" (
 	"payment_id" serial PRIMARY KEY NOT NULL,
 	"property_type" varchar(50) NOT NULL,
-	"property_id" integer NOT NULL,
+	"property_name" varchar NOT NULL,
 	"amount" integer NOT NULL,
 	"booking_id" integer,
 	"buyer_id" integer,
@@ -145,11 +145,12 @@ CREATE TABLE IF NOT EXISTS "payments" (
 CREATE TABLE IF NOT EXISTS "reviews" (
 	"review_id" serial PRIMARY KEY NOT NULL,
 	"property_type" varchar(50) NOT NULL,
-	"property_id" integer NOT NULL,
+	"property_name" varchar NOT NULL,
+	"user_name" varchar NOT NULL,
 	"user_id" integer,
 	"rating" integer NOT NULL,
 	"comment" text,
-	"created_at" timestamp DEFAULT now() NOT NULL
+	"created_at" timestamp DEFAULT now()
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "users" (

@@ -23,7 +23,7 @@ export const createBookingsService = async (booking: TIBookings): Promise<TIBook
     // Create a payment record
     const paymentRecord: TIPayments = {
       property_type: "",
-      property_id: 0,
+      property_name: "",
       payment_id: booking_id,
       booking_id: booking_id,
       amount: Number(total_amount),
@@ -57,64 +57,52 @@ export const deleteBookingsService = async (id: number) => {
   return "Booking deleted successfully";
 };
 
-// export const getBookingWithVehicleAndPaymentsAndUserService = async (): Promise<TSBookings[] | null> => {
-//   return await db.query.bookingsTable.findMany({
-//     with: {
-//       vehicles: {
-//         columns: {
-//           vehicle_id: true,
-//           availability: true,
-//         },
-//       },
-//       payments: {
-//         columns: {
-//           payment_id: true,
-//           payment_status: true,
-//           amount: true,
-//           payment_method: true,
-//           transaction_id: true,
-//         },
-//       },
-//       user: {
-//         columns: {
-//           user_id: true,
-//           full_name: true,
-//           email: true,
-//           role: true,
-//         },
-//       },
-//     },
-//   });
-// };
+export const getBookingWithPaymentsAndUserService = async (): Promise<TSBookings[] | null> => {
+  return await db.query.bookingsTable.findMany({
+    with: {
+      
+      payments: {
+        columns: {
+          payment_id: true,
+          status: true,
+          amount: true,
+          payment_method: true,
+          transaction_id: true,
+        },
+      },
+      users: {
+        columns: {
+          user_id: true,
+          full_name: true,
+          email: true,
+          role: true,
+        },
+      },
+    },
+  });
+};
 
-// export const getSingleBookingWithVehicleAndPaymentsAndUserService = async (id: number): Promise<TSBookings | null> => {
-//   return await db.query.bookingsTable.findFirst({
-//     where: eq(bookingsTable.booking_id, id),
-//     with: {
-//       vehicle: {
-//         columns: {
-//           vehicle_id: true,
-//           availability: true,
-          
-//         },
-//       },
-//       payments: {
-//         columns: {
-//           payment_id: true,
-//           payment_status: true,
-//           amount: true,
-//           payment_method: true,
-//           transaction_id: true,
-//         },
-//       },
-//       user: {
-//         columns: {
-//           user_id: true,
-//           full_name: true,
-//           email: true,
-//           role: true,
-//         },
-//       },
-//     },
-//   }) as TSBookings | null; // Add type assertion to match the expected return type
-// };
+export const getSingleBookingWithPaymentsAndUserService = async (id: number): Promise<TSBookings | null> => {
+  return await db.query.bookingsTable.findFirst({
+    where: eq(bookingsTable.booking_id, id),
+    with: {
+      payments: {
+        columns: {
+          payment_id: true,
+          status: true,
+          amount: true,
+          payment_method: true,
+          transaction_id: true,
+        },
+      },
+      users: {
+        columns: {
+          user_id: true,
+          full_name: true,
+          email: true,
+          role: true,
+        },
+      },
+    },
+  }) as TSBookings | null; // Add type assertion to match the expected return type
+};

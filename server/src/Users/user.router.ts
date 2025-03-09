@@ -1,5 +1,5 @@
 import { Hono } from "hono";
-import { createUser, getSingleUser, listUsers, updateUser, deleteUser} from "./user.controller";
+import { createUser, getSingleUser, listUsers, updateUser, deleteUser,listsingleuserwithBooking} from "./user.controller";
 import {zValidator} from "@hono/zod-validator"
 import { type Context } from "hono";
 import { userSchema } from "../validators";
@@ -38,7 +38,7 @@ userRouter.delete("/users/:id", deleteUser)
 //get users with bookings
 // userRouter.get("/usersWithBookings", listUserWithBookings)
 // // userRouter.get("/users/withBookings/:id", listUserWithBookings)
-// userRouter.get("/users/withBookings/:id", listsingleuserwithBooking)
+userRouter.get("/users/withBookings/:id", listsingleuserwithBooking)
 
 // userRouter.get("/usersWithTickets", listUserWithTickets)  
 // userRouter.get("/users/singleUserWithTickets/:id", listSingleUserWithTickets)  

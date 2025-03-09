@@ -602,21 +602,21 @@ const About = () => {
 
             <div className="w-full px-4 lg:w-1/2 xl:w-5/12">
               <div className="mt-10 lg:mt-0">
-                <span className="text-5xl font-size: 3rem block mb-4  font-semibold text-primary">
+                <span className="text-5xl font-size: 3rem block mb-4 text-red-400 font-semibold ">
                   Why Choose Us
                 </span>
-                <h2 className="mb-5 text-3xl font-bold text-dark dark:text-gray sm:text-[40px]/[48px]">
-                  Make our customers happy by giving services.
+                <h2 className="mb-5 text-3xl  font-bold text-dark dark:text-gray sm:text-[40px]/[48px]">
+                  We Make Our Customers Happy By Giving The Best Services.
                 </h2>
-                <p className="text-xl line-height: 1.75rem mb-5  text-body-color dark:text-dark-6">
-                  Choosing to hire from us means opting for reliability,
-                  quality, and exceptional service. Our diverse fleet caters to
-                  all needs, from business trips to family vacations, ensuring
-                  you always find the perfect vehicle. We offer competitive
+                <p className="text-xl line-height: 1.75rem mb-5 text-green-700 font-semibold text-body-color dark:text-dark-6">
+                  Choosing to work with us means opting for reliability,
+                  quality, and exceptional service. Our diverse property caters to
+                  all needs, from Housing requirements to Land requirements, ensuring
+                  you always find the property you want and be confident while purchasing or renting. We offer competitive
                   pricing with no hidden fees, a seamless booking process, and a
-                  secure payment system. Our dedicated customer support is
-                  always ready to assist, making your rental experience smooth
-                  and enjoyable. Trust us to make your journey comfortable and
+                  secure payment system. Our dedicated customer support syatem is
+                  always ready to assist, making your experience smooth
+                  and enjoyable. Trust us to make your purchase comfortable and
                   stress-free.
                 </p>
                

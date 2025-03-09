@@ -1,4 +1,4 @@
-import logo from "../assets/mansion3.jpg";
+import logo from "../assets/Business_logo-removebg-preview.png";
 const Footer = () => {
   return (
     <>
