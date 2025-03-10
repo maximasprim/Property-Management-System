@@ -1,5 +1,5 @@
 import { Context } from "hono";
-import { usersService, getUserService, createUserService, updateUserService, deleteUserService,getSingleUserWithBookingService} from "./user.service";
+import { usersService, getUserService, createUserService, updateUserService, deleteUserService,getSingleUserWithBookingService,getSingleUserWithPaymentsService } from "./user.service";
 
 
 
@@ -105,6 +105,7 @@ export const listsingleuserwithBooking = async (c: Context) =>{
     return c.json(data, 200);
 }
 
+
 // export const listUserWithTickets = async (c: Context) =>{
 //   const data = await getUserWithTicketsService();
 //   if ( data == null){
@@ -112,11 +113,11 @@ export const listsingleuserwithBooking = async (c: Context) =>{
 //   }
 //     return c.json(data, 200);
 // }
-// export const listSingleUserWithTickets = async (c: Context) =>{
-//   const id = parseInt(c.req.param("id"));
-//   const data = await getSingleUserWithTicketsService(id);
-//   if ( data == null){
-//     return c.text("user not Found", 404)
-//   }
-//     return c.json(data, 200);
-// }
+export const listSingleUserWithTickets = async (c: Context) =>{
+  const id = parseInt(c.req.param("id"));
+  const data = await getSingleUserWithPaymentsService (id);
+  if ( data == null){
+    return c.text("user not Found", 404)
+  }
+    return c.json(data, 200);
+}

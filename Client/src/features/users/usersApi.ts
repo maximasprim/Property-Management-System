@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+// import { Payment } from '../Payments/PaymentsApi';
 
 export interface User {
   profile_picture?: string;
@@ -11,6 +12,7 @@ export interface User {
     created_at: string;
     updated_at: string;
     bookings?: [];
+    payments?: [];
    
   }
 
@@ -32,6 +34,12 @@ export const usersApi = createApi({
     fetchUserWithBookings: builder.query<User, number>({
         query: (user_id) => ({
           url: `/users/withBookings/${user_id}`,
+          method: 'GET',
+        }),
+      }),
+    fetchUserWithPayments: builder.query<User, number>({
+        query: (user_id) => ({
+          url: `/users/withPayments/${user_id}`,
           method: 'GET',
         }),
       }),
@@ -68,4 +76,5 @@ export const {
   useUpdateUserMutation,
   useDeleteUserMutation,
   useFetchUserWithBookingsQuery,
+  useFetchUserWithPaymentsQuery,
 } = usersApi;

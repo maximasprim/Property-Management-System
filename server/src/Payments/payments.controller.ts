@@ -115,18 +115,24 @@ const paymentService = createPaymentService();
 export const createPayment = {
   async createCheckoutSession(c: Context) {
     try {
-      const { booking_id, amount } = await c.req.json();
+      const { booking_id, amount, buyer_id } = await c.req.json();
+
       console.log(
-       ` Check if id and amount is being received: ${booking_id}, amount: ${amount}`
+        `Check if id, amount, and buyer_id are received: Booking ID: ${booking_id}, Amount: ${amount}, Buyer ID: ${buyer_id}`
       );
+
+      if (!buyer_id) {
+        throw new Error("Valid Buyer ID is required.");
+      }
 
       const session = await paymentService.createCheckoutSession(
         booking_id,
-        amount
+        amount,
+        buyer_id // Now dynamically passed
       );
 
-      return c.json({ sessionId: session.id , checkoutUrl: session.url});
-     
+      return c.json({ sessionId: session.id, checkoutUrl: session.url });
+
     } catch (error) {
       console.error("Error creating checkout session:", error);
       return c.json(
@@ -135,21 +141,27 @@ export const createPayment = {
       );
     }
   },
-  //testing of checkout session
 
+  // Test checkout session dynamically
   async testCreateCheckoutSession(c: Context) {
     try {
-      // For testing, we'll use hardcoded values
-      const booking_id = 1;
-      const amount = 10000; // $100
-      const checkout = `Testing checkout session inpts for bookingId: ${booking_id}, amount: ${amount}`;
-      console.log(checkout);
+      const { booking_id, amount, buyer_id } = await c.req.json(); // Now user inputs data
+
+      console.log(
+        `Testing checkout session inputs: Booking ID: ${booking_id}, Amount: ${amount}, Buyer ID: ${buyer_id}`
+      );
+
+      if (!buyer_id) {
+        throw new Error("Valid Buyer ID is required.");
+      }
 
       const session = await paymentService.createCheckoutSession(
         booking_id,
-        amount
+        amount,
+        buyer_id // Now dynamically passed
       );
-      ///trying to update data on mytables once successful
+
+      // Trying to update data in my tables once successful
       await paymentService.handleSuccessfulPayment(session.id);
 
       return c.json({
@@ -166,8 +178,7 @@ export const createPayment = {
     }
   },
 
-  ///end of test
-
+  // Handle Stripe webhook events
   async handleWebhook(c: Context) {
     const sig = c.req.header("stripe-signature");
     const rawBody = await c.req.raw.text();
@@ -186,7 +197,7 @@ export const createPayment = {
 
       return c.json({ received: true });
     } catch (err) {
-      console.error(err);
+      console.error("Webhook error:", err);
       return c.json({ error: "Webhook error" }, 400);
     }
   },

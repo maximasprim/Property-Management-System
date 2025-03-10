@@ -53,7 +53,10 @@ Content-Type: application/json
 
 ###
 DELETE http://localhost:3000/users/4
-
+###
+GET http://localhost:3000/users/withBookings/15
+###
+GET http://localhost:3000/users/withPayments/15
 //vehicle queries
 ###
 GET http://localhost:3000/vehicles
@@ -213,8 +216,7 @@ DELETE http://localhost:3000/bookings/1
 GET http://localhost:3000/bookingsSummary
 ###
 GET http://localhost:3000/bookingsWithUserAndPayments/1
-###
-GET http://localhost:3000/users/withBookings/15
+
 
 //payments queries
 ###

@@ -51,40 +51,72 @@ export const deletePaymentsService = async (id: number) => {
 
   export const createPaymentService = () => {
     return {
-      async createCheckoutSession(booking_id: number, amount: number) {
-        const session = await stripe.checkout.sessions.create({
-          payment_method_types: ["card"],
-          line_items: [
-            {
-              price_data: {
-                currency: "usd",
-                product_data: {
-                  name: "Car Booking",
-                },
-                unit_amount: amount * 100, // change amount to cents
-              },
-              quantity: 1,
-            },
-          ],
-          mode: "payment",
-          success_url: process.env.FRONTEND_URL + "/paymentsuccess",
-          cancel_url: process.env.FRONTEND_URL + "/paymentcancel",
-          metadata: {
-            booking_id: booking_id.toString(),
-          },
-        });
-        const payment_intent = await stripe.paymentIntents.create({
-                amount: Number(amount) * 100,
-                currency: 'usd',
-                metadata: { booking_id:booking_id.toString() },
-              });
-              await db.update(bookingsTable).set({ status: "confirmed" }).where(eq(bookingsTable.booking_id, booking_id));
-              const property_id = 1; // or assign the appropriate value
-              const buyer_id = 1; // or assign the appropriate value
-              const property_name = "Default Property Name"; // or assign the appropriate value
-              await db.insert(paymentsTable).values({property_type:"land || vehicle || house",  property_name:property_name,amount: amount , booking_id, buyer_id,status: "payed",payment_method: 'credit card',transaction_id:payment_intent.id ,}) .execute();
-        return session;
-      },
+      async createCheckoutSession(booking_id: number, amount: number, buyer_id: number) {
+        if (!buyer_id || isNaN(buyer_id)) {
+            throw new Error("Valid Buyer ID is required.");
+        }
+    
+        console.log("Received Buyer ID:", buyer_id); // Debugging step
+    
+        const formattedAmount = Math.round(Number(amount) * 100);
+        if (isNaN(formattedAmount)) {
+            throw new Error("Invalid amount provided");
+        }
+    
+        try {
+            const session = await stripe.checkout.sessions.create({
+                payment_method_types: ["card"],
+                line_items: [
+                    {
+                        price_data: {
+                            currency: "usd",
+                            product_data: { name: "Property Booking" },
+                            unit_amount: formattedAmount,
+                        },
+                        quantity: 1,
+                    },
+                ],
+                mode: "payment",
+                success_url: `${process.env.FRONTEND_URL}/paymentsuccess`,
+                cancel_url: `${process.env.FRONTEND_URL}/paymentcancel`,
+                metadata: { booking_id: booking_id.toString(), buyer_id: buyer_id.toString() },
+            });
+    
+            console.log("Stripe session created:", session);
+    
+            // Fetch booking details
+            const booking = await db.query.bookingsTable.findFirst({
+                where: eq(bookingsTable.booking_id, booking_id),
+            });
+    
+            if (!booking) {
+                throw new Error("Booking not found");
+            }
+    
+            await db.update(bookingsTable)
+                .set({ status: "confirmed" })
+                .where(eq(bookingsTable.booking_id, booking_id));
+    
+            // Insert payment record with correct buyer_id
+            await db.insert(paymentsTable).values({
+                property_type: booking.property_type,
+                property_name: booking.property_name,
+                amount: amount,
+                booking_id: booking_id,
+                buyer_id: buyer_id,  // ✅ Store correct buyer_id
+                status: "paid",
+                payment_method: "credit card",
+                transaction_id: session.id,
+            }).execute();
+    
+            return session;
+        } catch (error) {
+            console.error("Error creating Stripe session:", error);
+            throw new Error("Failed to create checkout session.");
+        }
+    }
+    
+,
   
       async handleSuccessfulPayment(session_id: string) {
         const session = await stripe.checkout.sessions.retrieve(session_id);

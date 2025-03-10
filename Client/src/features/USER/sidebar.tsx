@@ -18,7 +18,7 @@ function SideNav() {
   // Get the first booking of the logged-in user
 
   return (
-    <ul className="menu bg-base-200 w-[140px] gap-10 text-base-content min-h-full">
+    <ul className="p-0 menu bg-base-200 w-[150px] gap-10 text-base-content min-h-full">
       
       <li>
         <Link to={``}>
@@ -27,7 +27,7 @@ function SideNav() {
         </Link>
       </li>
       <li>
-        <Link to={`/propertie`}>
+        <Link to="available_properties">
           <Car />
           Available Properties
         </Link>
@@ -44,6 +44,9 @@ function SideNav() {
             <li>
               <Link to="mybookings">My Bookings</Link>
             </li>
+            <li>
+              <Link to="mytransactions">My Transactions</Link>
+            </li>
           </ul>
         </details>
       </li>
@@ -54,13 +57,13 @@ function SideNav() {
         </Link>
       </li>
       <li>
-        <Link to="userbyid">
+        <Link to="my_profile">
           <SquareUserRound />
           My Profile
         </Link>
       </li>
       <li>
-        <button onClick={handleLogOut} className="btn btn-link">
+        <button onClick={handleLogOut} className="btn-link hover:font-semibold hover:text-lg">
           <LogOut />
           Logout
         </button>

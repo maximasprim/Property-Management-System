@@ -4,6 +4,7 @@ import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
 import {Link} from 'react-router-dom'
 import Footer from "../../components/Footer";
 import Navbar from "../../components/Navbar";
+import { Suspense } from "react";
 
 const PropertiesList: React.FC = () => {
   const { data: houses, isLoading: loadingHouses, error: errorHouses } = useGetHousesQuery();
@@ -55,84 +56,65 @@ const PropertiesList: React.FC = () => {
   return (
     <div className="">
     <Navbar/>
-    <div className="p-6 space-y-0">
-      <h2 className="text-3xl font-bold mb-6 text-center">Available Properties</h2>
-
-      {/* Houses Row */}
-      <section>
-        {/* <h3 className="text-2xl font-semibold mb-4">🏠 Houses</h3> */}
-        {loadingHouses && <p>Loading houses...</p>}
-        {errorHouses && <p className="text-red-500">Error loading houses</p>}
-        <div className="relative">
-          {/* Left Scroll Button */}
-          <button onClick={() => scroll(housesRef, "left")} className="absolute left-0 top-1/2 transform -translate-y-1/2 z-10 p-2 bg-transparent shadow-md rounded-full">
-            <ChevronLeftIcon className="h-10 w-10 text-white" />
-          </button>
-
-          {/* Scrollable Row */}
-          <div className="flex gap-4 overflow-x-auto scroll-smooth scrollbar-hide px-10" ref={housesRef}>
-            {houses?.map((house) => (
-              <PropertyCard key={house.property_id} property={house} />
-            ))}
+    <Suspense fallback={<div className="text-center text-lg font-semibold">Loading properties...</div>}>
+          <div className="space-y-0 w-[100%]  mb-6">
+            <h2 className="text-3xl font-bold mb-6 text-center">Available Properties</h2>
+    
+            <section>
+              {loadingHouses && <p>Loading houses...</p>}
+              {errorHouses && <p className="text-red-500">Error loading houses</p>}
+              <div className="relative">
+                <button onClick={() => scroll(housesRef, "left")} className="absolute left-0 top-1/2 transform -translate-y-1/2 z-10  bg-transparent shadow-md rounded-full">
+                  <ChevronLeftIcon className="h-10 w-10 text-white" />
+                </button>
+                <div className="flex gap-4 overflow-x-auto scroll-smooth scrollbar-hide px-1" ref={housesRef}>
+                  {houses?.map((house) => (
+                    <PropertyCard key={house.property_id} property={house} />
+                  ))}
+                </div>
+                <button onClick={() => scroll(housesRef, "right")} className="absolute right-0 top-1/2 transform -translate-y-1/2 z-10  bg-transparent shadow-md rounded-full">
+                  <ChevronRightIcon className="h-10 w-10 text-white" />
+                </button>
+              </div>
+            </section>
+    
+            <section>
+              {loadingLands && <p>Loading lands...</p>}
+              {errorLands && <p className="text-red-500">Error loading lands</p>}
+              <div className="relative">
+                <button onClick={() => scroll(landsRef, "left")} className="absolute left-0 top-1/2 transform -translate-y-1/2 z-10  bg-transparent shadow-md rounded-full">
+                  <ChevronLeftIcon className="h-10 w-10 text-white" />
+                </button>
+                <div className="flex gap-4 overflow-x-auto scroll-smooth scrollbar-hide px-1" ref={landsRef}>
+                  {lands?.map((land) => (
+                    <PropertyCard key={land.property_id} property={land} />
+                  ))}
+                </div>
+                <button onClick={() => scroll(landsRef, "right")} className="absolute right-0 top-1/2 transform -translate-y-1/2 z-10  bg-transparent shadow-md rounded-full">
+                  <ChevronRightIcon className="h-10 w-10 text-white" />
+                </button>
+              </div>
+            </section>
+    
+            <section>
+              {loadingVehicles && <p>Loading vehicles...</p>}
+              {errorVehicles && <p className="text-red-500">Error loading vehicles</p>}
+              <div className="relative">
+                <button onClick={() => scroll(vehiclesRef, "left")} className="absolute left-0 top-1/2 transform -translate-y-1/2 z-10  bg-transparent shadow-md rounded-full">
+                  <ChevronLeftIcon className="h-10 w-10 text-white" />
+                </button>
+                <div className="flex gap-4 overflow-x-auto scroll-smooth scrollbar-hide px-1" ref={vehiclesRef}>
+                  {vehicles?.map((vehicle) => (
+                    <PropertyCard key={vehicle.property_id} property={vehicle} />
+                  ))}
+                </div>
+                <button onClick={() => scroll(vehiclesRef, "right")} className="absolute right-0 top-1/2 transform -translate-y-1/2 z-10  bg-transparent shadow-md rounded-full">
+                  <ChevronRightIcon className="h-10 w-10 text-white" />
+                </button>
+              </div>
+            </section>
           </div>
-
-          {/* Right Scroll Button */}
-          <button onClick={() => scroll(housesRef, "right")} className="absolute right-0 top-1/2 transform -translate-y-1/2 z-10 p-2 bg-transparent shadow-md rounded-full">
-            <ChevronRightIcon className="h-10 w-10 text-white" />
-          </button>
-        </div>
-      </section>
-
-      {/* Lands Row */}
-      <section>
-        {/* <h3 className="text-2xl font-semibold mb-4">🌍 Lands</h3> */}
-        {loadingLands && <p>Loading lands...</p>}
-        {errorLands && <p className="text-red-500">Error loading lands</p>}
-        <div className="relative">
-          {/* Left Scroll Button */}
-          <button onClick={() => scroll(landsRef, "left")} className="absolute left-0 top-1/2 transform -translate-y-1/2 z-10 p-2 bg-transparent shadow-md rounded-full">
-            <ChevronLeftIcon className="h-10 w-10 text-white" />
-          </button>
-
-          {/* Scrollable Row */}
-          <div className="flex gap-4 overflow-x-auto scroll-smooth scrollbar-hide px-10" ref={landsRef}>
-            {lands?.map((land) => (
-              <PropertyCard key={land.property_id} property={land} />
-            ))}
-          </div>
-
-          {/* Right Scroll Button */}
-          <button onClick={() => scroll(landsRef, "right")} className="absolute right-0 top-1/2 transform -translate-y-1/2 z-10 p-2 bg-transparent shadow-md rounded-full">
-            <ChevronRightIcon className="h-10 w-10 text-white" />
-          </button>
-        </div>
-      </section>
-
-      {/* Vehicles Row */}
-      <section>
-        {/* <h3 className="text-2xl font-semibold mb-4">🚗 Vehicles</h3> */}
-        {loadingVehicles && <p>Loading vehicles...</p>}
-        {errorVehicles && <p className="text-red-500">Error loading vehicles</p>}
-        <div className="relative">
-          {/* Left Scroll Button */}
-          <button onClick={() => scroll(vehiclesRef, "left")} className="absolute left-0 top-1/2 transform -translate-y-1/2 z-10 p-2 bg-transparent shadow-md rounded-full">
-            <ChevronLeftIcon className="h-10 w-10 text-white" />
-          </button>
-
-          {/* Scrollable Row */}
-          <div className="flex gap-4 overflow-x-auto scroll-smooth scrollbar-hide px-10" ref={vehiclesRef}>
-            {vehicles?.map((vehicle) => (
-              <PropertyCard key={vehicle.property_id} property={vehicle} />
-            ))}
-          </div>
-
-          {/* Right Scroll Button */}
-          <button onClick={() => scroll(vehiclesRef, "right")} className="absolute right-0 top-1/2 transform -translate-y-1/2 z-10 p-2 bg-transparent shadow-md rounded-full">
-            <ChevronRightIcon className="h-10 w-10 text-white" />
-          </button>
-        </div>
-      </section>
-    </div>
+        </Suspense>
     <Footer/>
     </div>
   );

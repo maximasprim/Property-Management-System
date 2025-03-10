@@ -86,24 +86,27 @@ export const getSingleUserWithBookingService = async (id:number): Promise<TSUser
 //     },
 //   });
 // };
-// export const getSingleUserWithTicketsService = async (id:number): Promise<
-//   TSUsers[] | null
-// > => {
-//   return await db.query.usersTable.findMany({
-//     where: eq(usersTable.user_id,id),
-//     with: {
-//       supportTickets: {
-//         columns: {
-//           ticket_id: true,
-//           user_id: true,
-//           subject: true,
-//           description: true,
-//           status: true,
-//           created_at:true,
-//           updated_at:true
+export const getSingleUserWithPaymentsService = async (id:number): Promise<
+  TSUsers[] | null
+> => {
+  return await db.query.usersTable.findMany({
+    where: eq(usersTable.user_id,id),
+    with: {
+      payments: {
+        columns: {
+          payment_id: true,
+          property_type: true,
+          property_name: true,
+          amount: true,
+          booking_id: true,
+          buyer_id:true,
+          transaction_date:true,
+          transaction_id:true,
+          payment_method:true,
+          status:true,
           
-//         },
-//       },
-//     },
-//   });
-// };
+        },
+      },
+    },
+  });
+};

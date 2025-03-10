@@ -368,8 +368,14 @@ export const locationsRelations = relations(locationsTable, ({ many }) => ({
 }));
 
 export const paymentsRelations = relations(paymentsTable, ({ one }) => ({
-  buyer: one(usersTable),
-  bookingsTable: one(bookingsTable),
+  buyer: one(usersTable,{
+    fields:[paymentsTable.buyer_id],
+    references:[usersTable.user_id]
+  }),
+  bookingsTable: one(bookingsTable,{
+    fields:[paymentsTable.booking_id],
+    references:[bookingsTable.booking_id]
+  }),
 }));
 
 export const bookingsRelations = relations(bookingsTable, ({ one,many }) => ({

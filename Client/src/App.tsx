@@ -40,6 +40,10 @@ import AllBookings from './features/Bookings/Summary'
 import UserDashboard from './features/USER/dashboardLayout'
 import UserProfile from './features/users/UserProfile'
 import UserBookings from './features/Bookings/BookingsWithUser'
+import UserPayments from './features/Payments/Userpayments'
+import PaymentSuccess from './features/Stripe/success'
+import PaymentCancel from './features/Stripe/cancel'
+import AvailableProperties from './features/All_PropertyTypes/Availableproperties'
 // import BookingDetails from './features/Bookings/SingleBookingDetails'
 // import ImageUploadWidget from './components/CloudinaryUploadForm'
 // import VehicleHistoryForm from './features/VehiclesHistory/inputhistoryform'
@@ -79,6 +83,16 @@ const App = () => {
       path: 'properties',
       element: <PropertiesList />,
       errorElement: <Error />
+    },
+    {
+      path: 'paymentsuccess',
+      element: <PaymentSuccess />,
+      errorElement: <Error />
+    },
+    {
+      path: 'paymentcancel',
+      element: <  PaymentCancel />,
+      errorElement:<Error/>,
     },
     {
       path: 'properties/:id',
@@ -277,7 +291,17 @@ const App = () => {
           path:'mybookings',
           element: <UserBookings/>,
           errorElement: <Error />,
-        }
+        },
+        {
+          path:'mytransactions',
+          element: <UserPayments/>,
+          errorElement: <Error />,
+        },
+        {
+          path: 'available_properties',
+          element: <AvailableProperties />,
+          errorElement: <Error />
+        },
       ]
     }
    
