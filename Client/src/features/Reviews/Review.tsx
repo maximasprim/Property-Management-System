@@ -1,101 +1,81 @@
-import { motion } from "framer-motion";
+import React, { useEffect } from "react";
+import { useGetReviewsQuery } from "./ReviewApi";
 import { FaStar } from "react-icons/fa";
-import image1 from "../../assets/team1.jpg";
+import { PropagateLoader } from "react-spinners";
 
-const reviews = [
-  {
-    name: "Jane Doe",
-    role: "Homebuyer",
-    rating: 5,
-    feedback:
-    "The team helped me find my dream home seamlessly. Their service is exceptional!",
-image: image1,
-  },
-{
+const CustomerReview: React.FC = () => {
+  const { data: reviews, error, isLoading, refetch } = useGetReviewsQuery();
+  console.log(reviews);
+  
+  
+
+  useEffect(() => {
+    const debouncedRefetch = setTimeout(() => {
+      refetch();
+    }, 1000);
+
+    return () => clearTimeout(debouncedRefetch);
+  }, [refetch]);
     
-    name: "John Smith",
-    role: "Landowner",
-    rating: 4,
-    feedback:
-      "Great platform to manage my properties. The marketing tools are incredibly effective.",
-    image: image1,
-  },
-  {
-    name: "Emma Johnson",
-    role: "Vehicle Seller",
-    rating: 5,
-    feedback:
-      "I sold my vehicle quickly thanks to their platform. Highly recommended!",
-    image: image1,
-  },
-  {
-    name: "Michael Brown",
-    role: "Real Estate Investor",
-    rating: 4,
-    feedback:
-      "Excellent insights into the market and a smooth experience managing my properties.",
-    image: image1,
-  },
-  {
-    name: "Sophia Williams",
-    role: "Tenant",
-    rating: 5,
-    feedback:
-      "Renting a property has never been easier. The platform is user-friendly and efficient!",
-    image: image1,
-  },
-];
 
-const Reviews = () => {
   return (
-    <div className="min-h-screen bg-gray-100 py-12">
-      <div className="container mx-auto px-6 md:px-12">
-        <motion.h1
-          className="text-4xl md:text-5xl font-bold text-gray-800 text-center mb-12"
-          initial={{ opacity: 0, y: -50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-        >
-          What Our Customers Say
-        </motion.h1>
+    <div className="p-6 w-full bg-gray-200 min-h-screen">
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {reviews.map((review, index) => (
-            <motion.div
-              key={index}
-              className="bg-white rounded-lg shadow-lg p-6 hover:shadow-2xl transition-transform hover:scale-105"
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.2 }}
-            >
-              <div className="flex items-center space-x-4 mb-4">
-                <img
-                  src={review.image}
-                  alt={review.name}
-                  className="w-12 h-12 rounded-full object-cover"
-                />
-                <div>
-                  <h3 className="text-lg font-semibold text-gray-800">{review.name}</h3>
-                  <p className="text-sm text-gray-500">{review.role}</p>
-                </div>
-              </div>
-              <div className="flex items-center mb-4">
-                {[...Array(5)].map((_, i) => (
-                  <FaStar
-                    key={i}
-                    className={`text-yellow-500 ${
-                      i < review.rating ? "fill-current" : "opacity-50"
-                    }`}
-                  />
-                ))}
-              </div>
-              <p className="text-gray-600">{review.feedback}</p>
-            </motion.div>
-          ))}
-        </div>
+      <h2 className="text-3xl font-bold mb-6 text-gray-600 text-center">Customer Reviews</h2>
+      <h3 className="text-2xl font-bold mb-6 text-green-400 text-center">What People Say About Us</h3>
+      
+      {isLoading && (
+  <div className="fixed inset-0 flex items-center justify-center bg-gray-900">
+    <PropagateLoader color="#ffffff" />
+  </div>
+)}
+      {error && <p className="text-red-500 text-center">Error fetching reviews</p>}
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        {reviews?.map((review) => (
+          <div
+            key={review.review_id}
+            className="bg-white rounded-xl shadow-lg p-6 border border-gray-300 relative"
+          >
+            {/* Property Type */}
+            
+            <div className="flex flex-row justify-between align-center">
+            <p className="text-blue-700 text-2xl font-bold mt-2">{review.user_name}</p>
+
+
+            <p className="text-gray-700 text-lg font-bold mt-2">{review.property_type}</p>
+
+            </div>
+            
+                       {/* Rating */}
+            <div className="flex items-center mt-2">
+  {[...Array(5)].map((_, index) => (
+    <FaStar
+      key={index}
+      className={index < review.rating ? "text-yellow-400" : "text-gray-300"}
+      size={20}
+    />
+  ))}
+  <span className="ml-2 font-bold text-lg">{review.rating}/5</span>
+</div>
+            {/* Comment */}
+            <p className="text-gray-700 mt-3"><span className="text-gray-900 font-semibold">Description:</span> {review.comment || "No comment provided"}</p>
+            {/* <p className="text-gray-700 mt-3">{review.user_id || "No user_id"}</p> */}
+            <p className="text-gray-700 mt-3"><span className="text-green-500 font-semibold">Property Name:</span> {review.property_name || "No available property name"}</p>
+            <p className="text-gray-700 mt-3"><span className="text-amber-900 font-semibold">Name of User:</span> {review.user_name || "No available property name"}</p>
+
+            {/* Created At */}
+            <p className="text-sm text-gray-500 mt-2">
+              {new Date(review.created_at).toLocaleDateString()}
+            </p>
+
+           
+            
+          </div>
+        ))}
       </div>
     </div>
   );
 };
 
-export default Reviews;
+export default CustomerReview;

@@ -9,6 +9,14 @@ import { RingLoader } from "react-spinners";
 import { useState, useEffect } from "react";
 import { debounce } from "lodash";
 
+
+
+let totalLands = 0;
+export const setTotalLands = (count: number) => {
+  totalLands = count;
+};
+export const getTotalLands = () => totalLands;
+
 const Lands = () => {
   const {
     data: lands,
@@ -20,6 +28,11 @@ const Lands = () => {
   const [selectedLand, setSelectedLand] = useState<any>(null);
   const [deleteLand] = useDeleteLandMutation();
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+
+
+  useEffect(() => {
+      setTotalLands(lands?.length || 0); // Update the exported total
+    }, [lands]);
 
   useEffect(() => {
     const debouncedRefetch = debounce(refetch, 300);
@@ -306,6 +319,11 @@ const Lands = () => {
             Featured Lands
           </h2>
           <h1 className="text-center text-3xl font-bold mb-6">Our Lands</h1>
+          <div className="flex justify-center">
+          <p className="text-xl font-semibold text-green-600">
+          <span className="font-bold">Total Lands:</span> {lands?.length || 0}
+        </p>
+        </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-4 md:px-10">
             {lands &&

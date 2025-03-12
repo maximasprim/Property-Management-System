@@ -14,6 +14,12 @@ import { toast } from "react-toastify";
 import {useDeleteVehicleHistoryMutation} from "../VehiclesHistory/historyApi"
 // import { Suspense } from "react";
 // import { InputHistoryModalProps } from "../VehiclesHistory/inputhistoryform";
+let totalVehicles = 0;
+export const setTotalVehicles = (count: number) => {
+  totalVehicles = count;
+};
+export const getTotalVehicles = () => totalVehicles;
+
 
 const Vehicles = () => {
   const {
@@ -37,6 +43,11 @@ const Vehicles = () => {
     const debouncedRefetch = debounce(refetch, 300); // Adjust delay as needed
     debouncedRefetch();
     return () => debouncedRefetch.cancel();
+  }, [vehicles]);
+ 
+
+  useEffect(() => {
+    setTotalVehicles(vehicles?.length || 0); // Update the exported total
   }, [vehicles]);
 
   const handleCardClick = (vehicle: any) => {
@@ -84,6 +95,7 @@ const Vehicles = () => {
       </div>
     );
   }
+  
 
   return (
     <section className="bg-gray-800 flex flex-col min-h-screen w-full">
@@ -410,115 +422,99 @@ const Vehicles = () => {
       ) : (
         // Vehicle Cards List
         <div className="h-screen overflow-y-auto">
-          <h2 className="text-center text-blue-600 font-semibold uppercase">
-            Featured Vehicles
-          </h2>
-          <h1 className="text-center text-3xl font-bold mb-6">Our Vehicles</h1>
-
-          
-
-             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-4 md:px-10">
-            {vehicles &&
-              vehicles.map(
-                (vehicle) =>
-                  vehicle &&
-                  vehicle.images &&
-                  vehicle.images.length > 0 && (
-                    <div
-                      key={vehicle.property_id}
-                      onClick={(e) => {
-                        // Prevent selecting vehicle if a button was clicked
-                        if ((e.target as HTMLElement).tagName !== "BUTTON") {
-                          handleCardClick(vehicle);
-                        }
-                      }}
-                      className="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer hover:shadow-lg transition-shadow"
-                    >
-                      <div className="relative">
-                        {/* Horizontal Scrollable Images */}
-                        <div className="flex overflow-x-auto space-x-2 scrollbar-thin scrollbar-thumb-blue-600 scrollbar-track-gray-300">
-                          {vehicle.images.map((image, index) => (
-                            <img
-                              key={index}
-                              src={image || "https://via.placeholder.com/300"}
-                              alt={`Vehicle Image ${index + 1}`}
-                              className="w-64 h-48 object-cover rounded-md"
-                            />
-                          ))}
-                        </div>
-                      </div>
-                      <div className="p-4">
-                        {/* Vehicle Info */}
-
-                        <h3 className="text-3xl font-bold">
-                          <span className="text-orange-500">
-                            Property Name:
-                          </span>{" "}
-                          <span className="text-green-500">
-                            {vehicle.year} {vehicle.make} {vehicle.model}
-                          </span>
-                        </h3>
-
-                        <p className="text-lg text-gray-600">
-                          <span className="font-bold">VIN:</span>{" "}
-                          {vehicle.vin || "N/A"}
-                        </p>
-                        <p className="text-lg text-gray-600">
-                          <span className="font-bold">Mileage:</span>{" "}
-                          {vehicle.mileage || "N/A"}
-                        </p>
-                        <p className="text-lg text-gray-600">
-                          <span className="font-bold">Fuel Type:</span>{" "}
-                          {vehicle.fuel_type || "N/A"}
-                        </p>
-                        <p className="text-lg text-gray-600">
-                          <span className="font-bold">Location:</span>{" "}
-                          {vehicle.location || "N/A"}
-                        </p>
-
-                        <p className="mt-2 text-xl font-semibold text-blue-600">
-                          <span className="font-bold">Price:</span> Ksh{" "}
-                          {vehicle.price || "N/A"}
-                        </p>
-                        <p
-                          className={`mt-1 font-semibold ${
-                            vehicle.status === "Available"
-                              ? "text-green-600"
-                              : "text-red-600"
-                          }`}
-                        >
-                          <span className="font-bold">Status:</span>{" "}
-                          {vehicle.status}
-                        </p>
-
-                        <div className="flex justify-between mt-4">
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation(); // Prevent the card click from triggering
-                              console.log("Update button clicked:", vehicle); // Debugging log
-                              handleUpdateClick(vehicle);
-                            }}
-                            className="bg-blue-500 text-white px-4 py-2 rounded"
-                          >
-                            Update
-                          </button>
-                          <button
-                            onClick={() =>
-                              handleDeleteClick(vehicle.property_id)
-                            }
-                            className="bg-red-500 text-white px-4 py-2 rounded"
-                          >
-                            Delete
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  )
-              )}
-
-             </div>
-
+        <h2 className="text-center text-blue-600 font-semibold uppercase">
+          Featured Vehicles
+        </h2>
+        <h1 className="text-center text-3xl font-bold mb-6">Our Vehicles</h1>
+  
+        {/* Total Vehicles Display */}
+        <div className="flex justify-center">
+        <p className="text-xl font-semibold text-green-600">
+          <span className="font-bold">Total Vehicles:</span> {vehicles?.length || 0}
+        </p>
         </div>
+  
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-4 md:px-10">
+          {vehicles?.map(
+            (vehicle) =>
+              vehicle &&
+              vehicle.images &&
+              vehicle.images.length > 0 && (
+                <div
+                  key={vehicle.property_id}
+                  onClick={(e) => {
+                    if ((e.target as HTMLElement).tagName !== "BUTTON") {
+                      handleCardClick(vehicle);
+                    }
+                  }}
+                  className="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer hover:shadow-lg transition-shadow"
+                >
+                  <div className="relative">
+                    <div className="flex overflow-x-auto space-x-2 scrollbar-thin scrollbar-thumb-blue-600 scrollbar-track-gray-300">
+                      {vehicle.images.map((image, index) => (
+                        <img
+                          key={index}
+                          src={image || "https://via.placeholder.com/300"}
+                          alt={`Vehicle Image ${index + 1}`}
+                          className="w-64 h-48 object-cover rounded-md"
+                        />
+                      ))}
+                    </div>
+                  </div>
+                  <div className="p-4">
+                    <h3 className="text-3xl font-bold">
+                      <span className="text-orange-500">Property Name:</span>{" "}
+                      <span className="text-green-500">
+                        {vehicle.year} {vehicle.make} {vehicle.model}
+                      </span>
+                    </h3>
+                    <p className="text-lg text-gray-600">
+                      <span className="font-bold">VIN:</span> {vehicle.vin || "N/A"}
+                    </p>
+                    <p className="text-lg text-gray-600">
+                      <span className="font-bold">Mileage:</span> {vehicle.mileage || "N/A"}
+                    </p>
+                    <p className="text-lg text-gray-600">
+                      <span className="font-bold">Fuel Type:</span> {vehicle.fuel_type || "N/A"}
+                    </p>
+                    <p className="text-lg text-gray-600">
+                      <span className="font-bold">Location:</span> {vehicle.location || "N/A"}
+                    </p>
+  
+                    <p className="mt-2 text-xl font-semibold text-blue-600">
+                      <span className="font-bold">Price:</span> Ksh {vehicle.price || "N/A"}
+                    </p>
+                    <p
+                      className={`mt-1 font-semibold ${
+                        vehicle.status === "Available" ? "text-green-600" : "text-red-600"
+                      }`}
+                    >
+                      <span className="font-bold">Status:</span> {vehicle.status}
+                    </p>
+  
+                    <div className="flex justify-between mt-4">
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleUpdateClick(vehicle);
+                        }}
+                        className="bg-blue-500 text-white px-4 py-2 rounded"
+                      >
+                        Update
+                      </button>
+                      <button
+                        onClick={() => handleDeleteClick(vehicle.property_id)}
+                        className="bg-red-500 text-white px-4 py-2 rounded"
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )
+          )}
+        </div>
+      </div>
       )}
       {isUpdateModalOpen && (
         <UpdateVehicleModal

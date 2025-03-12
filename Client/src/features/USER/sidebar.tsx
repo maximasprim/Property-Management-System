@@ -1,4 +1,4 @@
-import { Users, SquareUserRound, LogOut, Ticket, Car,LayoutDashboard } from "lucide-react";
+import { Users, SquareUserRound, LogOut, Car,LayoutDashboard } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { clearCredentials } from "../../features/Login/loginSlice";
@@ -50,12 +50,12 @@ function SideNav() {
           </ul>
         </details>
       </li>
-      <li>
+      {/* <li>
         <Link to="singleUserWithTickets">
           <Ticket />
           My Tickets
         </Link>
-      </li>
+      </li> */}
       <li>
         <Link to="my_profile">
           <SquareUserRound />

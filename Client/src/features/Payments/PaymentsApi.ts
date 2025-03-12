@@ -13,15 +13,18 @@ export interface Payment {
   transaction_date: string;
 };
 
-export const usersApi = createApi({
+export const paymentsApi = createApi({
   reducerPath: 'paymentsApi',
-  baseQuery: fetchBaseQuery({ baseUrl: '/api' }), // Adjust API base URL
+  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3000' }), // Adjust API base URL
   tagTypes: ['Payments'],
   endpoints: (builder) => ({
-    fetchUserWithPayments: builder.query({
+    fetchPayments: builder.query<any[], void>({
+      query: () => "/payments", // Fetch all payments
+    }),
+      fetchUserWithPayments: builder.query({
       query: (userId) => `users/${userId}/payments`,
     }),
   }),
 });
 
-export const { useFetchUserWithPaymentsQuery } = usersApi;
+export const { useFetchUserWithPaymentsQuery,useFetchPaymentsQuery } = paymentsApi;

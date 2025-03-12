@@ -26,18 +26,7 @@ const Calendar = () => {
           selected={selectedDate}
           onSelect={setSelectedDate}
           className="w-fit mx-auto font-semibold text-black text-lg"
-          // className="
-          //   root: "w-cover mx-auto", // Center the calendar
-          //   months: "flex flex-col justify-center w-full", // Ensures full width
-          //   caption: "text-lg font-bold text-gray-800 mb-4", // Calendar header
-          //   table: "w-full border-collapse", // Makes the table full width
-          //   head: "w-full text-gray-800 font-semibold",
-          //   head_row: "flex w-full justify-between text-center",
-          //   row: "flex justify-between w-full",
-          //   cell: "w-[50%] text-center py-2 cursor-pointer hover:bg-blue-100 rounded-md transition-all", // Each day cell
-          //   day_selected: "bg-blue-500 text-white font-bold rounded-md", // Selected day style
-          //   day_today: "border-b-4 border-blue-500 font-bold text-blue-600", // Highlights today's date
-          // "
+         
         />
         {selectedDate && (
           <p className="mt-4 text-gray-700 text-lg">

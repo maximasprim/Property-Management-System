@@ -17,7 +17,7 @@ const Sidebar: React.FC = () => {
   };
 
   return (
-    <div className="w-64 bg-gray-300 shadow-md h-screen overflow-y-auto ">
+    <div className="w-64 bg-blue-950 shadow-md h-screen overflow-y-auto ">
       <Toaster
         toastOptions={{
           classNames: {
@@ -32,7 +32,7 @@ const Sidebar: React.FC = () => {
         <h2 className="text-2xl font-semibold ">Admin Dashboard</h2>
       </div>
       <nav className="p-4 " >
-      <ul className="menu font-semibold	font-weight: 600 text-lg	font-size: 0.875rem w-[200px] gap-5  min-h-screen text-black	color: rgb(255 255 255)">
+      <ul className="menu font-semibold	font-weight: 600 text-lg	font-size: 0.875rem w-[200px] gap-5  min-h-screen text-white	color: rgb(255 255 255)">
                
           <li>
               <Link to="">Dashboard</Link>
@@ -62,13 +62,16 @@ const Sidebar: React.FC = () => {
             <li>
               <Link to="bookingsSummary">Bookings History</Link>
             </li>
+            <li>
+              <Link to="sales_chart">Sales Analytics</Link>
+            </li>
           </ul>
         </details>
           </li>
           
           
           <li>
-              <Link to="locations">Locations & Branches</Link>
+              <Link to="our_locations">Locations & Branches</Link>
           </li>
           <li>
               <Link to="customer_reviews">Customer Reviews</Link>
@@ -80,8 +83,8 @@ const Sidebar: React.FC = () => {
          
         </ul>
       </nav>
-      <div className="p-4">
-        <button onClick={handleLogOut} className="text-red-700 hover:text-blue-600">Log Out</button>
+      <div className="p-2 mb-10 ml-10">
+        <button onClick={handleLogOut} className="text-red-500 hover:text-red-700">Log Out</button>
       </div>
     </div>
   );

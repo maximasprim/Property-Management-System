@@ -9,6 +9,13 @@ import { RingLoader } from "react-spinners";
 import { useState,useEffect } from "react";
 import { debounce } from "lodash";
 
+
+let totalHouses = 0;
+export const setTotalHouses = (count: number) => {
+  totalHouses = count;
+};
+export const getTotalHouses = () => totalHouses;
+
 const Houses = () => {
   const {
     data: houses,
@@ -19,6 +26,10 @@ const Houses = () => {
   const [selectedHouse, setSelectedHouse] = useState<any>(null);
   const [deleteHouse] = useDeleteHouseMutation();
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+
+  useEffect(() => {
+      setTotalHouses(houses?.length || 0); // Update the exported total
+    }, [houses]);
 
   useEffect(() => {
     const debouncedRefetch = debounce(refetch, 100); // Adjust delay as needed
@@ -301,6 +312,11 @@ const Houses = () => {
             Featured Houses
           </h2>
           <h1 className="text-center text-3xl font-bold mb-6">Our Houses</h1>
+          <div className="flex justify-center">
+          <p className="text-xl font-semibold text-green-600">
+          <span className="font-bold">Total Houses:</span> {houses?.length || 0}
+        </p>
+        </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-4 md:px-10">
             {houses &&

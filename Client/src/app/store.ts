@@ -14,6 +14,7 @@ import {propertiesApi} from '../features/All_PropertyTypes/PropertyApi';
 import {reviewApi} from '../features/Reviews/ReviewApi';
 import {vehicleHistoryApi} from '../features/VehiclesHistory/historyApi';
 import {bookingApi} from '../features/Bookings/BookingApi';
+import {paymentsApi} from '../features/Payments/PaymentsApi';
 
 
 const rootReducer = combineReducers({
@@ -30,6 +31,7 @@ const rootReducer = combineReducers({
     [reviewApi.reducerPath]: reviewApi.reducer,
     [vehicleHistoryApi.reducerPath]: vehicleHistoryApi.reducer,
     [bookingApi.reducerPath]: bookingApi.reducer,
+    [paymentsApi.reducerPath]: paymentsApi.reducer,
 
 });
 
@@ -46,7 +48,8 @@ export const store = configureStore({
   middleware: (getDefaultMiddleware) => 
     getDefaultMiddleware().concat(authApi.middleware).concat(registerApi.middleware).concat(vehiclesApi.middleware)
     .concat(landsApi.middleware).concat(HousesApi.middleware).concat(usersApi.middleware).concat(locationsApi.middleware)
-    .concat(propertiesApi.middleware).concat(reviewApi.middleware).concat(vehicleHistoryApi.middleware).concat(bookingApi.middleware),
+    .concat(propertiesApi.middleware).concat(reviewApi.middleware).concat(vehicleHistoryApi.middleware).concat(bookingApi.middleware)
+    .concat(paymentsApi.middleware),
 
 }) as any;
 

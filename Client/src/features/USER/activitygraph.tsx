@@ -24,7 +24,7 @@ const UserActivityGraph = () => {
   }, []);
 
   return (
-    <div className="p-6 bg-white shadow-lg  w-full mt-16">
+    <div className="p-4 bg-white shadow-lg  w-full ">
       <h2 className="text-xl font-semibold mb-4 text-gray-500">User Activity</h2>
       <div className="flex justify-between items-center mb-4">
         <p className="text-gray-600">Last Active: <span className="font-semibold">{lastActive}</span></p>

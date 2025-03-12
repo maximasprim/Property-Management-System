@@ -1,7 +1,7 @@
 import React from "react";
 import { useGetLocationsQuery } from "./LocationApi";
-import Navbar from "../../components/Navbar";
-import Footer from "../../components/Footer";
+// import Navbar from "../../components/Navbar";
+// import Footer from "../../components/Footer";
 import { PropagateLoader } from "react-spinners";
 import { Link } from "react-router-dom";
 
@@ -17,12 +17,12 @@ const locationImages: { [key: string]: string } = {
   "Nakuru branch": "https://i.pinimg.com/236x/e8/97/bf/e897bf7af97517abad9e27caed377f60.jpg",
 };
 
-const Locations: React.FC = () => {
+const Branches: React.FC = () => {
   const { data: locations, error, isLoading } = useGetLocationsQuery();
 
   return (
-    <div className="">
-      <Navbar />
+   
+      
       <div className="p-6 w-full bg-gray-800 min-h-screen overflow-y-auto">
         <h2 className="text-3xl font-bold mb-6 text-white text-center">Our Locations</h2>
         {isLoading && (
@@ -66,9 +66,9 @@ const Locations: React.FC = () => {
           ))}
         </div>
       </div>
-      <Footer />
-    </div>
+      
+    
   );
 };
 
-export default Locations;
+export default Branches;

@@ -1,14 +1,21 @@
 import React, { useEffect } from "react";
 import { useGetReviewsQuery, useDeleteReviewMutation } from "./ReviewApi";
-import ReviewForm from "./inputReview";
+// import ReviewForm from "./inputReview";
 import { FaStar } from "react-icons/fa";
 import { PropagateLoader } from "react-spinners";
+
+
+
+export const useTotalReviews = () => {
+  const { data: reviews } = useGetReviewsQuery();
+  return reviews?.length || 0;
+};
 
 const CustomerReviews: React.FC = () => {
   const { data: reviews, error, isLoading, refetch } = useGetReviewsQuery();
   console.log(reviews);
   const [deleteReview] = useDeleteReviewMutation();
-
+  const totalReviews = useTotalReviews(); // Use the hook here
   const handleDelete = async (review_id: number) => {
     await deleteReview(review_id);
     refetch(); // Refresh after delete
@@ -27,7 +34,8 @@ const CustomerReviews: React.FC = () => {
     <div className="p-6 w-full bg-gray-800 min-h-screen">
 
       <h2 className="text-3xl font-bold mb-6 text-white text-center">Customer Reviews</h2>
-      <ReviewForm/>
+      <h3 className="text-sm text-green-700 font-bold mb-6 text-center">Total Reviews: {totalReviews}</h3>
+      {/* <ReviewForm/> */}
       {isLoading && (
   <div className="fixed inset-0 flex items-center justify-center bg-gray-900">
     <PropagateLoader color="#ffffff" />

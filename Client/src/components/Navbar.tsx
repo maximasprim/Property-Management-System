@@ -54,14 +54,14 @@ const Navbar = () => {
             <ul className="absolute left-0 bg-gray-800 mt-2 rounded-lg shadow-lg w-40 z-50 transition-all duration-300">
        <li className="relative group px-4 py-2 hover:bg-gray-700">
   <a
-    href="#houses"
+    href="/houses"
     className="text-white hover:text-green-400 block"
   >
     Houses
   </a>
   {/* Side Menu */}
-  <ul className="absolute left-full top-0 hidden group-hover:block bg-gray-800 rounded-lg shadow-lg w-40 z-50">
-    <li className="px-4 py-2 hover:bg-gray-700">
+  {/* <ul className="absolute left-full top-0 hidden group-hover:block bg-gray-800 rounded-lg shadow-lg w-40 z-50"> */}
+    {/* <li className="px-4 py-2 hover:bg-gray-700">
       <a
         href="/houses"
         className="text-white hover:text-green-400 block"
@@ -116,8 +116,8 @@ const Navbar = () => {
       >
         Penthouses
       </a>
-    </li>
-  </ul>
+    </li> */}
+  {/* </ul> */}
 </li>
 
               

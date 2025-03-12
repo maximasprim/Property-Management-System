@@ -18,20 +18,20 @@ import LandServ from './components/LandServ'
 import Team from './components/Team'
 import OurServices from './components/Services'
 import Location from './features/Location/location'
-import Reviews from './features/Reviews/Review'
+// import Reviews from './features/Reviews/Review'
 // import Houses from './features/Houses/Houses'
 import FeaturedVehicles from './features/Vehicles/FeaturedVehicle'
 import LandsList from './features/Lands/FeaturedLands'
 import HousesList from './features/Houses/FeaturedHouses'
 import UsersList from './features/users/users'
-import ReusableForm from './components/inputForm'
+// import ReusableForm from './components/inputForm'
 import UserDetails from './features/users/singleUserComponent'
 import AdminDashboard from './features/ADMIN/Dashboardlayout'
 import Vehicles from './features/Vehicles/Vehicles'
 import AddForm from './pages/AddComponent'
 import Houses from './features/Houses/Houses'
 import Lands from './features/Lands/Lands'
-import Locations from './features/Location/Locations'
+// import Locations from './features/Location/Locations'
 import PropertiesList from './features/All_PropertyTypes/Property'
 import PropertyDetails from './features/All_PropertyTypes/PropertyDetails'
 import CustomerReviews from './features/Reviews/Reviews'
@@ -44,6 +44,9 @@ import UserPayments from './features/Payments/Userpayments'
 import PaymentSuccess from './features/Stripe/success'
 import PaymentCancel from './features/Stripe/cancel'
 import AvailableProperties from './features/All_PropertyTypes/Availableproperties'
+import Branches from './features/Location/Branches'
+import SalesChart from './features/Payments/Payments'
+import CustomerReview from './features/Reviews/Review'
 // import BookingDetails from './features/Bookings/SingleBookingDetails'
 // import ImageUploadWidget from './components/CloudinaryUploadForm'
 // import VehicleHistoryForm from './features/VehiclesHistory/inputhistoryform'
@@ -151,7 +154,7 @@ const App = () => {
     },
     {
       path: 'reviews',
-      element: <Reviews/>,
+      element: <CustomerReview />,
       errorElement: <Error />
     },
     // {
@@ -164,15 +167,7 @@ const App = () => {
       element: <FeaturedVehicles/>,
       errorElement: <Error />
     },
-    {
-      path: 'inputform',
-      element: <ReusableForm 
-        fields={[]} 
-        initialValues={{}} 
-        onSubmit={() => {}} 
-      />,
-      errorElement: <Error />
-    },
+    
     {
       path: 'lands',
       element: <LandsList/>,
@@ -188,6 +183,11 @@ const App = () => {
     //   element: <VehicleHistoryForm/>,
     //   errorElement: <Error />,
     // },
+    {
+      path:'users/:user_id',
+      element: <UserDetails/>,
+      errorElement: <Error />,
+    },
 
     //ADMIN DASHBOARD
     {
@@ -210,11 +210,7 @@ const App = () => {
           element: <AdminDashboard/>,
           errorElement: <Error />,
         },
-        {
-          path:'users/:user_id',
-          element: <UserDetails/>,
-          errorElement: <Error />,
-        },
+        
         {
           path:'vehicles_details',
           element: <Vehicles/>,
@@ -231,6 +227,11 @@ const App = () => {
           element: <Lands/>,
           errorElement: <Error />,
         },
+        {
+          path: 'our_locations',
+          element: <Branches/>,
+          errorElement: <Error />
+        },
         
         {
           path:'add_property',
@@ -240,12 +241,7 @@ const App = () => {
             
           ]
         },
-        {
-          path:'locations',
-          element: <Locations/>,
-          errorElement: <Error />,
-        },
-        
+                
         {
           path:'customer_reviews',
           element: <CustomerReviews/>,
@@ -259,6 +255,11 @@ const App = () => {
         {
           path:'bookingsSummary',
           element: <AllBookings/>,
+          errorElement: <Error />,
+        },
+        {
+          path:'sales_chart',
+          element: <SalesChart/>,
           errorElement: <Error />,
         },
         // {

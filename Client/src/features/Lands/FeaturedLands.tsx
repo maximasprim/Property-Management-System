@@ -1,3 +1,5 @@
+import Footer from "../../components/Footer";
+import Navbar from "../../components/Navbar";
 import { useGetLandsQuery } from "./LandsApi";
 import {  useState } from "react";
 
@@ -31,6 +33,8 @@ const LandsList = () => {
   }
 
   return (
+     <div className="bg-gray-100 h-screen">
+        <Navbar />
     <section className="py-10 bg-gray-100">
       {selectedLand ? (
         <div className="max-w-6xl mx-auto bg-white rounded-lg shadow-md p-6">
@@ -156,6 +160,8 @@ const LandsList = () => {
         </>
       )}
     </section>
+    <Footer/>
+    </div>
   );
 };
 
