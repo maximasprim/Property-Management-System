@@ -92,11 +92,11 @@ const AllBookings: React.FC = () => {
         </div>
         <div className="p-4 bg-blue-700 rounded-lg text-center">
           <p className="text-lg font-bold">Total Amount (Ksh)</p>
-          <p className="text-2xl">${totalAmount.toFixed(2)}</p>
+          <p className="text-2xl">Ksh{totalAmount.toFixed(2)}</p>
         </div>
         <div className="p-4 bg-purple-700 rounded-lg text-center">
           <p className="text-lg font-bold">Total Amount Before Update (Ksh)</p>
-          <p className="text-2xl">${totalAmountTwoHoursAgo.toFixed(2)}</p>
+          <p className="text-2xl">Ksh{totalAmountTwoHoursAgo.toFixed(2)}</p>
         </div>
         <div className="p-4 bg-indigo-700 rounded-lg text-center">
           <p className="text-lg font-bold">Profit Made </p>
