@@ -179,6 +179,7 @@ const FeaturedProperties = () => {
       </div>
 
       {/* Property Cards */}
+      <Link to = '/properties'>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-4 md:px-10">
         {displayedProperties.map((property) => (
           <div key={property.id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-black transition duration-300 ease-in-out">
@@ -248,6 +249,7 @@ const FeaturedProperties = () => {
           </div>
         ))}
       </div>
+      </Link>
 
       {/* View More & View All Buttons */}
       <div className='flex justify-center mt-8 space-x-4'>

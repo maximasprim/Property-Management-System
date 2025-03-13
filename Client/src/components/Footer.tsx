@@ -50,7 +50,7 @@ const Footer = () => {
             </div>
 
             <LinkGroup header="INFORMATION">
-              <NavLink link="/about" label="About" />
+              <NavLink link="/aboutUs" label="About" />
               <NavLink link="/services" label="Services" />
               <NavLink link="/terms" label="Terms & Conditions" />
               <NavLink link="/bestPriceguarantee" label="Best Prices Guarantee" />

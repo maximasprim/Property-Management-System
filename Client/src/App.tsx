@@ -123,7 +123,7 @@ const App = () => {
       errorElement: <Error />
     },
     {
-      path: 'ourServices',
+      path: 'services',
       element: <OurServices />,
       errorElement: <Error />
     },

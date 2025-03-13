@@ -4,6 +4,7 @@ import { useGetHouseByIdQuery, useGetLandByIdQuery, useGetVehicleByIdQuery } fro
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import BookingModal from "../Bookings/CreateBookingModal"; // Import modal
+import { Toaster,toast } from "sonner";
 
 const PropertyDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>(); // Get ID from URL params
@@ -30,7 +31,9 @@ const PropertyDetails: React.FC = () => {
       setModalOpen(true); // Open the modal if user is logged in
     } else {
       if (property) {
-        navigate("/login", { state: { redirectTo: `/properties/${property.property_id}` } }); // Redirect to login first
+        toast.error("You must be logged in first to purchase this property");
+        setTimeout(() => navigate("/login", { state: { redirectTo: `/properties/${property.property_id}` } }), 2000); // Redirect to login first
+        // navigate("/login", { state: { redirectTo: `/properties/${property.property_id}` } }); // Redirect to login first
       }
     }
   };
@@ -40,6 +43,17 @@ const PropertyDetails: React.FC = () => {
 
   return (
     <div>
+     <Toaster
+      position="top-right"
+      toastOptions={{
+        classNames: {
+          error: "bg-red-400 text-white",
+          success: "text-green-400",
+          warning: "text-yellow-400",
+          info: "bg-blue-400 text-white",
+        },
+      }}
+    />
       <Navbar />
       <div className="max-w-5xl mx-auto p-6">
         {/* Property Title */}

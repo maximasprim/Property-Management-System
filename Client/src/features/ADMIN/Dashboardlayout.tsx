@@ -171,7 +171,7 @@ color: var(--color-red-200)">Dashboard</h1>
               })}
             />
           </div>
-          <p className="text-sm">Total Score</p>
+          {/* <p className="text-sm">Total Score</p> */}
         </div>
       </div>
     </div>
