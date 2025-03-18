@@ -37,11 +37,11 @@ const ProjectHeader = () => {
 
           <div className="flex items-center gap-16 text-sm">
             <Link to="my_profile">
-            <span className="bg-yellow-400 text-white px-3 py-1 rounded-full text-lg hover:bg-yellow-500">
+            <span className="bg-yellow-400 text-white px-2 py-1 rounded-full text-lg hover:bg-yellow-500">
               My Profile
             </span>
             </Link>
-            <span className="text-gray-500 text-lg"><span className="font-bold text-red-600 ">My ID:</span> {user?.user_id || "N/A"}</span>
+            <span className="text-gray-500 text-lg"><span className="font-bold text-purple-600 ">Welcome Back,</span> {user?.full_name || "N/A"}</span>
             <span className="text-blue-600 text-lg hover:underline">{user?.email || "N/A"}</span>
           </div>
 

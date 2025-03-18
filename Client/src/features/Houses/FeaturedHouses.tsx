@@ -1,205 +1,414 @@
-import Footer from "../../components/Footer";
-import Navbar from "../../components/Navbar";
-import { House, useGetHousesQuery } from "./HousesApi"; // Adjust based on your API slice
-import { useState } from "react";
+import {
+  useFetchHousesWithHistoryQuery,
+  HouseHistory
+} from "./HousesApi";
+// import UpdateHouseModal from "./houseModal";
+import { RingLoader } from "react-spinners";
+import { useState,useEffect } from "react";
+import { debounce } from "lodash";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import BookingModal from "../Bookings/CreateBookingModal";
 
-const HousesList = () => {
-  const { data: houses, isLoading, isError } = useGetHousesQuery();
-  // const [visibleCount, setVisibleCount] = useState(3);
+
+let totalHouses = 0;
+export const setTotalHouses = (count: number) => {
+  totalHouses = count;
+};
+export const getTotalHouses = () => totalHouses;
+
+const Houses = () => {
+  const {
+    data: houses,
+    isLoading,
+    isError,refetch
+  } = useFetchHousesWithHistoryQuery();
+  console.log(houses);
   const [selectedHouse, setSelectedHouse] = useState<any>(null);
-  const [showGallery, setShowGallery] = useState(false); // New state for gallery view
+  // const [deleteHouse] = useDeleteHouseMutation();
+  // const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
 
-  // const handleViewMore = () => {
-  //   setVisibleCount((prevCount) => prevCount + 6);
-  // };
+  useEffect(() => {
+      setTotalHouses(houses?.length || 0); // Update the exported total
+    }, [houses]);
+
+  useEffect(() => {
+    const debouncedRefetch = debounce(refetch, 100); // Adjust delay as needed
+    debouncedRefetch();
+    return () => debouncedRefetch.cancel();
+  }, [houses]);
 
   const handleCardClick = (house: any) => {
-    setSelectedHouse(house);
+    console.log("Selected House:", house);
+    setSelectedHouse(house); // Set the selected house when clicked
+  };
+
+const navigate = useNavigate();
+  const [isModalOpen, setModalOpen] = useState(false);
+  const handlePurchaseClick = () => {
+    const userId = localStorage.getItem("user_id"); // Check localStorage for user_id
+
+    if (userId) {
+      setModalOpen(true); // Open the modal if user is logged in
+    } else {
+      if (houses) {
+        toast.error("You must be logged in first to purchase this property");
+        setTimeout(
+          () =>
+            navigate("/login", {
+              state: { redirectTo: `/properties/${selectedHouse.property_id}` },
+            }),
+          2000
+        ); // Redirect to login first
+        navigate("/login", { state: { redirectTo: `/properties/${selectedHouse.property_id}` } }); // Redirect to login first
+      }
+    }
   };
 
   const handleBack = () => {
-    setSelectedHouse(null);
-    setShowGallery(false); // Reset gallery view when going back
+    setSelectedHouse(null); // Clear the selected house to go back to the list
   };
 
-  const toggleGallery = () => {
-    setShowGallery((prev) => !prev); // Toggle gallery view
-  };
-
-  if (isLoading) {
-    return <div className="text-center">Loading houses...</div>;
-  }
+  if (isLoading) return (
+    <div className="fixed inset-0 flex items-center justify-center">
+      <RingLoader color="#2563eb" size={80} />
+    </div>
+  );
 
   if (isError) {
-    return <div className="text-center text-red-600">Failed to load houses. Please try again later.</div>;
-  }
-
-  if (!houses || houses.length === 0) {
-    return <div className="text-center">No houses found.</div>;
+    return (
+      <div className="text-center text-red-600">
+        Failed to load houses. Please try again later.
+      </div>
+    );
   }
 
   return (
-    <div className="bg-gray-100 h-screen">
-    <Navbar />
-    <h2 className="text-center text-blue-600 font-semibold uppercase">Featured Houses</h2>
-    <h1 className="text-center text-3xl font-bold mb-6">Our Houses</h1>
-    <section className=" flex flex-col bg-gray-100">
-      
-      <div className="h-full mb-10">    {/*flex-grow overflow-y-auto*/}
-        {selectedHouse ? (
-          <div className="max-w-6xl mx-auto bg-white rounded-lg shadow-md p-10 h-full flex flex-col">
-            <button onClick={handleBack} className="text-blue-600 font-semibold mb-4">
-              &larr; Back to Houses
+    
+    <section className="bg-gray-800 flex flex-col min-h-screen w-full">
+      {selectedHouse ? (
+        (console.log(
+          "Selected House History:",
+          selectedHouse?.houses_history
+        ),
+        (
+          // Detailed View for Selected House
+          <div className="max-w-8xl mx-auto bg-white rounded-lg shadow-md p-6 ">
+            <button
+              onClick={handleBack}
+              className="text-blue-600 font-semibold mb-4"
+            >
+              &larr; Back to houses
             </button>
-            <div className="flex flex-col md:flex-row gap-4">
-              {/* Scrollable Images with Pop-out Effect */}
-              <div className="flex overflow-x-auto space-x-4 scrollbar-thin scrollbar-thumb-blue-600 scrollbar-track-gray-300">
-                {selectedHouse.images && selectedHouse.images.length > 0 ? (
-                  selectedHouse.images.map((image: string, index: number) => (
-                    <div
-                      key={index}
-                      className={`relative flex-shrink-0 ${
-                        index === Math.floor(selectedHouse.images.length / 2)
-                          ? "scale-105 z-10" // Pop-out effect for the middle image
-                          : "scale-100"
-                      } transform transition-transform duration-300`}
-                    >
-                      <img
-                        src={image || "https://via.placeholder.com/300"}
-                        alt={`House Image ${index + 1}`}
-                        className="w-64 h-48 object-cover rounded-md shadow-md"
-                      />
-                    </div>
-                  ))
-                ) : (
-                  <p className="text-center text-gray-500">No images available.</p>
-                )}
+            <div className="flex flex-col md:flex-col gap-4">
+              {/* House Images */}
+              <div className="flex overflow-x-auto space-x-2 scrollbar-thin scrollbar-thumb-blue-600 scrollbar-track-gray-300">
+                {selectedHouse.images.map((image: string, index: number) => (
+                  <img
+                    key={index}
+                    src={image || "https://via.placeholder.com/300"}
+                    alt={`House Image ${index + 1}`}
+                    className="w-64 h-48 object-cover rounded-md"
+                  />
+                ))}
               </div>
-              <div className="p-4 flex-grow">
-                <h3 className="text-lg font-semibold">{selectedHouse.name}</h3>
-                <p className="text-sm text-gray-600">Address: {selectedHouse.address || "N/A"}</p>
-                <p className="text-sm text-gray-600">Rooms: {selectedHouse.number_of_rooms}</p>
-                <p className="text-sm text-gray-600">Size: {selectedHouse.size} sqm</p>
-                <p className="text-sm text-gray-600">Year Built: {selectedHouse.year_built || "Unknown"}</p>
-                <p className="mt-2 text-xl font-semibold text-blue-600">${selectedHouse.price}</p>
-                <p
-                  className={`mt-1 font-semibold ${
-                    selectedHouse.status === "Available" ? "text-green-600" : "text-red-600"
-                  }`}
-                >
-                  {selectedHouse.status}
-                </p>
-                <button
-                  onClick={toggleGallery}
-                  className="mt-4 px-4 py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700"
-                >
-                  {showGallery ? "Close Gallery" : "Gallery"}
-                </button>
-              </div>
-            </div>
-
-            {/* Gallery Section */}
-            {showGallery && (
-              <div className="grid grid-cols-1 l:grid-cols-2 lg:grid-cols-3 gap-4 mt-10 overflow-y-auto">
-                {selectedHouse.images && selectedHouse.images.length > 0 ? (
-                  selectedHouse.images.map((image: string, index: number) => (
-                    <div
-                      key={index}
-                      className="relative w-full h-[300px] transition-transform duration-300 hover:scale-105"
-                    >
-                      <img
-                        src={image || "https://via.placeholder.com/300"}
-                        alt={`Gallery Image ${index + 1}`}
-                        className="w-full h-full object-cover rounded-lg shadow-lg"
-                      />
-                    </div>
-                  ))
-                ) : (
-                  <p className="text-center text-gray-500">No images available.</p>
-                )}
-              </div>
-            )}
-          </div>
-        ) : (
-          <>
-           
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-4  ">
-              {houses.slice().map((house: House) => (
-                <div
-                  key={house.property_id}
-                  className="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer"
-                  onClick={() => handleCardClick(house)}
-                >
-                  {/* Updated Scrollable Images */}
-                  <div className="relative overflow-hidden">
-                    <div className="flex overflow-x-auto space-x-4 scrollbar-thin scrollbar-thumb-blue-600 scrollbar-track-gray-300">
-                      {house.images && house.images.length > 0 ? (
-                        house.images.map((image, index) => (
-                          <div
-                            key={index}
-                            className={`relative flex-shrink-0 ${
-                              index === Math.floor(house.images.length / 2)
-                                ? "scale-105 z-10" // Pop-out effect for the middle image
-                                : "scale-100"
-                            } transform transition-transform duration-300`}
-                          >
-                            <img
-                              src={image || "https://via.placeholder.com/300"}
-                              alt={`House Image ${index + 1}`}
-                              className="w-64 h-48 object-cover rounded-md shadow-md"
-                            />
-                          </div>
-                        ))
-                      ) : (
-                        <img
-                          src="https://via.placeholder.com/300"
-                          alt="Placeholder"
-                          className="w-full h-56 object-cover"
-                        />
-                      )}
-                    </div>
+              {/* House Details */}
+              <div>
+                <div className="flex flex-row gap-32">
+                  <div>
+                    <h3 className="text-2xl font-semibold "><span className="text-orange-500">Property Name:</span>{" "} <span className="text-green-500">{selectedHouse.name}</span>{" "}
+                      
+                    </h3>
+                    <p className="text-lg text-gray-600"><span className="font-bold">Type of House:</span>{" "}
+                      {selectedHouse.house_type || "N/A"}
+                    </p>
+                    <p className="text-lg text-gray-600"><span className="font-bold">Size in Square Feet:</span>{" "}
+                      {selectedHouse.size || "N/A"}
+                    </p>
+                    <p className="text-lg text-gray-600"><span className="font-bold">Number of Rooms:</span>{" "}
+                      {selectedHouse.number_of_rooms || "N/A"}
+                    </p>
+                    
                   </div>
-                  {/* Card Details */}
-                  <div className="p-4">
-                    <h3 className="text-lg font-semibold">{house.name}</h3>
-                    <div className="flex items-center space-x-4 text-gray-600 mt-2">
-                      <div className="flex items-center space-x-1">
-                        <i className="fas fa-bed"></i>
-                        <span>{house.number_of_rooms} Rooms</span>
-                      </div>
-                      <div className="flex items-center space-x-1">
-                        <i className="fas fa-ruler-combined"></i>
-                        <span>{house.size} sqm</span>
-                      </div>
-                    </div>
+                  <div>
+                    <p className="text-lg text-gray-600">
+                      Location: {selectedHouse.location || "N/A"}
+                    </p>
+                    <p className="text-lg text-gray-600">
+                      Size Of Property: {selectedHouse.size || "N/A"}
+                    </p>
+                    <p className="mt-2 text-xl font-semibold text-blue-300">
+                      Price :Ksh {selectedHouse.price}
+                    </p>
                   </div>
-                  <div className="flex justify-between items-center p-4 border-t">
-                    <span className="text-gray-700 text-sm">Year Built: {house.year_built || "Unknown"}</span>
-                    <span className="text-blue-600 font-bold">${house.price}</span>
+                  <div>
+                    <p className="text-lg text-gray-600">
+                      Year Built: {selectedHouse.year_built || "N/A"}
+                    </p>
+                    <p
+                      className={`mt-1 font-semibold ${
+                        selectedHouse.status === "Available"
+                          ? "text-green-600"
+                          : "text-red-600"
+                      }`}
+                    >
+                      {" "}
+                      Status:
+                      {selectedHouse.status}
+                    </p>
+
                   </div>
                 </div>
-              ))}
-            </div>
 
-            {/* {visibleCount < houses.length && (
-              <div className="flex justify-center mt-8">
-                <button
-                  onClick={handleViewMore}
-                  className="px-6 py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700"
-                >
-                  View More
-                </button>
+                {/* House History */}
+                <div className="grid gap-6 -screen overflow-y-auto">
+                  {selectedHouse.history.map(
+                    (historyItem: HouseHistory, index: number) => (
+                      <div
+                        key={index}
+                        className="p-6 border rounded-lg shadow-lg bg-gray-100 h"
+                      >
+                        <h5 className="font-bold text-xl text-blue-700 mb-4">
+                          History Record {index + 1}
+                        </h5>
+
+                        <div className="grid grid-cols-3 gap-4">
+                          {/* Column 1 */}
+                          <div>
+                            <h6 className="font-extrabold text-black">
+                              Ownership
+                            </h6>
+                            <p className="text-gray-700">
+                              <span className="font-bold">Previous Owner:</span>{" "}
+                              {historyItem.previous_owner || "N/A"}
+                            </p>
+                            <p className="text-gray-700">
+                              <span className="font-bold">Transfer Date:</span>{" "}
+                              {historyItem.transfer_date || "N/A"}
+                            </p>
+
+
+                            <h6 className="font-extrabold text-black mt-4">
+                              Leasing
+                            </h6>
+                            <p className="text-gray-700">
+                              <span className="font-bold">Tenant Information:</span>{" "}
+                              {historyItem.tenant_name || "N/A"}
+                            </p>
+                            <p className="text-gray-700">
+                              <span className="font-bold">Lease Start:</span>{" "}
+                              {historyItem.lease_start || "N/A"}
+                            </p>
+                            <p className="text-gray-700">
+                              <span className="font-bold">Lease End:</span>{" "}
+                              {historyItem.lease_end || "N/A"}
+                            </p>
+                            <h6 className="font-extrabold text-black mt-4">
+                              Dispute History
+                            </h6>
+                            <p className="text-gray-700">
+                              <span className="font-bold">Type of Dispute:</span>{" "}
+                              {historyItem.dispute_type || "N/A"}
+                            </p>
+                            <p className="text-gray-700">
+                              <span className="font-bold">Dispute Status:</span>{" "}
+                              {historyItem.dispute_status || "N/A"}
+                            </p>
+                            <p className="text-gray-700">
+                              <span className="font-bold">Dispute Resolution Date:</span>{" "}
+                              {historyItem.dispute_resolution_date || "N/A"}
+                            </p>
+
+                          </div>
+
+                          {/* Column 2 */}
+                          <div>
+                            <h6 className="font-extrabold text-black">
+                              Legal Infomation
+                            </h6>
+                            <p className="text-gray-700">
+                              <span className="font-bold">Issue:</span>{" "}
+                              {historyItem.legal_issue || "N/A"}
+                            </p>
+                            <p className="text-gray-700">
+                              <span className="font-bold">
+                                Resolution Date:
+                              </span>{" "}
+                              {historyItem.resolution_date || "N/A"}
+                            </p>
+                            <p className="text-gray-700">
+                              <span className="font-bold">Permit Approval Date:</span>{" "}
+                              {historyItem.permit_approval_date || "N/A"}
+                            </p>
+                            
+
+                            <h6 className="font-extrabold text-black mt-4">
+                              Disaster History
+                            </h6>
+                            <p className="text-gray-700">
+                              <span className="font-bold">Type of Disaster:</span>{" "}
+                              {historyItem.disaster_type || "N/A"}
+                            </p>
+                            <p className="text-gray-700">
+                              <span className="font-bold">Description Of Disaster:</span>{" "}
+                              {historyItem.disaster_description || "N/A"}
+                            </p>
+                            <p className="text-gray-700">
+                              <span className="font-bold">Date of Disaster:</span>{" "}
+                              {historyItem.disaster_date || "N/A"}
+                            </p>
+                            <p className="text-gray-700">
+                            <span className="font-bold">Disaster Assessmet Report :</span>{" "}
+                              {historyItem.environmental_assessment_date ||
+                                "N/A"}
+                            </p>
+                            <p className="text-gray-700">
+                              <span className="font-bold">Status After Disaster:</span>{" "}
+                              {historyItem.status_after_disaster || "N/A"}
+                            </p>
+                          </div>
+                          <div>
+                            {/* Column 3 */}
+
+
+                            <h6 className="font-extrabold text-black mt-4">
+                              Crime Reports
+                            </h6>
+                            <p className="text-gray-700">
+                              <span className="font-bold">Crime Type:</span>{" "}
+                              {historyItem.crime_type || "N/A"}
+                            </p>
+                            <p className="text-gray-700">
+                              <span className="font-bold">Crime Date:</span>{" "}
+                              {historyItem.crime_date || "N/A"}
+                            </p>
+
+                            <h6 className="font-extrabold text-black mt-4">
+                              Valuation
+                            </h6>
+                            <p className="text-gray-700">
+                              <span className="font-bold">Valuation Date:</span>{" "}
+                              {historyItem.valuation_date || "N/A"}
+                            </p>
+                            <p className="text-gray-700">
+                              <span className="font-bold">Property Value:</span>{" "}
+                              $
+                              {historyItem.property_value?.toLocaleString() ||
+                                "N/A"}
+                            </p>
+                            <h6 className="font-extrabold text-black mt-4">
+                              Feedback Information
+                            </h6>
+                            <p className="text-gray-700">
+                              <span className="font-bold">Tenant Feedback:</span>{" "}
+                              {historyItem.tenant_feedback || "N/A"}
+                            </p>
+                            <p className="text-gray-700">
+                              <span className="font-bold">Feedback Date:</span>{" "}
+                              {historyItem.feedback_date || "N/A"}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    )
+                  )}
+                </div>
               </div>
-            )} */}
-          </>
-        )}
-      </div>
-      {/* <Footer /> */}
+            </div>
+             <div className="mt-10">
+                        <button
+                          onClick={handlePurchaseClick}
+                          className="btn btn-primary mt-4 w-full"
+                        >
+                          Purchase Property
+                        </button>
+                      </div>
+                      <BookingModal
+                        isOpen={isModalOpen}
+                        onClose={() => setModalOpen(false)}
+                      />
+          </div>
+        ))
+      ) : (
+        // House Cards List
+        <div className="">
+          
+          <div className="flex justify-center">
+          
+        </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 md:px-2">
+            {houses &&
+              houses.map(
+                (house) =>
+                  house &&
+                  house.images &&
+                  house.images.length > 0 && (
+                    <div
+                      key={house.property_id}
+                      onClick={(e) => {
+                        // Prevent selecting house if a button was clicked
+                        if ((e.target as HTMLElement).tagName !== "BUTTON") {
+                          handleCardClick(house);
+                        }
+                      }}
+                      className="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer hover:shadow-lg transition-shadow"
+                    >
+                      <div className="relative">
+                        {/* Horizontal Scrollable Images */}
+                        <div className="flex overflow-x-auto space-x-2 scrollbar-thin scrollbar-thumb-blue-600 scrollbar-track-gray-300 ">
+                          {house.images.map((image, index) => (
+                            <img
+                              key={index}
+                              src={image || "https://via.placeholder.com/300"}
+                              alt={`House Image ${index + 1}`}
+                              className="w-64 h-48 object-cover rounded-md"
+                            />
+                          ))}
+                        </div>
+                      </div>
+                      <div className="p-4">
+                        {/* House Info */}
+                        <h3 className="text-3xl
+font-size: var(--text-3xl) font-bold "><span className="text-orange-500">Property Name:</span>{" "} <span className="text-green-500">{house.name}</span>{" "}
+                           
+                        </h3>
+                        <p className="text-lg text-gray-600"><span className="font-bold">Type of House:</span>{" "}
+                           {house.house_type}
+                        </p>
+                        <p className="text-lg text-gray-600"><span className="font-bold">Size in Square Feet:</span>{" "}
+                           {house.size}
+                        </p>
+                        <p className="text-lg text-gray-600"><span className="font-bold">Number of Rooms:</span>{" "}
+                        {house.number_of_rooms}
+                        </p>
+                        <p className="text-lg text-gray-600"><span className="font-bold">Location:</span>{" "}
+                           {house.address}
+                        </p>                        
+                       
+                        <p className="mt-2 text-xl font-semibold text-blue-600">
+                          Ksh {house.price}
+                        </p>
+                        <p
+                          className={`mt-1 font-semibold ${
+                            house.status === "Available"
+                              ? "text-green-600"
+                              : "text-red-600"
+                          }`}
+                        >
+                          {house.status}
+                        </p>
+                        
+                      </div>
+                    </div>
+                  )
+              )}
+          </div>
+        </div>
+      )}
+      
     </section>
-    <Footer />
-    </div>
   );
 };
 
-export default HousesList;
+export default Houses;

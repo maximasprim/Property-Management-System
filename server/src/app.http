@@ -222,6 +222,22 @@ GET http://localhost:3000/bookingsWithUserAndPayments/1
 ###
 GET http://localhost:3000/payments
 ###
+POST http://localhost:3000/initiate
+Content-Type: application/json
+
+{
+   
+  "amount": 1,
+  "phoneNumber": "254706409089",
+  "propertyType": "house",
+  "propertyName": "White House",
+  "bookingId": 2,
+  "buyerId": 15,
+  "paymentMethod": "mpesa"
+
+
+}
+###
 GET http://localhost:3000/payments/1
 ###
 # POST http://localhost:3000/create-checkout-session

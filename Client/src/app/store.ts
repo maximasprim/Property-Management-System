@@ -15,6 +15,7 @@ import {reviewApi} from '../features/Reviews/ReviewApi';
 import {vehicleHistoryApi} from '../features/VehiclesHistory/historyApi';
 import {bookingApi} from '../features/Bookings/BookingApi';
 import {paymentsApi} from '../features/Payments/PaymentsApi';
+import {mpesaApi} from '../features/Mpesa/mpesaApi';
 
 
 const rootReducer = combineReducers({
@@ -32,6 +33,7 @@ const rootReducer = combineReducers({
     [vehicleHistoryApi.reducerPath]: vehicleHistoryApi.reducer,
     [bookingApi.reducerPath]: bookingApi.reducer,
     [paymentsApi.reducerPath]: paymentsApi.reducer,
+    [mpesaApi.reducerPath]: mpesaApi.reducer,
 
 });
 
@@ -49,7 +51,7 @@ export const store = configureStore({
     getDefaultMiddleware().concat(authApi.middleware).concat(registerApi.middleware).concat(vehiclesApi.middleware)
     .concat(landsApi.middleware).concat(HousesApi.middleware).concat(usersApi.middleware).concat(locationsApi.middleware)
     .concat(propertiesApi.middleware).concat(reviewApi.middleware).concat(vehicleHistoryApi.middleware).concat(bookingApi.middleware)
-    .concat(paymentsApi.middleware),
+    .concat(paymentsApi.middleware).concat(mpesaApi.middleware),
 
 }) as any;
 

@@ -12,6 +12,7 @@ import { authRouter } from './Authentication/auth.router'
 import { landHistoryRouter } from './Land_History/landHistory.router'
 import { vehiclesHistoryRouter } from './vehicleHistory/vehiclesHistory.router'
 import { reviewRouter } from './Reviews/review.router'
+import paymentRouter from './mpesa payment/payment.router'
 import {cors} from 'hono/cors'
 
 const app = new Hono()
@@ -50,3 +51,4 @@ app.route('/',authRouter)
 app.route('/',landHistoryRouter)
 app.route('/',vehiclesHistoryRouter)
 app.route('/',reviewRouter)
+app.route('/',paymentRouter)

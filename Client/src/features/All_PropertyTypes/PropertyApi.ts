@@ -61,7 +61,7 @@ export const propertiesApi = createApi({
       providesTags: ["Lands"],
     }),
     getVehicles: builder.query<Vehicle[],void>({
-      query: () => "/vehicles",
+      query: () => "/vehicleshistory",
       providesTags: ["Vehicles"],
     }),
     getHouseById: builder.query<House, number>({

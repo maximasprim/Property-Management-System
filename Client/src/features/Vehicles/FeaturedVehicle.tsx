@@ -8,8 +8,11 @@ import {
 import { RingLoader } from "react-spinners";
 import { useState, useEffect } from "react";
 import { debounce } from "lodash";
-import Navbar from "../../components/Navbar";
-import Footer from "../../components/Footer";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import BookingModal from "../Bookings/CreateBookingModal";
+// import Navbar from "../../components/Navbar";
+// import Footer from "../../components/Footer";
 
 
 const Vehicles = () => {
@@ -35,7 +38,28 @@ const Vehicles = () => {
     setSelectedVehicle(vehicle); // Set the selected vehicle when clicked
   };
 
-  
+
+  const [isModalOpen, setModalOpen] = useState(false);
+  const navigate=useNavigate();
+  const handlePurchaseClick = () => {
+    const userId = localStorage.getItem("user_id"); // Check localStorage for user_id
+
+    if (userId) {
+      setModalOpen(true); // Open the modal if user is logged in
+    } else {
+      if (vehicles) {
+        toast.error("You must be logged in first to purchase this property");
+        setTimeout(
+          () =>
+            navigate("/login", {
+              state: { redirectTo: `/properties/${selectedVehicle.property_id}` },
+            }),
+          2000
+        ); // Redirect to login first
+        navigate("/login", { state: { redirectTo: `/properties/${selectedVehicle.property_id}` } }); // Redirect to login first
+      }
+    }
+  };
 
   const handleBack = () => {
     setSelectedVehicle(null); // Clear the selected vehicle to go back to the list
@@ -56,7 +80,7 @@ const Vehicles = () => {
   }
 
   return (
-    <section className="bg-gray-800 flex flex-col min-h-screen w-full">
+    <section className="bg-gray-800 flex flex-col mb-2 w-full">
       {selectedVehicle ? (
         (console.log(
           "Selected Vehicle History:",
@@ -148,65 +172,65 @@ const Vehicles = () => {
                         <div className="grid grid-cols-3 gap-4">
                           {/* Column 1 */}
                           <div>
-                            <h6 className="font-bold text-gray-700">
+                            <h6 className="font-extrabold text-black">
                               Ownership
                             </h6>
-                            <p>
+                            <p className="text-gray-700">
                               <span className="font-bold">Previous Owner:</span>{" "}
                               {historyItem.previous_owner || "N/A"}
                             </p>
-                            <p>
+                            <p className="text-gray-700">
                               <span className="font-bold">Transfer Date:</span>{" "}
                               {historyItem.transfer_date || "N/A"}
                             </p>
 
-                            <h6 className="font-bold text-gray-700 mt-4">
+                            <h6 className="font-extrabold text-black mt-4">
                               Maintenance
                             </h6>
-                            <p>
+                            <p className="text-gray-700">
                               <span className="font-bold">Type:</span>{" "}
                               {historyItem.maintenance_type || "None"}
                             </p>
-                            <p>
+                            <p className="text-gray-700">
                               <span className="font-bold">Date:</span>{" "}
                               {historyItem.maintenance_date || "N/A"}
                             </p>
-                            <p>
+                            <p className="text-gray-700">
                               <span className="font-bold">
                                 Service Provider:
                               </span>{" "}
                               {historyItem.service_provider || "N/A"}
                             </p>
-                            <p>
+                            <p className="text-gray-700">
                               <span className="font-bold">Cost:</span> $
                               {historyItem.maintenance_cost?.toLocaleString() ||
                                 "N/A"}
                             </p>
 
-                            <h6 className="font-bold text-gray-700 mt-4">
+                            <h6 className="font-extrabold text-black mt-4">
                               Leasing
                             </h6>
-                            <p>
+                            <p className="text-gray-700">
                               <span className="font-bold">Tenant:</span>{" "}
                               {historyItem.tenant_name || "N/A"}
                             </p>
-                            <p>
+                            <p className="text-gray-700">
                               <span className="font-bold">Lease Start:</span>{" "}
                               {historyItem.lease_start || "N/A"}
                             </p>
-                            <p>
+                            <p className="text-gray-700">
                               <span className="font-bold">Lease End:</span>{" "}
                               {historyItem.lease_end || "N/A"}
                             </p>
 
-                            <h6 className="font-bold text-gray-700 mt-4">
+                            <h6 className="font-extrabold text-black mt-4">
                               Taxes
                             </h6>
-                            <p>
+                            <p className="text-gray-700">
                               <span className="font-bold">Payment Date:</span>{" "}
                               {historyItem.tax_payment_date || "N/A"}
                             </p>
-                            <p>
+                            <p className="text-gray-700">
                               <span className="font-bold">Amount:</span> $
                               {historyItem.tax_amount?.toLocaleString() ||
                                 "N/A"}
@@ -215,44 +239,44 @@ const Vehicles = () => {
 
                           {/* Column 2 */}
                           <div>
-                            <h6 className="font-bold text-gray-700">
+                            <h6 className="font-extrabold text-black">
                               Legal & Disputes
                             </h6>
-                            <p>
+                            <p className="text-gray-700">
                               <span className="font-bold">Issue:</span>{" "}
                               {historyItem.legal_issue || "N/A"}
                             </p>
-                            <p>
+                            <p className="text-gray-700">
                               <span className="font-bold">
                                 Resolution Date:
                               </span>{" "}
                               {historyItem.resolution_date || "N/A"}
                             </p>
-                            <p>
+                            <p className="text-gray-700">
                               <span className="font-bold">Dispute Type:</span>{" "}
                               {historyItem.dispute_type || "N/A"}
                             </p>
-                            <p>
+                            <p className="text-gray-700">
                               <span className="font-bold">Status:</span>{" "}
                               {historyItem.dispute_status || "N/A"}
                             </p>
-                            <p>
+                            <p className="text-gray-700">
                               <span className="font-bold">
                                 Resolution Date:
                               </span>{" "}
                               {historyItem.dispute_resolution_date || "N/A"}
                             </p>
 
-                            <h6 className="font-bold text-gray-700 mt-4">
+                            <h6 className="font-extrabold text-black mt-4">
                               Permits & Environmental
                             </h6>
-                            <p>
+                            <p className="text-gray-700">
                               <span className="font-bold">
                                 Permit Approval:
                               </span>{" "}
                               {historyItem.permit_approval_date || "N/A"}
                             </p>
-                            <p>
+                            <p className="text-gray-700">
                               <span className="font-bold">
                                 Environmental Assessment:
                               </span>{" "}
@@ -260,22 +284,22 @@ const Vehicles = () => {
                                 "N/A"}
                             </p>
 
-                            <h6 className="font-bold text-gray-700 mt-4">
+                            <h6 className="font-extrabold text-black mt-4">
                               Disaster History
                             </h6>
-                            <p>
+                            <p className="text-gray-700">
                               <span className="font-bold">Type:</span>{" "}
                               {historyItem.disaster_type || "N/A"}
                             </p>
-                            <p>
+                            <p className="text-gray-700">
                               <span className="font-bold">Description:</span>{" "}
                               {historyItem.disaster_description || "N/A"}
                             </p>
-                            <p>
+                            <p className="text-gray-700">
                               <span className="font-bold">Date:</span>{" "}
                               {historyItem.disaster_date || "N/A"}
                             </p>
-                            <p>
+                            <p className="text-gray-700">
                               <span className="font-bold">Status:</span>{" "}
                               {historyItem.status_after_disaster || "N/A"}
                             </p>
@@ -283,43 +307,43 @@ const Vehicles = () => {
                           <div>
                             {/* Column 3 */}
 
-                            <h6 className="font-bold text-gray-700 mt-4">
+                            <h6 className="font-extrabold text-black mt-4">
                               Insurance & Claims
                             </h6>
-                            <p>
+                            <p className="text-gray-700">
                               <span className="font-bold">Policy Number:</span>{" "}
                               {historyItem.insurance_policy_number || "N/A"}
                             </p>
-                            <p>
+                            <p className="text-gray-700">
                               <span className="font-bold">Claim Date:</span>{" "}
                               {historyItem.claim_date || "N/A"}
                             </p>
-                            <p>
+                            <p className="text-gray-700">
                               <span className="font-bold">Claim Amount:</span> $
                               {historyItem.claim_amount?.toLocaleString() ||
                                 "N/A"}
                             </p>
 
-                            <h6 className="font-bold text-gray-700 mt-4">
+                            <h6 className="font-extrabold text-black mt-4">
                               Crime Reports
                             </h6>
-                            <p>
+                            <p className="text-gray-700">
                               <span className="font-bold">Crime Type:</span>{" "}
                               {historyItem.crime_type || "N/A"}
                             </p>
-                            <p>
+                            <p className="text-gray-700">
                               <span className="font-bold">Crime Date:</span>{" "}
                               {historyItem.crime_date || "N/A"}
                             </p>
 
-                            <h6 className="font-bold text-gray-700 mt-4">
+                            <h6 className="font-extrabold text-black mt-4">
                               Valuation
                             </h6>
-                            <p>
+                            <p className="text-gray-700">
                               <span className="font-bold">Valuation Date:</span>{" "}
                               {historyItem.valuation_date || "N/A"}
                             </p>
-                            <p>
+                            <p className="text-gray-700">
                               <span className="font-bold">Property Value:</span>{" "}
                               $
                               {historyItem.property_value?.toLocaleString() ||
@@ -335,21 +359,32 @@ const Vehicles = () => {
                 </div>
               </div>
             </div>
+            <div className="mt-10">
+            <button
+              onClick={handlePurchaseClick}
+              className="btn btn-primary mt-4 w-full"
+            >
+              Purchase Property
+            </button>
           </div>
+          <BookingModal
+            isOpen={isModalOpen}
+            onClose={() => setModalOpen(false)}
+          />
+          </div>
+          
         ))
       ) : (
         // Vehicle Cards List
         <div className="">
-          <Navbar/>
-        <div className=" mb-8 ">
-          <h2 className="text-center text-blue-600 font-semibold uppercase">
-            Featured Vehicles
-          </h2>
-          <h1 className="text-center text-3xl font-bold mb-6">Our Vehicles</h1>
+          {/* <Navbar/> */}
+        <div className="">
+          
+         
 
           
 
-             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-4 md:px-10">
+             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 px-2 md:px-2">
             {vehicles &&
               vehicles.map(
                 (vehicle) =>
@@ -450,7 +485,7 @@ const Vehicles = () => {
 
              </div>
         </div>
-<Footer/>
+
         </div>
       )}
       
