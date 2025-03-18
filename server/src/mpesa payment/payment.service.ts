@@ -1,6 +1,6 @@
 import axios from "axios";
 import { db } from "../Drizzle/db";
-import { paymentsTable } from "../Drizzle/schema";
+import { paymentsTable, bookingsTable } from "../Drizzle/schema"; // Ensure bookingsTable is imported
 import { eq } from "drizzle-orm";
 
 export class PaymentService {
@@ -9,6 +9,9 @@ export class PaymentService {
 
     try {
       const timestamp = this.generateTimestamp();
+      if (!process.env.MPESA_SHORTCODE || !process.env.MPESA_PASSKEY) {
+        throw new Error("MPESA_SHORTCODE or MPESA_PASSKEY is not defined");
+      }
       const password = this.generatePassword(process.env.MPESA_SHORTCODE, process.env.MPESA_PASSKEY, timestamp);
       const accessToken = await this.getMpesaToken();
 
@@ -60,18 +63,49 @@ export class PaymentService {
       const { Body } = callbackData;
       const checkoutRequestID = Body?.stkCallback?.CheckoutRequestID;
       const resultCode = Body?.stkCallback?.ResultCode;
-      const mpesaReceiptNumber = Body?.stkCallback?.CallbackMetadata?.Item?.find((item: any) => item.Name === "MpesaReceiptNumber")?.Value;
+      const callbackItems = Body?.stkCallback?.CallbackMetadata?.Item || [];
 
       if (!checkoutRequestID) {
         throw new Error("Invalid callback data");
       }
 
+      // Extract MpesaReceiptNumber
+      const mpesaReceiptNumber = callbackItems.find((item: any) => item.Name === "MpesaReceiptNumber")?.Value;
+
+      // Determine payment status
       const status = resultCode === 0 ? "Completed" : "Failed";
 
+      // Check if the transaction exists in the database
+      const existingPayment = await db
+        .select()
+        .from(paymentsTable)
+        .where(eq(paymentsTable.transaction_id, checkoutRequestID))
+        .execute();
+
+      if (!existingPayment.length) {
+        throw new Error("Payment record not found for this transaction");
+      }
+
+      const payment = existingPayment[0];
+
+      // Update the paymentsTable with the correct status
       await db
         .update(paymentsTable)
-        .set({ status, transaction_id: mpesaReceiptNumber || checkoutRequestID })
-        .where(eq(paymentsTable.transaction_id, checkoutRequestID));
+        .set({ 
+          status, 
+          transaction_id: mpesaReceiptNumber || checkoutRequestID 
+        })
+        .where(eq(paymentsTable.transaction_id, checkoutRequestID))
+        .execute();
+
+      // If payment is successful, update the booking status to "Confirmed"
+      if (status === "Completed") {
+        await db
+          .update(bookingsTable)
+          .set({ status: "Confirmed" })
+          .where(eq(bookingsTable.booking_id, payment.booking_id!))
+          .execute();
+      }
 
       return { message: "Payment status updated", status };
     } catch (error) {

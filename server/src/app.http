@@ -237,6 +237,9 @@ Content-Type: application/json
 
 
 }
+
+###
+GET http://localhost:3000/callback
 ###
 GET http://localhost:3000/payments/1
 ###
