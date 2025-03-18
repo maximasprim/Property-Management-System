@@ -333,6 +333,7 @@ const Lands = () => {
           <BookingModal
             isOpen={isModalOpen}
             onClose={() => setModalOpen(false)}
+            selectedHouse={selectedLand}
           />
           </div>
         ))

@@ -15,7 +15,7 @@ const UserPayments: React.FC = () => {
   }, [userId, navigate]);
 
   const { data, isLoading, error } = useFetchUserWithPaymentsQuery(Number(userId));
-  const user = data?.[0];
+  const user = Array.isArray(data) && data.length > 0 ? data[0] : undefined;
 
   console.log("Fetched User Payments:", user);
 

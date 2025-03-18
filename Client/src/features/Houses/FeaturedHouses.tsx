@@ -132,7 +132,7 @@ const navigate = useNavigate();
                   </div>
                   <div>
                     <p className="text-lg text-gray-600">
-                      Location: {selectedHouse.location || "N/A"}
+                      Location: {selectedHouse.address || "N/A"}
                     </p>
                     <p className="text-lg text-gray-600">
                       Size Of Property: {selectedHouse.size || "N/A"}
@@ -326,6 +326,7 @@ const navigate = useNavigate();
                       <BookingModal
                         isOpen={isModalOpen}
                         onClose={() => setModalOpen(false)}
+                        selectedHouse={selectedHouse} // Pass the selected house
                       />
           </div>
         ))

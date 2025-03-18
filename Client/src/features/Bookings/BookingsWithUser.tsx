@@ -21,7 +21,7 @@ const UserBookings: React.FC = () => {
   const [deleteBooking] = useDeleteBookingMutation();
   const { data, isLoading, error, refetch } = useFetchUserWithBookingsQuery(Number(userId));
   const [createCheckout] = useCreatePaymentsMutation();
-  const User = data?.[0];
+  const User = Array.isArray(data) && data.length > 0 ? data[0] : undefined;
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedBooking, setSelectedBooking] = useState<any>(null);

@@ -47,7 +47,8 @@ import AvailableProperties from './features/All_PropertyTypes/Availablepropertie
 import Branches from './features/Location/Branches'
 import SalesChart from './features/Payments/Payments'
 import CustomerReview from './features/Reviews/Review'
-import MpesaPaymentButton from './features/Mpesa/mpesa'
+// import MpesaPaymentButton from './features/Mpesa/mpesa'
+import PaymentCallback from './features/Mpesa/callback'
 // import BookingDetails from './features/Bookings/SingleBookingDetails'
 // import ImageUploadWidget from './components/CloudinaryUploadForm'
 // import VehicleHistoryForm from './features/VehiclesHistory/inputhistoryform'
@@ -305,10 +306,16 @@ const App = () => {
           errorElement: <Error />
         },
         {
-          path: 'mpesa_payment',
-          element: <MpesaPaymentButton booking={{}} />,
+          path: 'callback',
+          element: <PaymentCallback />,
           errorElement: <Error />
         },
+        // {
+        //   path: 'mpesa_payment',
+        //   element: <MpesaPaymentButton booking={{}} />,
+        //   errorElement: <Error />
+        // },
+        
       ]
     }
    

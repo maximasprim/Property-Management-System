@@ -11,7 +11,7 @@ export const PaymentsAPI = createApi({
     baseUrl: 'http://localhost:3000/',
   }),
   endpoints: (builder) => ({
-    createPayments: builder.mutation<TPayments, { booking_id: number; amount: number }>({
+    createPayments: builder.mutation<TPayments, { booking_id: number; amount: number; buyer_id: number }>({
       query: ({ booking_id, amount }) => {
         const buyer_id = localStorage.getItem("user_id"); // Fetch user_id from localStorage
 

@@ -2,26 +2,29 @@ import { useState } from "react";
 import { useProcessPaymentMutation } from "./mpesaApi";
 import { toast } from "react-toastify";
 import { Toaster } from "sonner";
+// import { useNavigate } from "react-router-dom"; // Import navigation hook
+// import PaymentCallback from "./callback"; // Import callback component
 
 const MpesaPaymentButton: React.FC<{ booking: any; onClose: () => void }> = ({ booking, onClose }) => {
   const [processPayment] = useProcessPaymentMutation();
   const [phoneNumber, setPhoneNumber] = useState("");
+  // const navigate = useNavigate(); // Initialize navigation
 
   const handlePaymentWithMpesa = async () => {
     if (!booking) return;
-
+  
     const buyer_id = localStorage.getItem("user_id");
-
+  
     if (!buyer_id) {
       toast.error("User ID not found. Please log in.");
       return;
     }
-
+  
     if (!phoneNumber) {
       toast.error("Please enter your phone number.");
       return;
     }
-
+  
     try {
       const result = await processPayment({
         bookingId: Number(booking.booking_id),
@@ -32,8 +35,13 @@ const MpesaPaymentButton: React.FC<{ booking: any; onClose: () => void }> = ({ b
         propertyName: booking.propertyName || "N/A",
         paymentMethod: "mpesa",
       }).unwrap();
-
+  
+      if (result?.transactionId) {
+        localStorage.setItem("transactionId", result.transactionId);
+      }
+  
       if (result?.checkoutUrl) {
+        toast.info("Redirecting to M-Pesa payment...");
         window.location.href = result.checkoutUrl;
       } else {
         toast.error("Checkout URL missing. Try again.");
@@ -42,16 +50,17 @@ const MpesaPaymentButton: React.FC<{ booking: any; onClose: () => void }> = ({ b
       toast.error("Error processing payment. Please try again.");
     }
   };
+  
 
   return (
     <div
       className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
-      onClick={onClose} // Clicking outside closes modal
+      onClick={onClose}
     >
-        <Toaster />
+      <Toaster />
       <div
         className="bg-white p-6 rounded-lg shadow-lg w-96 text-center relative"
-        onClick={(e) => e.stopPropagation()} // Prevent accidental close when clicking inside
+        onClick={(e) => e.stopPropagation()}
       >
         <h2 className="text-xl text-green-500 font-semibold mb-4">M-Pesa Payment</h2>
         <p className="text-gray-700">Proceed with your M-Pesa payment for:</p>
@@ -76,9 +85,8 @@ const MpesaPaymentButton: React.FC<{ booking: any; onClose: () => void }> = ({ b
           <button
             className="bg-gray-400 hover:bg-gray-500 text-white py-2 px-4 rounded-lg"
             onClick={(e) => {
-              e.stopPropagation(); // Prevent event bubbling
-              console.log("Cancel button clicked"); // Debugging output
-              onClose(); // Close modal
+              e.stopPropagation();
+              onClose();
             }}
           >
             Cancel

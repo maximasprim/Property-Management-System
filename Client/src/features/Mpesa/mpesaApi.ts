@@ -19,6 +19,7 @@ interface ApiResponse {
   message: string;
   data?: any;
   checkoutUrl?: string;
+  transactionId?: string;
 }
 
 // Create API slice
