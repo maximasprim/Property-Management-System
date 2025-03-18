@@ -75,7 +75,9 @@ const UserProfile: React.FC = () => {
 
   if (isLoading) return <div>Loading...</div>;
   if (error) {
-    return <div>Error: {error?.data?.message || 'Something went wrong'}</div>;
+    return <div>
+      Error: { 'data' in error && typeof error.data === 'object' && error.data !== null && 'message' in error.data ? (error.data as { message: string }).message : 'Something went wrong' }
+    </div>;
   }
 
   return (
