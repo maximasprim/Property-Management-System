@@ -8,6 +8,7 @@ import { PropagateLoader } from "react-spinners";
 interface Booking {
   booking_id: number;
   property_type: string;
+  property_name: string;
   property_id: number;
   total_amount: number;
   user_id: number;
