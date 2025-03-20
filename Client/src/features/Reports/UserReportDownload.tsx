@@ -1,7 +1,6 @@
 import React, { useRef } from "react";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
-// import UserPaymentsChart from "../users/singleUserPaymentCharts"; // Import your chart or other components here
 import PaymentsReport from "./paymetsReports";
 
 const DownloadableComponent: React.FC = () => {
@@ -10,7 +9,7 @@ const DownloadableComponent: React.FC = () => {
   const handleDownloadPDF = async () => {
     if (!componentRef.current) return;
 
-    // ✅ Convert OKLCH colors to HEX
+    // ✅ Convert OKLCH colors to HEX to avoid issues
     document.querySelectorAll("*").forEach((element) => {
       const computedStyle = getComputedStyle(element);
       if (computedStyle.backgroundColor.includes("oklch")) {
@@ -20,18 +19,20 @@ const DownloadableComponent: React.FC = () => {
 
     try {
       const canvas = await html2canvas(componentRef.current, {
-        backgroundColor: "#ffffff", // White background to avoid transparency
+        backgroundColor: "#ffffff",
         scale: 2,
       });
 
       const imgData = canvas.toDataURL("image/png");
-
       const pdf = new jsPDF("p", "mm", "a4");
       const imgWidth = 190;
       const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
       pdf.addImage(imgData, "PNG", 10, 10, imgWidth, imgHeight);
       pdf.save("User_Payments_Report.pdf");
+
+      // ✅ Reload the page after download to reset the UI
+      window.location.reload();
     } catch (error) {
       console.error("Error generating PDF:", error);
     }
@@ -41,7 +42,6 @@ const DownloadableComponent: React.FC = () => {
     <div className="w-full mx-auto p-6 bg-white shadow-md rounded-lg">
       <div ref={componentRef} className="p-4 bg-gray-100 rounded-lg shadow-md">
         <PaymentsReport />
-        {/* <UserPaymentsChart /> */}
       </div>
       <button
         onClick={handleDownloadPDF}

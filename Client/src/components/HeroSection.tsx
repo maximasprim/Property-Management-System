@@ -10,7 +10,7 @@ import image4 from '../assets/landhero.jpg';
 import { Toaster, toast } from 'sonner';
 
 const HeroSection = () => {
-  const [searchType, setSearchType] = useState('For Rent');
+  // const [searchType, setSearchType] = useState('For Rent');
   const [filters, setFilters] = useState({ type: 'All', location: '', property_name: '' });
   const navigate = useNavigate();
 
@@ -36,9 +36,9 @@ const HeroSection = () => {
   };
 
   // Handle search type toggle
-  const handleSearchTypeToggle = (type: string) => {
-    setSearchType(type);
-  };
+  // const handleSearchTypeToggle = (type: string) => {
+  //   setSearchType(type);
+  // };
 
   // Filter properties based on search inputs
   const filteredProperties = properties.filter((property:any) => {
