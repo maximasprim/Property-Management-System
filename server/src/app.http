@@ -10,7 +10,7 @@ Content-Type: application/json
     "username":"daniel",
     "password":"pass",
     "role":"user",
-    "email":"daniel@gmail.com",
+    "email":"mwasamemichael05@gmail.com",
     "address":"1234 Main St, City, State, 12345",
     "contact_phone":"1234567890"
 }

@@ -2,29 +2,29 @@ import { useState } from "react";
 import { useProcessPaymentMutation } from "./mpesaApi";
 import { toast } from "react-toastify";
 import { Toaster } from "sonner";
-// import { useNavigate } from "react-router-dom"; // Import navigation hook
-// import PaymentCallback from "./callback"; // Import callback component
 
 const MpesaPaymentButton: React.FC<{ booking: any; onClose: () => void }> = ({ booking, onClose }) => {
   const [processPayment] = useProcessPaymentMutation();
   const [phoneNumber, setPhoneNumber] = useState("");
-  // const navigate = useNavigate(); // Initialize navigation
+  const [isLoading, setIsLoading] = useState(false); // Loading state for button
 
   const handlePaymentWithMpesa = async () => {
     if (!booking) return;
-  
+
     const buyer_id = localStorage.getItem("user_id");
-  
+
     if (!buyer_id) {
       toast.error("User ID not found. Please log in.");
       return;
     }
-  
+
     if (!phoneNumber) {
       toast.error("Please enter your phone number.");
       return;
     }
-  
+
+    setIsLoading(true); // Start loading state
+
     try {
       const result = await processPayment({
         bookingId: Number(booking.booking_id),
@@ -35,29 +35,32 @@ const MpesaPaymentButton: React.FC<{ booking: any; onClose: () => void }> = ({ b
         propertyName: booking.propertyName || "N/A",
         paymentMethod: "mpesa",
       }).unwrap();
-  
+
       if (result?.transactionId) {
         localStorage.setItem("transactionId", result.transactionId);
       }
-  
+
       if (result?.checkoutUrl) {
         toast.info("Redirecting to M-Pesa payment...");
         window.location.href = result.checkoutUrl;
       } else {
         toast.error("Checkout URL missing. Try again.");
       }
+
+      toast.success("Payment successful!", { position: "top-left" }); // Show success toast
     } catch (error) {
       toast.error("Error processing payment. Please try again.");
+    } finally {
+      setIsLoading(false); // Stop loading state
     }
   };
-  
 
   return (
     <div
       className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
       onClick={onClose}
     >
-      <Toaster />
+      <Toaster position="top-left" /> {/* Toast positioned at top-left */}
       <div
         className="bg-white p-6 rounded-lg shadow-lg w-96 text-center relative"
         onClick={(e) => e.stopPropagation()}
@@ -77,10 +80,11 @@ const MpesaPaymentButton: React.FC<{ booking: any; onClose: () => void }> = ({ b
 
         <div className="flex justify-between mt-6">
           <button
-            className="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded-lg"
+            className={`py-2 px-4 rounded-lg text-white ${isLoading ? "bg-gray-500 cursor-not-allowed" : "bg-green-500 hover:bg-green-600"}`}
             onClick={handlePaymentWithMpesa}
+            disabled={isLoading}
           >
-            Confirm Payment
+            {isLoading ? "Processing..." : "Confirm Payment"}
           </button>
           <button
             className="bg-gray-400 hover:bg-gray-500 text-white py-2 px-4 rounded-lg"
@@ -88,6 +92,7 @@ const MpesaPaymentButton: React.FC<{ booking: any; onClose: () => void }> = ({ b
               e.stopPropagation();
               onClose();
             }}
+            disabled={isLoading}
           >
             Cancel
           </button>

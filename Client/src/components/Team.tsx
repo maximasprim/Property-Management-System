@@ -2,6 +2,9 @@ import { motion } from "framer-motion";
 import teamMember1 from "../assets/team1.jpg"; // Replace with your image paths
 import teamMember2 from "../assets/team2.jpg";
 import teamMember3 from "../assets/team3.jpg";
+import teamMember4 from "../assets/team4.jpg"; 
+import teamMember5 from "../assets/team5.jpg";
+import teamMember6 from "../assets/team6.jpg"; 
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 
@@ -25,22 +28,22 @@ const teamMembers = [
     image: teamMember3,
   },
   {
-    name: "Emily Davis",
+    name: "Brian Mwangi",
     role: "Marketing Head",
     description: "Crafting strategies to connect with our audience.",
-    image: teamMember3,
+    image: teamMember4,
   },
   {
-    name: "Emily Davis",
+    name: "Jacob Jones",
     role: "Marketing Head",
     description: "Crafting strategies to connect with our audience.",
-    image: teamMember3,
+    image: teamMember5,
   },
   {
-    name: "Emily Davis",
+    name: "Tomas Tom",
     role: "Marketing Head",
     description: "Crafting strategies to connect with our audience.",
-    image: teamMember3,
+    image: teamMember6,
   },
 ];
 

@@ -100,7 +100,7 @@ const UsersList: React.FC = () => {
     : "0";
 
   return (
-    <div className="container max-w-full mx-auto p-4 bg-gray-800 text-white">
+    <div className="container max-w-full mx-auto p-4 bg-gray-800 text-white h-screen overflow-y-auto">
       <h1 className="text-2xl font-bold mb-4">Users List</h1>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
         <div className="bg-blue-600 p-4 rounded-lg shadow-md text-center">
@@ -120,7 +120,7 @@ const UsersList: React.FC = () => {
       <h3 className="text-2xl font-semibold text-purple-400 mb-4">Add New User</h3>
       </div>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4 ">
         <input type="text" name="full_name" placeholder="Full Name" value={newUser.full_name} onChange={handleInputChange} className="input input-bordered w-full" />
         <input type="email" name="email" placeholder="Email" value={newUser.email} onChange={handleInputChange} className="input input-bordered w-full" />
         <input type="text" name="contact_phone" placeholder="Phone" value={newUser.contact_phone} onChange={handleInputChange} className="input input-bordered w-full" />

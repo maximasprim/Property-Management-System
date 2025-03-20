@@ -1,7 +1,7 @@
 import { authenticationsTable,usersTable, TIAuthentications, TSAuthentications } from "../Drizzle/schema";
 import db from "../Drizzle/db";
 import { sql } from "drizzle-orm";
-// import { mailFunction } from "../mail"
+import { mailFunction } from "../mail"
 
 export const createAuthUserService = async (user: any) => {
     try {
@@ -25,19 +25,25 @@ export const createAuthUserService = async (user: any) => {
         role:user.role
       }).returning();
   
-    //   // Ensure username is defined and of type string before calling mailFunction
-    //   if (!user.username || typeof user.username !== 'string') {
-    //     throw new Error('Invalid username');
-    //   }
+      // Ensure username is defined and of type string before calling mailFunction
+      if (!user.email || typeof user.email !== "string") {
+        throw new Error("Invalid email");
+      }
   
-    //   // Sending welcome email to the user
-    //   await mailFunction(user.username, 'Welcome to Maximus CarBook', 'welcome-email', { username: user.username, password: user.password });
-    //   console.log("Authservices: Sent welcome email");
+      // ✅ Send welcome email to the registering user
+      await mailFunction(
+        user.email, // 👈 Use email instead of username here
+        "Welcome to TrueEstate Property Management",
+        "welcome-email",
+        { username: user.username, password: user.password }
+      );
+  
+      console.log("Authservices: Sent welcome email");
   
       return createdUser[0]; // Return the created user
     } catch (error) {
-      console.error('Error creating user:', error);
-      throw new Error('User creation failed');
+      console.error("Error creating user:", error);
+      throw new Error("User creation failed");
     }
   };
 
