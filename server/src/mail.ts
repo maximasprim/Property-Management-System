@@ -71,14 +71,14 @@ const templates: { [key: string]: string } = {
     <body>
         <div class="container">
             <div class="header">
-                <h1>Welcome to Maximus CarBook</h1>
+                <h1>Welcome to TrueEstate Property Management/h1>
             </div>
             <div class="content">
                 <p>Dear <strong><%= username %></strong>,</p>
                 <p>Thank you for registering. Here are your credentials:</p>
                 <p><strong>Username:</strong> <%= username %></p>
                 <p><strong>Password:</strong> <%= password %></p>
-                <a href="https://restaurantapp.azurewebsites.net/api" class="button">Get Started</a>
+                <a href="https://property-management-system-three.vercel.app" class="button">Get Started</a>
             </div>
             <div class="footer">
                 <p>&copy; 2025 TrueEstate Property Management . All rights reserved.</p>
