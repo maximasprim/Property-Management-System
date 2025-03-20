@@ -14,7 +14,7 @@ export default function Comment() {
     <button className="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded">Download Reports</button>
     </Link>
       <Link to ="chat">
-    {/* <button className="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded">Live Chat</button> */}
+    <button className="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded">Community Chat</button>
     </Link>
     </div>
       <ReviewModal isOpen={isModalOpen} onClose={() => setModalOpen(false)} />

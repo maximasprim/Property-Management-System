@@ -29,6 +29,9 @@ const Chat = () => {
 
   return (
     <div className="p-4 bg-gray-800 text-white rounded-lg h-full">
+      <div className="flex place-content-center">
+      <h1 className="text-2xl font-bold mb-4">Live Chat</h1>
+      </div>
       <div className="h-64 overflow-y-auto border border-gray-600 p-2 mb-4">
         {messages.map((msg, index) => (
           <div
