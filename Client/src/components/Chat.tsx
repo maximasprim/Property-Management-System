@@ -53,7 +53,7 @@ const Chat = () => {
       </div>
       <div className="flex">
         <input
-          className="flex-1 p-2 text-black"
+          className="flex-1 p-2 text-white"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder="Type a message..."
