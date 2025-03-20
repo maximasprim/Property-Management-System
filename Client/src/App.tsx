@@ -49,6 +49,12 @@ import SalesChart from './features/Payments/Payments'
 import CustomerReview from './features/Reviews/Review'
 // import MpesaPaymentButton from './features/Mpesa/mpesa'
 import PaymentCallback from './features/Mpesa/callback'
+import AnalyticsReport from './features/Reports/report'
+import FeaturedVehicle from './features/Vehicles/NavVehicles'
+import NavHouses from './features/Houses/NavHouses'
+import Chat from './components/Chat'
+// import UserPaymentsChart from './features/users/singleUserPaymentCharts'
+import DownloadableComponent from './features/Reports/UserReportDownload'
 // import BookingDetails from './features/Bookings/SingleBookingDetails'
 // import ImageUploadWidget from './components/CloudinaryUploadForm'
 // import VehicleHistoryForm from './features/VehiclesHistory/inputhistoryform'
@@ -87,6 +93,16 @@ const App = () => {
     {
       path: 'properties',
       element: <PropertiesList />,
+      errorElement: <Error />
+    },
+    {
+      path: 'featuredvehicles',
+      element: <FeaturedVehicle />,
+      errorElement: <Error />
+    },
+    {
+      path: 'featuredhouses',
+      element: <NavHouses />,
       errorElement: <Error />
     },
     {
@@ -264,6 +280,11 @@ const App = () => {
           element: <SalesChart/>,
           errorElement: <Error />,
         },
+        {
+          path:'reports',
+          element: <AnalyticsReport/>,
+          errorElement: <Error />,
+        },
         // {
         //   path:'booking_details/:id',
         //   element: <BookingDetails/>,
@@ -308,6 +329,16 @@ const App = () => {
         {
           path: 'callback',
           element: <PaymentCallback />,
+          errorElement: <Error />
+        },
+        {
+          path: 'chat',
+          element: <Chat/>,
+          errorElement: <Error />
+        },
+        {
+          path: 'my_reports',
+          element: <DownloadableComponent/>,
           errorElement: <Error />
         },
         // {

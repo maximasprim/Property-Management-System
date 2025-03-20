@@ -44,7 +44,7 @@ const PropertiesList: React.FC = () => {
       <div className="p-4">
         <h3 className="text-lg font-semibold">{property.name || property.model || property.property_name || "Unnamed Property"}</h3>
         <p className="text-gray-500 text-sm">{property.city || property.address}</p>
-        <p className="text-gray-700 font-medium mt-2">${property.price ? property.price.toLocaleString() : "N/A"}</p>
+        <p className="text-gray-700 font-medium mt-2">Ksh {property.price ? property.price.toLocaleString() : "N/A"}</p>
         <p className={`text-sm mt-1 ${property.status === "Available" ? "text-green-600" : "text-red-500"}`}>
           {property.status || "Available"}
         </p>

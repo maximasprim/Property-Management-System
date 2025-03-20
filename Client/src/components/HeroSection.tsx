@@ -106,7 +106,7 @@ const HeroSection = () => {
           </div>
 
           <div className="flex flex-col items-center mt-10 w-full max-w-3xl">
-            <div className="flex space-x-4">
+            {/* <div className="flex space-x-4">
               <button 
                 className={`px-6 py-2 rounded-full ${searchType === 'For Rent' ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-800'}`}
                 onClick={() => handleSearchTypeToggle('For Rent')}
@@ -119,7 +119,7 @@ const HeroSection = () => {
               >
                 For Sale
               </button>
-            </div>
+            </div> */}
 
             <div className="flex items-center mt-4 bg-white rounded-full shadow-lg px-4 py-2 w-full">
               <select 

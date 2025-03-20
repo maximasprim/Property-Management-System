@@ -11,6 +11,7 @@ import { debounce } from "lodash";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import BookingModal from "../Bookings/CreateBookingModal";
+import ReviewModal from "../Reviews/inputReview";
 // import Navbar from "../../components/Navbar";
 // import Footer from "../../components/Footer";
 
@@ -40,6 +41,7 @@ const Vehicles = () => {
 
 
   const [isModalOpen, setModalOpen] = useState(false);
+  const [isReviewModalOpen,setIsReviewModalOpen] = useState(false);
   const navigate=useNavigate();
   const handlePurchaseClick = () => {
     const userId = localStorage.getItem("user_id"); // Check localStorage for user_id
@@ -372,6 +374,18 @@ const Vehicles = () => {
             onClose={() => setModalOpen(false)}
             selectedHouse={selectedVehicle}
           />
+          <div className="flex justify-center items-center mt-4">
+                <button
+                  onClick={() => setIsReviewModalOpen(true)}
+                  className="bg-blue-500 text-white font-semibold px-4 py-2 rounded-lg shadow-md hover:bg-blue-600 transition"
+                >
+                  Comment
+                </button>
+          
+                {/* Modal Component */}
+                <ReviewModal isOpen={isReviewModalOpen} onClose={() => setIsReviewModalOpen(false)}
+                selectedVehicle={selectedVehicle} />
+              </div>
           </div>
           
         ))

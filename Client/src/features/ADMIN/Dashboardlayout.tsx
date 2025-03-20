@@ -76,11 +76,12 @@ const AdminDashboard = () => {
         <h1 className="text-2xl font-bold text-red-200
 color: var(--color-red-200)">Dashboard</h1>
         <div className="flex items-center space-x-4">
+          <Link to="reports">
           <button className="flex items-center space-x-2 bg-blue-600 px-4 py-2 rounded-lg">
             <Download className="w-5 h-5" />
             <span className="text-white">Download Reports</span>
           </button>
-          
+          </Link>
           <Link to="add_property">
           <button className="flex items-center space-x-2 bg-blue-600 text-white px-4 py-2 rounded-lg">
             <Plus className="w-5 h-5" />
@@ -177,6 +178,7 @@ color: var(--color-red-200)">Dashboard</h1>
     </div>
 
       {/* Expenses & Top Performance */}
+      {/* <Link to="reports"> */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-6 bg-gray-900 text-white">
       {/* Sales Overview */}
       <div className="bg-blue-950 rounded-xl p-6">
@@ -192,6 +194,7 @@ color: var(--color-red-200)">Dashboard</h1>
           </LineChart>
         </ResponsiveContainer>
       </div>
+      {/* </Link> */}
 
       {/* Active Users + Bar Chart */}
       <div className="bg-blue-950 rounded-xl p-6">

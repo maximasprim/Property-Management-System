@@ -32,7 +32,7 @@ const PropertyDetails: React.FC = () => {
     } else {
       if (property) {
         toast.error("You must be logged in first to purchase this property");
-        setTimeout(() => navigate("/login", { state: { redirectTo: `/properties/${property.property_id}` } }), 2000); // Redirect to login first
+        setTimeout(() => navigate("/login", { state: { redirectTo: 'available_properties' } }), 2000); // Redirect to login first
         // navigate("/login", { state: { redirectTo: `/properties/${property.property_id}` } }); // Redirect to login first
       }
     }
@@ -86,7 +86,7 @@ const PropertyDetails: React.FC = () => {
         <div className="mt-6 bg-white p-6 shadow-lg rounded-xl">
           <h2 className="text-2xl font-semibold mb-4">Property Information</h2>
           <button onClick={() => navigate(-1)} className="btn btn-secondary mt-4">Go Back</button>
-          <p className="text-gray-700"><strong>Price:</strong> ${property.price?.toLocaleString() || "N/A"}</p>
+          <p className="text-gray-700"><strong>Price:</strong> Ksh {property.price?.toLocaleString() || "N/A"}</p>
           <p className="text-gray-700"><strong>Status:</strong> {property.status || "Available"}</p>
 
           {/* Conditional fields based on property type */}
@@ -117,7 +117,7 @@ const PropertyDetails: React.FC = () => {
 
         {/* Purchase Property Button */}
         <button onClick={handlePurchaseClick} className="btn btn-primary mt-4 w-full">
-          Purchase Property
+          View Property History $ Purchase Property
         </button>
       </div>
 

@@ -9,6 +9,7 @@ import { debounce } from "lodash";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import BookingModal from "../Bookings/CreateBookingModal";
+import ReviewModal from "../Reviews/inputReview";
 
 
 
@@ -47,6 +48,7 @@ const Lands = () => {
  
   const navigate =useNavigate ();
   const [isModalOpen, setModalOpen] = useState(false);
+  const [isReviewModalOpen,setIsReviewModalOpen] = useState(false);
   const handlePurchaseClick = () => {
     const userId = localStorage.getItem("user_id"); // Check localStorage for user_id
 
@@ -335,6 +337,19 @@ const Lands = () => {
             onClose={() => setModalOpen(false)}
             selectedHouse={selectedLand}
           />
+          <div className="flex justify-center items-center mt-4">
+      <button
+        onClick={() => setIsReviewModalOpen(true)}
+        className="bg-blue-500 text-white font-semibold px-4 py-2 rounded-lg shadow-md hover:bg-blue-600 transition"
+      >
+        Comment
+      </button>
+
+      {/* Modal Component */}
+      <ReviewModal isOpen={isReviewModalOpen} onClose={() => setIsReviewModalOpen(false)}
+      selectedLand={selectedLand} />
+        
+    </div>
           </div>
         ))
       ) : (

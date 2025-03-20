@@ -54,7 +54,7 @@ const Navbar = () => {
             <ul className="absolute left-0 bg-gray-800 mt-2 rounded-lg shadow-lg w-40 z-50 transition-all duration-300">
        <li className="relative group px-4 py-2 hover:bg-gray-700">
   <a
-    href="/houses"
+    href="/featuredhouses"
     className="text-white hover:text-green-400 block"
   >
     Houses
@@ -123,7 +123,7 @@ const Navbar = () => {
               
               <li className="px-4 py-2 hover:bg-gray-700">
                 <a
-                  href="/vehicleshistory"
+                  href="/featuredVehicles"
                   className="text-white hover:text-green-400 block"
                 >
                   Vehicles

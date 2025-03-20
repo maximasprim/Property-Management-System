@@ -1,6 +1,7 @@
 
 import Calendar from "../../components/Calender";
-import UserActivityGraph from "./activitygraph";
+import UserPaymentsChart from "../users/singleUserPaymentCharts";
+// import UserActivityGraph from "./activitygraph";
 import Comment from "./comment";
 
 const EventList = () => {
@@ -9,7 +10,7 @@ const EventList = () => {
       <div className="flex justify-between flex-row ">
           <div className="flex flex-col gap-0 p-2 w-[60%] bg-white shadow-md">
             <Comment />
-          < UserActivityGraph />
+          < UserPaymentsChart />
           </div>
           <div className="p-4 w-[40%] bg-white shadow-md">
             <Calendar />

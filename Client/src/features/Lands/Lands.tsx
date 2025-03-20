@@ -7,7 +7,7 @@ import {
 import UpdateLandModal from "./LandModal";
 import { RingLoader } from "react-spinners";
 import { useState, useEffect } from "react";
-import { debounce } from "lodash";
+// import { debounce } from "lodash";
 
 
 
@@ -31,14 +31,17 @@ const Lands = () => {
 
 
   useEffect(() => {
-      setTotalLands(lands?.length || 0); // Update the exported total
+      setTotalLands(lands?.length || 0);
+      refetch(); // Update the exported total
     }, [lands]);
 
-  useEffect(() => {
-    const debouncedRefetch = debounce(refetch, 300);
-    debouncedRefetch();
-    return () => debouncedRefetch.cancel();
-  }, [lands]);
+    useEffect(() => {
+      const interval = setInterval(() => {
+        refetch();
+      }, 1000); // Adjust polling interval as needed
+    
+      return () => clearInterval(interval);
+    }, [lands]);
 
   const handleCardClick = (land: any) => {
     setSelectedLand(land);

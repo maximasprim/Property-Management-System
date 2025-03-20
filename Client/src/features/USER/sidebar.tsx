@@ -18,7 +18,7 @@ function SideNav() {
   // Get the first booking of the logged-in user
 
   return (
-    <ul className="p-0 menu bg-base-200 w-[150px] gap-10 text-base-content min-h-full">
+    <ul className="p-0 menu bg-base-200 w-[150px] gap-10 text-base-content h-full">
       
       <li>
         <Link to={``}>

@@ -19,7 +19,7 @@ const Home = () => {
                 <FeaturedProperties />
                 <About />
                 <Footer />
-                
+              
                
             
             </Container>

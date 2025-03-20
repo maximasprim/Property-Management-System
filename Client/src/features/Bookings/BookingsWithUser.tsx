@@ -100,7 +100,7 @@ const UserBookings: React.FC = () => {
               <div key={booking.booking_id} className="border rounded-lg p-4 shadow-md">
                 <p><strong>Property Name:</strong> {booking.property_name}</p>
                 <p><strong>Property Type:</strong> {booking.property_type}</p>
-                <p><strong>Amount To be Paid:</strong> ${booking.total_amount?.toLocaleString()}</p>
+                <p><strong>Amount To be Paid:</strong> Ksh {booking.total_amount?.toLocaleString()}</p>
                 <p><strong>Booking Status:</strong> {booking.status}</p>
                 <p><strong>Date Booked:</strong> {new Date(booking.booking_date).toLocaleDateString()}</p>
                 <p><strong>Location of Booking:</strong> {booking.location || "N/A"}</p>

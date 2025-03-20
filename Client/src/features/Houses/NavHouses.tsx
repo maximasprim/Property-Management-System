@@ -1,13 +1,16 @@
 import {
   useFetchHousesWithHistoryQuery,
-  useDeleteHouseMutation,
-  HouseHistory,
-  House,
+  HouseHistory
 } from "./HousesApi";
-import UpdateHouseModal from "./houseModal";
+// import UpdateHouseModal from "./houseModal";
 import { RingLoader } from "react-spinners";
 import { useState,useEffect } from "react";
-
+import { debounce } from "lodash";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import BookingModal from "../Bookings/CreateBookingModal";
+import Footer from "../../components/Footer";
+import Navbar from "../../components/Navbar";
 
 
 let totalHouses = 0;
@@ -16,7 +19,7 @@ export const setTotalHouses = (count: number) => {
 };
 export const getTotalHouses = () => totalHouses;
 
-const Houses = () => {
+const NavHouses = () => {
   const {
     data: houses,
     isLoading,
@@ -24,34 +27,43 @@ const Houses = () => {
   } = useFetchHousesWithHistoryQuery();
   console.log(houses);
   const [selectedHouse, setSelectedHouse] = useState<any>(null);
-  const [deleteHouse] = useDeleteHouseMutation();
-  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+  // const [deleteHouse] = useDeleteHouseMutation();
+  // const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
 
   useEffect(() => {
       setTotalHouses(houses?.length || 0); // Update the exported total
     }, [houses]);
 
-    useEffect(() => {
-      const interval = setInterval(() => {
-        refetch();
-      }, 1000); // Adjust polling interval as needed
-    
-      return () => clearInterval(interval);
-    }, [houses]);
+  useEffect(() => {
+    const debouncedRefetch = debounce(refetch, 100); // Adjust delay as needed
+    debouncedRefetch();
+    return () => debouncedRefetch.cancel();
+  }, [houses]);
 
   const handleCardClick = (house: any) => {
     console.log("Selected House:", house);
     setSelectedHouse(house); // Set the selected house when clicked
   };
 
-  const handleUpdateClick = (house: House) => {
-    setSelectedHouse(house);
-    setIsUpdateModalOpen(true);
-  };
+const navigate = useNavigate();
+  const [isModalOpen, setModalOpen] = useState(false);
+  const handlePurchaseClick = () => {
+    const userId = localStorage.getItem("user_id"); // Check localStorage for user_id
 
-  const handleDeleteClick = async (houseId: number) => {
-    if (window.confirm("Are you sure you want to delete this house?")) {
-      await deleteHouse(houseId);
+    if (userId) {
+      setModalOpen(true); // Open the modal if user is logged in
+    } else {
+      if (houses) {
+        toast.error("You must be logged in first to purchase this property");
+        setTimeout(
+          () =>
+            navigate("/login", {
+              state: { redirectTo: `/properties/${selectedHouse.property_id}` },
+            }),
+          2000
+        ); // Redirect to login first
+        navigate("/login", { state: { redirectTo: `/properties/${selectedHouse.property_id}` } }); // Redirect to login first
+      }
     }
   };
 
@@ -122,7 +134,7 @@ const Houses = () => {
                   </div>
                   <div>
                     <p className="text-lg text-gray-600">
-                      Location: {selectedHouse.location || "N/A"}
+                      Location: {selectedHouse.address || "N/A"}
                     </p>
                     <p className="text-lg text-gray-600">
                       Size Of Property: {selectedHouse.size || "N/A"}
@@ -165,46 +177,46 @@ const Houses = () => {
                         <div className="grid grid-cols-3 gap-4">
                           {/* Column 1 */}
                           <div>
-                            <h6 className="font-bold text-gray-700">
+                            <h6 className="font-extrabold text-black">
                               Ownership
                             </h6>
-                            <p>
+                            <p className="text-gray-700">
                               <span className="font-bold">Previous Owner:</span>{" "}
                               {historyItem.previous_owner || "N/A"}
                             </p>
-                            <p>
+                            <p className="text-gray-700">
                               <span className="font-bold">Transfer Date:</span>{" "}
                               {historyItem.transfer_date || "N/A"}
                             </p>
 
 
-                            <h6 className="font-bold text-gray-700 mt-4">
+                            <h6 className="font-extrabold text-black mt-4">
                               Leasing
                             </h6>
-                            <p>
+                            <p className="text-gray-700">
                               <span className="font-bold">Tenant Information:</span>{" "}
                               {historyItem.tenant_name || "N/A"}
                             </p>
-                            <p>
+                            <p className="text-gray-700">
                               <span className="font-bold">Lease Start:</span>{" "}
                               {historyItem.lease_start || "N/A"}
                             </p>
-                            <p>
+                            <p className="text-gray-700">
                               <span className="font-bold">Lease End:</span>{" "}
                               {historyItem.lease_end || "N/A"}
                             </p>
-                            <h6 className="font-bold text-gray-700 mt-4">
+                            <h6 className="font-extrabold text-black mt-4">
                               Dispute History
                             </h6>
-                            <p>
+                            <p className="text-gray-700">
                               <span className="font-bold">Type of Dispute:</span>{" "}
                               {historyItem.dispute_type || "N/A"}
                             </p>
-                            <p>
+                            <p className="text-gray-700">
                               <span className="font-bold">Dispute Status:</span>{" "}
                               {historyItem.dispute_status || "N/A"}
                             </p>
-                            <p>
+                            <p className="text-gray-700">
                               <span className="font-bold">Dispute Resolution Date:</span>{" "}
                               {historyItem.dispute_resolution_date || "N/A"}
                             </p>
@@ -213,46 +225,46 @@ const Houses = () => {
 
                           {/* Column 2 */}
                           <div>
-                            <h6 className="font-bold text-gray-700">
+                            <h6 className="font-extrabold text-black">
                               Legal Infomation
                             </h6>
-                            <p>
+                            <p className="text-gray-700">
                               <span className="font-bold">Issue:</span>{" "}
                               {historyItem.legal_issue || "N/A"}
                             </p>
-                            <p>
+                            <p className="text-gray-700">
                               <span className="font-bold">
                                 Resolution Date:
                               </span>{" "}
                               {historyItem.resolution_date || "N/A"}
                             </p>
-                            <p>
+                            <p className="text-gray-700">
                               <span className="font-bold">Permit Approval Date:</span>{" "}
                               {historyItem.permit_approval_date || "N/A"}
                             </p>
                             
 
-                            <h6 className="font-bold text-gray-700 mt-4">
+                            <h6 className="font-extrabold text-black mt-4">
                               Disaster History
                             </h6>
-                            <p>
+                            <p className="text-gray-700">
                               <span className="font-bold">Type of Disaster:</span>{" "}
                               {historyItem.disaster_type || "N/A"}
                             </p>
-                            <p>
+                            <p className="text-gray-700">
                               <span className="font-bold">Description Of Disaster:</span>{" "}
                               {historyItem.disaster_description || "N/A"}
                             </p>
-                            <p>
+                            <p className="text-gray-700">
                               <span className="font-bold">Date of Disaster:</span>{" "}
                               {historyItem.disaster_date || "N/A"}
                             </p>
-                            <p>
+                            <p className="text-gray-700">
                             <span className="font-bold">Disaster Assessmet Report :</span>{" "}
                               {historyItem.environmental_assessment_date ||
                                 "N/A"}
                             </p>
-                            <p>
+                            <p className="text-gray-700">
                               <span className="font-bold">Status After Disaster:</span>{" "}
                               {historyItem.status_after_disaster || "N/A"}
                             </p>
@@ -261,39 +273,39 @@ const Houses = () => {
                             {/* Column 3 */}
 
 
-                            <h6 className="font-bold text-gray-700 mt-4">
+                            <h6 className="font-extrabold text-black mt-4">
                               Crime Reports
                             </h6>
-                            <p>
+                            <p className="text-gray-700">
                               <span className="font-bold">Crime Type:</span>{" "}
                               {historyItem.crime_type || "N/A"}
                             </p>
-                            <p>
+                            <p className="text-gray-700">
                               <span className="font-bold">Crime Date:</span>{" "}
                               {historyItem.crime_date || "N/A"}
                             </p>
 
-                            <h6 className="font-bold text-gray-700 mt-4">
+                            <h6 className="font-extrabold text-black mt-4">
                               Valuation
                             </h6>
-                            <p>
+                            <p className="text-gray-700">
                               <span className="font-bold">Valuation Date:</span>{" "}
                               {historyItem.valuation_date || "N/A"}
                             </p>
-                            <p>
+                            <p className="text-gray-700">
                               <span className="font-bold">Property Value:</span>{" "}
                               $
                               {historyItem.property_value?.toLocaleString() ||
                                 "N/A"}
                             </p>
-                            <h6 className="font-bold text-gray-700 mt-4">
+                            <h6 className="font-extrabold text-black mt-4">
                               Feedback Information
                             </h6>
-                            <p>
+                            <p className="text-gray-700">
                               <span className="font-bold">Tenant Feedback:</span>{" "}
                               {historyItem.tenant_feedback || "N/A"}
                             </p>
-                            <p>
+                            <p className="text-gray-700">
                               <span className="font-bold">Feedback Date:</span>{" "}
                               {historyItem.feedback_date || "N/A"}
                             </p>
@@ -305,22 +317,30 @@ const Houses = () => {
                 </div>
               </div>
             </div>
+             <div className="mt-10">
+                        <button
+                          onClick={handlePurchaseClick}
+                          className="btn btn-primary mt-4 w-full"
+                        >
+                          Purchase Property
+                        </button>
+                      </div>
+                      <BookingModal
+                        isOpen={isModalOpen}
+                        onClose={() => setModalOpen(false)}
+                        selectedHouse={selectedHouse} // Pass the selected house
+                      />
           </div>
         ))
       ) : (
         // House Cards List
-        <div className="h-screen overflow-y-auto">
-          <h2 className="text-center text-blue-600 font-semibold uppercase">
-            Featured Houses
-          </h2>
-          <h1 className="text-center text-3xl font-bold mb-6">Our Houses</h1>
-          <div className="flex justify-center">
-          <p className="text-xl font-semibold text-green-600">
-          <span className="font-bold">Total Houses:</span> {houses?.length || 0}
-        </p>
-        </div>
+        <div className="">
+          <Navbar/>
+          <div className="flex justify-center p-6">
+          
+       
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-4 md:px-10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 md:px-2">
             {houses &&
               houses.map(
                 (house) =>
@@ -339,7 +359,7 @@ const Houses = () => {
                     >
                       <div className="relative">
                         {/* Horizontal Scrollable Images */}
-                        <div className="flex overflow-x-auto space-x-2 scrollbar-thin scrollbar-thumb-blue-600 scrollbar-track-gray-300">
+                        <div className="flex overflow-x-auto space-x-2 scrollbar-thin scrollbar-thumb-blue-600 scrollbar-track-gray-300 ">
                           {house.images.map((image, index) => (
                             <img
                               key={index}
@@ -381,42 +401,19 @@ font-size: var(--text-3xl) font-bold "><span className="text-orange-500">Propert
                         >
                           {house.status}
                         </p>
-                        <div className="flex justify-between mt-4">
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation(); // Prevent the card click from triggering
-                              console.log("Update button clicked:", house); // Debugging log
-                              handleUpdateClick(house);
-                            }}
-                            className="bg-blue-500 text-white px-4 py-2 rounded"
-                          >
-                            Update
-                          </button>
-                          <button
-                            onClick={() =>
-                              handleDeleteClick(house.property_id)
-                            }
-                            className="bg-red-500 text-white px-4 py-2 rounded"
-                          >
-                            Delete
-                          </button>
-                        </div>
+                        
                       </div>
                     </div>
                   )
               )}
           </div>
         </div>
+          <Footer/>
+        </div>
       )}
-      {isUpdateModalOpen && (
-        <UpdateHouseModal
-          house={selectedHouse}
-          onClose={() => setIsUpdateModalOpen(false)}
-          onUpdate={(updatedHouse) => setSelectedHouse(updatedHouse)}
-        />
-      )}
+      
     </section>
   );
 };
 
-export default Houses;
+export default NavHouses;
